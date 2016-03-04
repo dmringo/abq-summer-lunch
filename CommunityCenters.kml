@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Community Centers</name>
+		<description><![CDATA[Community Centers in Albuquerque.  See http://www.cabq.gov/communitycenters/ for more information.]]></description>
+		<Folder>
+			<name>Untitled layer</name>
+			<Placemark>
+				<name>Alamosa Community Center</name>
+				<description><![CDATA[6900 Gonzales Rd SW 87121 <br>Coors and Bridge <br>Phone: (505) 836-8760<br>Features: computer lab, fitness room  <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southwest/alamosa-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.712585,35.073032,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Barelas Community Center</name>
+				<description><![CDATA[801 Barelas Rd. SW 87102 <br>Atlantic & 8th Street <br>Phone: (505) 848-1343 <br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/central/barelas-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.655663,35.077522,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Cesar Chavez Community Center</name>
+				<description><![CDATA[7505 Kathryn SE 87108 <br>Louisiana & Kathryn <br>Phone: (505) 256-2680 <br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/cesar-chavez-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.565422,35.064991,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Dennis Chavez Community Center</name>
+				<description><![CDATA[715 Kathryn SE 87102 <br>Kathryn & Walter <br>Phone: (505) 848-1341 <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/dennis-chavez-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.64077,35.065849,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Don Newton (Taylor Ranch) Community Center</name>
+				<description><![CDATA[4900 Kachina NW <br>Montano & Kachina <br>Phone: (505) 768-6006<br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/don-newton-taylor-ranch-community-center)]]></description>
+				<styleUrl>#icon-22</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.69529,35.155781,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Heights Community Center</name>
+				<description><![CDATA[823 Buena Vista SE 87106 <br>Coal & Buena Vista <br>Phone: (505) 848-1334<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/central/heights-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.624252,35.073647,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Herman Sanchez Community Center</name>
+				<description><![CDATA[(Formerly East San Jose Community Center)<br>1830 William SE 87102 <br>Trumbull & William <br>Phone: (505) 764-6897<br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/herman-sanchez-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.649193,35.064331,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Holiday Park Center</name>
+				<description><![CDATA[11710 Comanche NE 87111 <br>Juan Tabo & Comanche <br>Phone: (505) 764-6425<br>Features: computer lab, fitness room  <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/holiday-park-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.50946,35.123402,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Jack Candelaria Community Center</name>
+				<description><![CDATA[400 San Jose SE 87102 <br>San Jose & Broadway <br>Phone: (505) 848-1324 (Center)<br>Features: computer lab<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/jack-candelaria-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.647522,35.054749,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Jeanne Bellamah Center</name>
+				<description><![CDATA[11516 Summer NE 87112 <br>Tomasita & Lomas <br>Phone: (505) 767-5910<br>Features: computer lab, fitness room   <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/jeanne-bellamah-center)]]></description>
+				<styleUrl>#icon-22</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.519379,35.092377,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Loma Linda Community Center/Therapeutic Recreation Program</name>
+				<description><![CDATA[1700 Yale SE 87106 <br>Yale & Gibson <br>Phone: (505) 764-1525 <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/loma-linda-community-center-therapeutic-recreation-program)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.621819,35.063839,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Los Duranes Community Center</name>
+				<description><![CDATA[2920 Leopoldo NW 87104 <br>Rio Grande & Rice <br>Phone: (505) 767-5900<br>Features: computer lab, fitness room  <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/los-duranes-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.68013,35.110176,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>McKinley Community Center</name>
+				<description><![CDATA[3401 Monroe NE 87110 <br>Comanche & Monroe <br>Phone: (505) 767-5930<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/mckinley-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.592552,35.122017,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Mesa Verde Community Center</name>
+				<description><![CDATA[7900 Marquette NE 87108 <br>Marquette & Tennessee <br>Phone: (505) 767-5920<br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/mesa-verde-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.558571,35.083561,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Pat Hurley Center</name>
+				<description><![CDATA[3928 Rincon NW 87105 <br>Rincon & Bluewater <br>Phone: (505) 836-8810 <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/pat-hurley-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.69725,35.089428,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Singing Arrow Community Center</name>
+				<description><![CDATA[13001 Singing Arrow SE 87123 <br>Dorado & Singing Arrow <br>Phone: (505) 291-6200 <br>Features: computer lab<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/singing-arrow-community-center/folder_contents)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.501762,35.064499,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Snow Park Center</name>
+				<description><![CDATA[9501 Indian School NE 87112 <br>Eubank & Indian School <br>Phone: (505) 332-5250 <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/snow-park-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.537514,35.102081000000005,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Thomas Bell Community Center</name>
+				<description><![CDATA[3001 University SE 87106 <br>University & Gibson <br>Phone: (505) 848-1332<br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/thomas-bell-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.63089,35.053196,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Valle del Norte Community Center</name>
+				<description><![CDATA[1812 Candelaria NW 87105 <br>Candelaria & Rio Grande <br>Phone: (505) 342-1322<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/valle-del-norte-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.664383,35.123325,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Wells Park Community Center</name>
+				<description><![CDATA[500 Mountain NW 87102 <br>5th & Mountain <br>Phone: (505) 848-1390 <br>Features: computer lab<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/central/wells-park-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.650757,35.096081,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Westgate Community Center</name>
+				<description><![CDATA[1400 Snow Vista SW 87121 <br>98th & Benavides <br>Phone: (505) 836-8723 <br>Features: computer lab<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southwest/westgate-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.737915,35.049751,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>West Mesa Community Center</name>
+				<description><![CDATA[5500 Glenrio NW 87105 <br>Coors & Glenrio <br>Phone: (505) 836-3487<br>Features: computer lab, fitness room<br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/west-mesa-community-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.701904,35.097179,0.0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark>
+				<name>Whittier Center</name>
+				<description><![CDATA[1100 Quincy SE 87108 <br>Kathryn & San Mateo <br>Phone: (505) 256-2093 <br>View more information. (http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/whittier-center)]]></description>
+				<styleUrl>#icon-ci-1</styleUrl>
+				<ExtendedData>
+				</ExtendedData>
+				<Point>
+					<coordinates>-106.588425,35.06551,0.0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Style id='icon-22-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-22-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>http://www.gstatic.com/mapspro/images/stock/22-blue-dot.png</href>
+				</Icon>
+				<hotSpot x='16' y='31' xunits='pixels' yunits='insetPixels'>
+				</hotSpot>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-22'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-22-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-22-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Style id='icon-ci-1-normal'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>images/icon-1.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>0.0</scale>
+			</LabelStyle>
+		</Style>
+		<Style id='icon-ci-1-highlight'>
+			<IconStyle>
+				<scale>1.1</scale>
+				<Icon>
+					<href>images/icon-1.png</href>
+				</Icon>
+			</IconStyle>
+			<LabelStyle>
+				<scale>1.1</scale>
+			</LabelStyle>
+		</Style>
+		<StyleMap id='icon-ci-1'>
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#icon-ci-1-normal</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#icon-ci-1-highlight</styleUrl>
+			</Pair>
+		</StyleMap>
+	</Document>
+</kml>

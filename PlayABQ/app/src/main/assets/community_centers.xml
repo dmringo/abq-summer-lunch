@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document>
+    <name>Community Centers</name>
+    <description><![CDATA[Community Centers in Albuquerque]]></description>
+    <item>
+        <name>Alamosa Community Center</name>
+        <lat>35.073032,0.0</lat>
+        <lon>-106.712585</lon>
+    </item>
+</Document>
