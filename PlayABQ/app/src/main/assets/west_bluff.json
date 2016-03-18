@@ -1,0 +1,477 @@
+{
+ "displayFieldName": "PARKNAME",
+ "fieldAliases": {
+  "OBJECTID": "OBJECTID",
+  "PARKNAME": "Name",
+  "PARKSTATUS": "Status",
+  "JURISDICTION": "Jurisdiction",
+  "ACRES": "Acres",
+  "DEVELOPEDACRES": "Developed Acres",
+  "LITTENNISCOURTS": "Lit Tennis Courts",
+  "UNLITTENNISCOURTS": "Unlit Tennis Courts",
+  "PLAYAREAS": "Play Areas",
+  "FULLBASKETBALLCOURTS": "Full Basketball Courts",
+  "HALFBASKETBALLCOURTS": "Half Basketball Courts",
+  "SOCCERFIELDS": "Soccer Fields",
+  "LITSOFTBALLFIELDS": "Lit Softball Fields",
+  "UNLITSOFTBALLFIELDS": "Unlit Softball Fields",
+  "YOUTHBALLFIELDS": "Youth Ball Fields",
+  "INDOORPOOLS": "Indoor Pools",
+  "OUTDOORPOOLS": "Outdoor Pools",
+  "HORSESHOEPITS": "Horseshoe Pits",
+  "VOLLEYBALLCOURTS": "Volleyball Courts",
+  "BACKSTOPS": "Backstops",
+  "PICNICTABLES": "Picnic Tables",
+  "SHADESTRUCTURES": "Shade Structures",
+  "PARKINGSPACES": "Parking Spaces",
+  "JOGGINGPATHS": "Jogging Paths",
+  "created_user": "created_user",
+  "created_date": "created_date",
+  "last_edited_user": "last_edited_user",
+  "last_edited_date": "last_edited_date"
+ },
+ "geometryType": "esriGeometryPolygon",
+ "spatialReference": {
+  "wkid": 102100,
+  "latestWkid": 3857
+ },
+ "fields": [
+  {
+   "name": "OBJECTID",
+   "type": "esriFieldTypeOID",
+   "alias": "OBJECTID"
+  },
+  {
+   "name": "PARKNAME",
+   "type": "esriFieldTypeString",
+   "alias": "Name",
+   "length": 60
+  },
+  {
+   "name": "PARKSTATUS",
+   "type": "esriFieldTypeString",
+   "alias": "Status",
+   "length": 1
+  },
+  {
+   "name": "JURISDICTION",
+   "type": "esriFieldTypeString",
+   "alias": "Jurisdiction",
+   "length": 6
+  },
+  {
+   "name": "ACRES",
+   "type": "esriFieldTypeDouble",
+   "alias": "Acres"
+  },
+  {
+   "name": "DEVELOPEDACRES",
+   "type": "esriFieldTypeDouble",
+   "alias": "Developed Acres"
+  },
+  {
+   "name": "LITTENNISCOURTS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Lit Tennis Courts"
+  },
+  {
+   "name": "UNLITTENNISCOURTS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Unlit Tennis Courts"
+  },
+  {
+   "name": "PLAYAREAS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Play Areas"
+  },
+  {
+   "name": "FULLBASKETBALLCOURTS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Full Basketball Courts"
+  },
+  {
+   "name": "HALFBASKETBALLCOURTS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Half Basketball Courts"
+  },
+  {
+   "name": "SOCCERFIELDS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Soccer Fields"
+  },
+  {
+   "name": "LITSOFTBALLFIELDS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Lit Softball Fields"
+  },
+  {
+   "name": "UNLITSOFTBALLFIELDS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Unlit Softball Fields"
+  },
+  {
+   "name": "YOUTHBALLFIELDS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Youth Ball Fields"
+  },
+  {
+   "name": "INDOORPOOLS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Indoor Pools"
+  },
+  {
+   "name": "OUTDOORPOOLS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Outdoor Pools"
+  },
+  {
+   "name": "HORSESHOEPITS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Horseshoe Pits"
+  },
+  {
+   "name": "VOLLEYBALLCOURTS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Volleyball Courts"
+  },
+  {
+   "name": "BACKSTOPS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Backstops"
+  },
+  {
+   "name": "PICNICTABLES",
+   "type": "esriFieldTypeInteger",
+   "alias": "Picnic Tables"
+  },
+  {
+   "name": "SHADESTRUCTURES",
+   "type": "esriFieldTypeInteger",
+   "alias": "Shade Structures"
+  },
+  {
+   "name": "PARKINGSPACES",
+   "type": "esriFieldTypeInteger",
+   "alias": "Parking Spaces"
+  },
+  {
+   "name": "JOGGINGPATHS",
+   "type": "esriFieldTypeInteger",
+   "alias": "Jogging Paths"
+  },
+  {
+   "name": "created_user",
+   "type": "esriFieldTypeString",
+   "alias": "created_user",
+   "length": 255
+  },
+  {
+   "name": "created_date",
+   "type": "esriFieldTypeDate",
+   "alias": "created_date",
+   "length": 8
+  },
+  {
+   "name": "last_edited_user",
+   "type": "esriFieldTypeString",
+   "alias": "last_edited_user",
+   "length": 255
+  },
+  {
+   "name": "last_edited_date",
+   "type": "esriFieldTypeDate",
+   "alias": "last_edited_date",
+   "length": 8
+  }
+ ],
+ "features": [
+  {
+   "attributes": {
+    "OBJECTID": 175127,
+    "PARKNAME": "WEST BLUFF",
+    "PARKSTATUS": "D",
+    "JURISDICTION": "CITY",
+    "ACRES": 2.3175488899999999,
+    "DEVELOPEDACRES": 2.2999999999999998,
+    "LITTENNISCOURTS": 0,
+    "UNLITTENNISCOURTS": 0,
+    "PLAYAREAS": 1,
+    "FULLBASKETBALLCOURTS": 0,
+    "HALFBASKETBALLCOURTS": 2,
+    "SOCCERFIELDS": 1,
+    "LITSOFTBALLFIELDS": 0,
+    "UNLITSOFTBALLFIELDS": 0,
+    "YOUTHBALLFIELDS": 0,
+    "INDOORPOOLS": 0,
+    "OUTDOORPOOLS": 0,
+    "HORSESHOEPITS": 0,
+    "VOLLEYBALLCOURTS": 0,
+    "BACKSTOPS": 0,
+    "PICNICTABLES": 7,
+    "SHADESTRUCTURES": 2,
+    "PARKINGSPACES": 0,
+    "JOGGINGPATHS": 0,
+    "created_user": null,
+    "created_date": null,
+    "last_edited_user": null,
+    "last_edited_date": null
+   },
+   "geometry": {
+    "rings": [
+     [
+      [
+       -11877552.0776,
+       4178859.939199999
+      ],
+      [
+       -11877514.716800001,
+       4178860.0143999979
+      ],
+      [
+       -11877477.3562,
+       4178860.1362000033
+      ],
+      [
+       -11877458.699000001,
+       4178860.1736000031
+      ],
+      [
+       -11877421.338399999,
+       4178860.2951999977
+      ],
+      [
+       -11877393.515700001,
+       4178860.3737000003
+      ],
+      [
+       -11877365.6929,
+       4178860.452200003
+      ],
+      [
+       -11877338.475,
+       4178860.5279000029
+      ],
+      [
+       -11877346.4077,
+       4178782.2083000019
+      ],
+      [
+       -11877382.1863,
+       4178782.1407999992
+      ],
+      [
+       -11877428.898600001,
+       4178782.0239999965
+      ],
+      [
+       -11877465.1423,
+       4178781.9073999971
+      ],
+      [
+       -11877464.733199999,
+       4178784.0591000021
+      ],
+      [
+       -11877463.7651,
+       4178786.0731000006
+      ],
+      [
+       -11877459.321,
+       4178791.0939999968
+      ],
+      [
+       -11877457.245099999,
+       4178795.0759000033
+      ],
+      [
+       -11877456.241700001,
+       4178799.6138999984
+      ],
+      [
+       -11877456.542399999,
+       4178804.4263999984
+      ],
+      [
+       -11877457.3454,
+       4178807.1335000023
+      ],
+      [
+       -11877458.6601,
+       4178809.7915999964
+      ],
+      [
+       -11877460.4387,
+       4178812.1670999974
+      ],
+      [
+       -11877462.4946,
+       4178814.1208000034
+      ],
+      [
+       -11877464.967799999,
+       4178815.7453999966
+      ],
+      [
+       -11877467.5317,
+       4178816.8554999977
+      ],
+      [
+       -11877470.2333,
+       4178817.5443999991
+      ],
+      [
+       -11877472.8398,
+       4178817.7663000003
+      ],
+      [
+       -11877475.583999999,
+       4178817.5670000017
+      ],
+      [
+       -11877478.1402,
+       4178816.9478999972
+      ],
+      [
+       -11877480.694400001,
+       4178815.8615000024
+      ],
+      [
+       -11877482.9213,
+       4178814.4492999986
+      ],
+      [
+       -11877484.867899999,
+       4178812.7580000013
+      ],
+      [
+       -11877486.5338,
+       4178810.7408000007
+      ],
+      [
+       -11877487.827399999,
+       4178808.6785999984
+      ],
+      [
+       -11877488.886,
+       4178806.1032999977
+      ],
+      [
+       -11877489.657299999,
+       4178801.7066000029
+      ],
+      [
+       -11877489.3597,
+       4178797.5951000005
+      ],
+      [
+       -11877487.898600001,
+       4178793.3954000026
+      ],
+      [
+       -11877485.088300001,
+       4178789.2018000036
+      ],
+      [
+       -11877484.195900001,
+       4178787.3364000022
+      ],
+      [
+       -11877483.672699999,
+       4178784.7682000026
+      ],
+      [
+       -11877483.845800001,
+       4178781.8698000014
+      ],
+      [
+       -11877513.9016,
+       4178781.7809000015
+      ],
+      [
+       -11877510.8114,
+       4178819.0438999981
+      ],
+      [
+       -11877555.476599999,
+       4178818.9356999993
+      ],
+      [
+       -11877552.0776,
+       4178859.939199999
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "attributes": {
+    "OBJECTID": 175190,
+    "PARKNAME": "WEST BLUFF OVERLOOK",
+    "PARKSTATUS": "D",
+    "JURISDICTION": "CITY",
+    "ACRES": 2.1147908399999999,
+    "DEVELOPEDACRES": 2.1000000000000001,
+    "LITTENNISCOURTS": 0,
+    "UNLITTENNISCOURTS": 0,
+    "PLAYAREAS": 0,
+    "FULLBASKETBALLCOURTS": 0,
+    "HALFBASKETBALLCOURTS": 0,
+    "SOCCERFIELDS": 0,
+    "LITSOFTBALLFIELDS": 0,
+    "UNLITSOFTBALLFIELDS": 0,
+    "YOUTHBALLFIELDS": 0,
+    "INDOORPOOLS": 0,
+    "OUTDOORPOOLS": 0,
+    "HORSESHOEPITS": 0,
+    "VOLLEYBALLCOURTS": 0,
+    "BACKSTOPS": 0,
+    "PICNICTABLES": 0,
+    "SHADESTRUCTURES": 1,
+    "PARKINGSPACES": 0,
+    "JOGGINGPATHS": 0,
+    "created_user": null,
+    "created_date": null,
+    "last_edited_user": null,
+    "last_edited_date": null
+   },
+   "geometry": {
+    "rings": [
+     [
+      [
+       -11877139.4474,
+       4178853.3823999986
+      ],
+      [
+       -11877149.4066,
+       4178780.5688000023
+      ],
+      [
+       -11877217.8463,
+       4178780.3554999977
+      ],
+      [
+       -11877257.1142,
+       4178780.2260000035
+      ],
+      [
+       -11877290.4268,
+       4178780.1230999976
+      ],
+      [
+       -11877324.1116,
+       4178780.0185000002
+      ],
+      [
+       -11877317.270399999,
+       4178852.7246999964
+      ],
+      [
+       -11877139.4474,
+       4178853.3823999986
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}
