@@ -1,0 +1,501 @@
+{
+  "displayFieldName" : "CENTERNAME",
+  "fieldAliases" : {
+    "CENTERNAME" : "Name",
+    "LATITUDE" : "Latitude",
+    "LONGITUDE" : "Longitude",
+    "GYMNASIUM" : "Gymnasium",
+    "OUTDOORBASKETBALL" : "Outdoor Basketball",
+    "WEIGHTROOM" : "Weight Room",
+    "COMPUTERLAB" : "Computer Lab",
+    "GAMEROOM" : "Game Room",
+    "CONFERENCEROOM" : "Conference Room",
+    "CLASSROOMS" : "Class Rooms",
+    "ARTROOM" : "Art Room",
+    "SENIORMEALS" : "Senior Meals",
+    "REGULARHOURS" : "Regular Hours",
+    "YOUTHPROGRAMS" : "Youth Programs",
+    "ADULTPROGRAMS" : "Adult Programs",
+    "BOXINGFACILITY" : "Boxing Facility"
+  },
+  "geometryType" : "esriGeometryPoint",
+  "spatialReference" : {
+    "wkid" : 102100,
+    "latestWkid" : 3857
+  },
+  "features" : [ {
+    "CENTERNAME" : "Cesar Chavez Community Center",
+    "LATITUDE" : 35.064991,
+    "LONGITUDE" : -106.565422,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : true,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : true,
+    "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p; Sat 8a-3p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.565422,
+      "y" : 35.064991
+    }
+  }, {
+    "CENTERNAME" : "Dennis Chavez Community Center",
+    "LATITUDE" : 35.065849,
+    "LONGITUDE" : -106.64077,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : false,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 8a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.64077,
+      "y" : 35.065849
+    }
+  }, {
+    "CENTERNAME" : "Herman Sanchez Community Center",
+    "LATITUDE" : 35.064331,
+    "LONGITUDE" : -106.649193,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7a-7p; Fri 7a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.649193,
+      "y" : 35.064331
+    }
+  }, {
+    "CENTERNAME" : "Jack Candelaria Community Center",
+    "LATITUDE" : 35.054749,
+    "LONGITUDE" : -106.647522,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7:30a-7p; Fri 8a-5p",
+    "YOUTHPROGRAMS" : false,
+    "ADULTPROGRAMS" : false,
+    "BOXINGFACILITY" : true,
+    "geometry" : {
+      "x" : -106.647522,
+      "y" : 35.054749
+    }
+  }, {
+    "CENTERNAME" : "Loma Linda Community Center & Therapeutic Recreation Program",
+    "LATITUDE" : 35.063839,
+    "LONGITUDE" : -106.621819,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : false,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 8a-5p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.621819,
+      "y" : 35.063839
+    }
+  }, {
+    "CENTERNAME" : "Singing Arrow Community Center",
+    "LATITUDE" : 35.064499,
+    "LONGITUDE" : -106.501762,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 7a-6p",
+    "geometry" : {
+      "x" : -106.501762,
+      "y" : 35.064499
+    }
+  }, {
+    "CENTERNAME" : "Thomas Bell Community Center",
+    "LATITUDE" : 35.053196,
+    "LONGITUDE" : -106.63089,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7:30a-7p; Fri 7:30a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.63089,
+      "y" : 35.053196
+    }
+  }, {
+    "geometry" : {
+      "x" : 0.0,
+      "y" : 0.0
+    }
+  }, {
+    "CENTERNAME" : "David's",
+    "geometry" : {
+      "x" : 0.0,
+      "y" : 0.0
+    }
+  }, {
+    "CENTERNAME" : "Whittier Center",
+    "LATITUDE" : 35.06551,
+    "LONGITUDE" : -106.588425,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : true,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 7a-6p",
+    "YOUTHPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.588425,
+      "y" : 35.06551
+    }
+  }, {
+    "CENTERNAME" : "Holiday Park Community Center",
+    "LATITUDE" : 35.123402,
+    "LONGITUDE" : -106.50946,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7:30a-8p; Fri 7:30a-6p; Sat 9a-1p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.50946,
+      "y" : 35.123402
+    }
+  }, {
+    "CENTERNAME" : "Jeanne Bellamah Center",
+    "LATITUDE" : 35.092377,
+    "LONGITUDE" : -106.519379,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.519379,
+      "y" : 35.092377
+    }
+  }, {
+    "CENTERNAME" : "McKinley Community Center",
+    "LATITUDE" : 35.122017,
+    "LONGITUDE" : -106.592552,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : false,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 7a-6p",
+    "YOUTHPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.592552,
+      "y" : 35.122017
+    }
+  }, {
+    "CENTERNAME" : "Mesa Verde Community Center",
+    "LATITUDE" : 35.083561,
+    "LONGITUDE" : -106.558571,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : true,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.558571,
+      "y" : 35.083561
+    }
+  }, {
+    "CENTERNAME" : "Snow Park Center",
+    "LATITUDE" : 35.102081,
+    "LONGITUDE" : -106.537514,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 1:30p-5:30p",
+    "YOUTHPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.537514,
+      "y" : 35.102081
+    }
+  }, {
+    "CENTERNAME" : "Alamosa Community Center",
+    "LATITUDE" : 35.073032,
+    "LONGITUDE" : -106.712585,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : true,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : false,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7a-8p; Fri 7a-7p; Sat 8a-12p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.712585,
+      "y" : 35.073032
+    }
+  }, {
+    "CENTERNAME" : "Westgate Community Center",
+    "LATITUDE" : 35.049751,
+    "LONGITUDE" : -106.737915,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : true,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 9a-6p",
+    "YOUTHPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.737915,
+      "y" : 35.049751
+    }
+  }, {
+    "geometry" : {
+      "x" : 0.0,
+      "y" : 0.0
+    }
+  }, {
+    "CENTERNAME" : "Jessica's",
+    "geometry" : {
+      "x" : 0.0,
+      "y" : 0.0
+    }
+  }, {
+    "CENTERNAME" : "Barelas Community Center",
+    "LATITUDE" : 35.077522,
+    "LONGITUDE" : -106.655663,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7:30a-7p; Fri 7:30a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.655663,
+      "y" : 35.077522
+    }
+  }, {
+    "CENTERNAME" : "Heights Community Center",
+    "LATITUDE" : 35.073647,
+    "LONGITUDE" : -106.624252,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : true,
+    "CLASSROOMS" : false,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 9a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.624252,
+      "y" : 35.073647
+    }
+  }, {
+    "CENTERNAME" : "Wells Park Community Center",
+    "LATITUDE" : 35.096081,
+    "LONGITUDE" : -106.650757,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : true,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 9a-8p; Fri 9a-6p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.650757,
+      "y" : 35.096081
+    }
+  }, {
+    "CENTERNAME" : "Don Newton-Taylor Ranch Community Center",
+    "LATITUDE" : 35.155781,
+    "LONGITUDE" : -106.69529,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : false,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : true,
+    "REGULARHOURS" : "Mon-Fri 8a-9p; Sat 9a-3p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.69529,
+      "y" : 35.155781
+    }
+  }, {
+    "CENTERNAME" : "Los Duranes Community Center",
+    "LATITUDE" : 35.110176,
+    "LONGITUDE" : -106.68013,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : true,
+    "CLASSROOMS" : true,
+    "ARTROOM" : true,
+    "SENIORMEALS" : true,
+    "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p; Sat 10a-2p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.68013,
+      "y" : 35.110176
+    }
+  }, {
+    "CENTERNAME" : "Pat Hurley Center",
+    "LATITUDE" : 35.089428,
+    "LONGITUDE" : -106.69725,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : false,
+    "COMPUTERLAB" : false,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 12:30p-6p",
+    "YOUTHPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.69725,
+      "y" : 35.089428
+    }
+  }, {
+    "CENTERNAME" : "Valle del Norte Family Development Center",
+    "LATITUDE" : 35.123325,
+    "LONGITUDE" : -106.664383,
+    "GYMNASIUM" : false,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : false,
+    "CONFERENCEROOM" : false,
+    "CLASSROOMS" : false,
+    "ARTROOM" : false,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Fri 8a-5p",
+    "geometry" : {
+      "x" : -106.664383,
+      "y" : 35.123325
+    }
+  }, {
+    "CENTERNAME" : "West Mesa Community Center",
+    "LATITUDE" : 35.097179,
+    "LONGITUDE" : -106.701904,
+    "GYMNASIUM" : true,
+    "OUTDOORBASKETBALL" : false,
+    "WEIGHTROOM" : true,
+    "COMPUTERLAB" : true,
+    "GAMEROOM" : true,
+    "CONFERENCEROOM" : true,
+    "CLASSROOMS" : true,
+    "ARTROOM" : true,
+    "SENIORMEALS" : false,
+    "REGULARHOURS" : "Mon-Thu 7a-8p; Fri 7a-6p; Sat 8a-1p",
+    "YOUTHPROGRAMS" : true,
+    "ADULTPROGRAMS" : true,
+    "geometry" : {
+      "x" : -106.701904,
+      "y" : 35.097179
+    }
+  } ]
+}
