@@ -33,12 +33,12 @@ import android.content.Context;
  * geographic coordinates.
  */
 public class JsonParser {
-    final static String PARKS_FILE = "west_bluff.json";
+    final static String PARKS_FILE = "parks.json";
     final static ObjectMapper mapper = new ObjectMapper();
 
     public static Map getParkData(Context ct)  {
         try {
-            InputStream stream = ct.getAssets().open(TestJackson.TEST_FILE);
+            InputStream stream = ct.getAssets().open(PARKS_FILE);
             Map map = mapper.readValue(stream, Map.class);
             return map;
         }
