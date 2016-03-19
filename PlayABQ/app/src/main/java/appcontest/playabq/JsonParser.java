@@ -16,6 +16,21 @@ import android.content.Context;
 
 /**
  * Created by jessica on 3/18/16.
+ *
+ * If we need to get the Parks JSON file again, be sure to use this link:
+ * http://coagisweb.cabq.gov/arcgis/rest/services/public/recreation/MapServer/0/query?
+ * where=1%3D1
+ * &text=&objectIds=&time=&geometry=
+ * &geometryType=esriGeometryEnvelope
+ * &inSR=&spatialRel=esriSpatialRelIntersects
+ * &relationParam=&outFields=*&returnGeometry=true
+ * &maxAllowableOffset=&geometryPrecision=
+ * &outSR=4326&returnIdsOnly=false&returnCountOnly=false
+ * &orderByFields=&groupByFieldsForStatistics=
+ * &outStatistics=&returnZ=false&returnM=false&gdbVersion=&f=pjson
+ *
+ * The important part for our location data is the &outSR=4326, which specifies that we want
+ * geographic coordinates.
  */
 public class JsonParser {
     final static String PARKS_FILE = "west_bluff.json";
