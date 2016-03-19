@@ -20,8 +20,8 @@
   },
   "geometryType" : "esriGeometryPoint",
   "spatialReference" : {
-    "wkid" : 102100,
-    "latestWkid" : 3857
+    "wkid" : 4326,
+    "latestWkid" : 4326
   },
   "features" : [ {
     "CENTERNAME" : "Cesar Chavez Community Center",
@@ -161,17 +161,6 @@
     "geometry" : {
       "x" : -106.63089,
       "y" : 35.053196
-    }
-  }, {
-    "geometry" : {
-      "x" : 0.0,
-      "y" : 0.0
-    }
-  }, {
-    "CENTERNAME" : "David's",
-    "geometry" : {
-      "x" : 0.0,
-      "y" : 0.0
     }
   }, {
     "CENTERNAME" : "Whittier Center",
@@ -328,17 +317,6 @@
     "geometry" : {
       "x" : -106.737915,
       "y" : 35.049751
-    }
-  }, {
-    "geometry" : {
-      "x" : 0.0,
-      "y" : 0.0
-    }
-  }, {
-    "CENTERNAME" : "Jessica's",
-    "geometry" : {
-      "x" : 0.0,
-      "y" : 0.0
     }
   }, {
     "CENTERNAME" : "Barelas Community Center",
