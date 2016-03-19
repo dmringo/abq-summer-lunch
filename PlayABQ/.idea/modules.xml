@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PlayABQ.iml" filepath="$PROJECT_DIR$/PlayABQ.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/csv2json/csv2json.iml" filepath="$PROJECT_DIR$/csv2json/csv2json.iml" />
     </modules>
   </component>
 </project>

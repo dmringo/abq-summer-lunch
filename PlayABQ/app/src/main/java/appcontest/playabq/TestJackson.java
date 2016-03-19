@@ -3,6 +3,8 @@ package appcontest.playabq;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.json.UTF8JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -24,6 +26,12 @@ public class TestJackson {
                 Object val = map.get(key);
                 msg = String.format("value class: %s, value: %s", val.getClass().toString(), val.toString());
                 Log.i("TestJackson", msg);
+            }
+            try {
+                String s = mapper.writeValueAsString(map);
+                Log.i("TestJackson", String.format("ValueAsString: %n%s", s));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
             }
         }
 
