@@ -25,6 +25,20 @@ public class TestJackson {
                 msg = String.format("value class: %s, value: %s", val.getClass().toString(), val.toString());
                 Log.i("TestJackson", msg);
             }
+            List features = (List) map.get("features");
+            for (Object item : features) {
+                String msg = String.format("feature class: %s, value: %s", item.getClass().toString(), item.toString());
+                Log.i("feature", msg);
+                Map itemMap = (Map) item;
+                for (Object element : itemMap.keySet()) {
+                    String elMsg = String.format("feature key class: %s, feature: %s", element.getClass().toString(), element.toString());
+                    Log.i("feature key ",elMsg);
+                    Object elVal = itemMap.get(element);
+                    String valMsg = String.format("feature val class: %s, value: %s", elVal.getClass().toString(), elVal.toString());
+                    Log.i("feature val ", valMsg);
+
+                }
+            }
         }
 
     }

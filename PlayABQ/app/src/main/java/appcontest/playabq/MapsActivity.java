@@ -12,12 +12,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Map parkData;
+    private List<Map> parkList;
+    private Map<String,String> aliases;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        parkData = JsonParser.getParkData(this);
+        parkList = JsonParser.getParkList(parkData);
+        aliases = JsonParser.getParkAliases(parkData);
+
+        for (Map park : parkList)  {
+            System.out.println(park.get("PARKNAME"));
+            Map coords = (Map) park.get("geometry");
+            for (Object key : coords.keySet()) {
+                List coordlist = (List) coords.get(key);
+                for (Object item : coordlist) {
+                    System.out.println(item.toString()); // returns array of points for poly
+                }
+            }
+        }
+        for (String name : aliases.keySet()) {
+            System.out.println(aliases.get(name));
+        }
+
+        /***
         try {
             TestJackson.testJackson(getAssets().open(TestJackson.TEST_FILE));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        ***/
     }
 
 
@@ -50,9 +74,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
+
+
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
     }
+
 }
