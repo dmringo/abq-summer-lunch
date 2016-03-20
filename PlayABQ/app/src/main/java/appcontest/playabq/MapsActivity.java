@@ -3,7 +3,6 @@ package appcontest.playabq;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,16 +53,19 @@ public class MapsActivity extends FragmentActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         parkData = JsonParser.getParkData(this);
+
+        /* suppressing warnings to make Android Studio (and David) happy */
+        //noinspection unchecked
         parkList = JsonParser.getParkList(parkData);
+        //noinspection unchecked
         parkAliases = JsonParser.getAliases(parkData);
 
         commData = JsonParser.getCommData(this);
+        //noinspection unchecked
         commList = JsonParser.getCommList(commData);
+        //noinspection unchecked
         commAliases = JsonParser.getAliases(commData);
-
-
 
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
@@ -102,8 +104,6 @@ public class MapsActivity extends FragmentActivity implements
         mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);
 
-//        getPolys();
-//        markCenters();
         GoogleMapAdapter adapter = new GoogleMapAdapter();
         adapter.setAllListeners(mMap);
 
@@ -112,42 +112,38 @@ public class MapsActivity extends FragmentActivity implements
             System.out.println(polygonMap.get(poly));
             System.out.println(poly.getPoints());
         }*/
+
+
+        /* roughly I-25 and I-40 */
+        final LatLng center = new LatLng(35.10998051198137, -106.61751497536898);
+        /* zoom level determined by trial and error */
+        final float zoom = 10.6f;
+        CameraUpdate move = CameraUpdateFactory.newLatLngZoom(center, zoom);
+
+        /* let the map register the move before we try to add polygons and markers,
+         * rendering may be threaded and occur before we get the map centered on ABQ */
+        mMap.moveCamera(move);
+
+        getPolys();
+        markCenters();
+
+        /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
+         * using it again, so let's leave this here for now */
         mMap.setOnMapLoadedCallback(this);
+
     }
 
 
     /**
-     * Once the map is loaded (i.e. visible?) center it on Albuquerque and zoom to a city-ish
-     * level.  This is where polygon and marker loading methods are called.
+     * Unused at the moment.  May be useful later.  Called once the Map is loaded and rendering.
      */
     @Override
     public void onMapLoaded() {
         /*
         Old abq rectangular bounds saved in case we need them...
         LatLngBounds abqBounds =
-                new LatLngBounds(
-                new LatLng(34.946766, -106.471163), new LatLng(35.218054, -106.881796));
+                new LatLngBounds(new LatLng(34.946766, -106.471163), new LatLng(35.218054, -106.881796));
         */
-
-        /* roughly I-25 and I-40 */
-        final LatLng center = new LatLng(35.10998051198137, -106.61751497536898);
-        /* zoom level determined by trial and error */
-        float zoom = 10.6f;
-        CameraUpdate move = CameraUpdateFactory.newLatLngZoom(center, zoom);
-
-        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-                getPolys();
-                markCenters();
-
-                /* set the cam listener to null so we don't always reload polygons and markers
-                on Map movement */
-                mMap.setOnCameraChangeListener(null);
-            }
-        });
-        mMap.animateCamera(move);
-
     }
 
 
@@ -166,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements
                     ArrayList coordList = (ArrayList) poly;
                     List<LatLng> vtxList = new ArrayList<LatLng>();
                     for (Object coord : coordList) {
-                        ArrayList<Double> doubleList = (ArrayList) coord;
+                        @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
                         double lat = doubleList.get(1);
                         double lon = doubleList.get(0);
                         LatLng latlon = new LatLng(lat, lon);
