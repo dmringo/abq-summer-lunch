@@ -11,6 +11,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -25,7 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
 
     private GoogleMap mMap;
     // park/comm variables:
@@ -39,9 +41,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Map> commList;
     private Map<String,String> commAliases;
 
+
     // polygonMap has park polygons as keys, their names as values
     // for use in click listener
     private Map<Polygon, String> polygonMap;
+    private Map<Marker, String> markerMap;
 
 
     @Override
@@ -96,6 +100,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
+        mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
+        mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);
+
         getPolys();
         markCenters();
         GoogleMapAdapter adapter = new GoogleMapAdapter();
@@ -112,9 +120,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //this method isn't working
     @Override
     public void onMapLoaded() {
-        /*LatLngBounds abqBounds = new LatLngBounds(
+        LatLngBounds abqBounds =
+                new LatLngBounds(
                 new LatLng(34.946766, -106.471163), new LatLng(35.218054, -106.881796));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(abqBounds, 0));*/
+
+        LatLngBounds.Builder b = LatLngBounds.builder();
+        for(Marker m : markerMap.keySet()) b.include(m.getPosition());
+        for(Polygon p : polygonMap.keySet()) b.include(p.getPoints().get(0));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(b.build(),0));
+
     }
 
 
@@ -142,7 +157,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     PolygonOptions polyOpt = new PolygonOptions()
                             .addAll(vtxList)
                             .strokeColor(Color.RED)
-                            .fillColor(Color.BLUE);
+                            .fillColor(Color.BLUE)
+                            .clickable(true);
                     Polygon newPoly = mMap.addPolygon(polyOpt);
                     polygonMap.put(newPoly, name);
                 }
@@ -156,7 +172,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double lat = (double) geometry.get("y");
                 double lon = (double) geometry.get("x");
                 String name = (String) ctr.get("CENTERNAME");
-                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
+                Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
+
+                markerMap.put(m, name);
             }
         }
 

@@ -42,6 +42,18 @@ public class GoogleMapAdapter implements
         @Override
         public void onPolygonClick(Polygon polygon) {
             Log.d("MAP-DBG", "Polygon click, ID: " + polygon.getId());
+            polygon.setClickable(false);
+            polygon.setVisible(false);
+        }
+
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            Log.d("MAP-DBG", "Marker clicked: " + marker.getTitle());
+
+            /* returning false allows default Map behavior to occur as normal,
+             return true to indicate that event has been consumed and default Map behavior
+             should not happen */
+            return false;
         }
     };
 
