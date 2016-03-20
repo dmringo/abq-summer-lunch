@@ -28,9 +28,19 @@ import java.util.Map;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
 
     private GoogleMap mMap;
+    // park/comm variables:
+    // data = raw map read from Json
+    // list = list of maps, 1 per park/ctr
+    // aliases maps Json field names to their aliases
     private Map parkData;
     private List<Map> parkList;
-    private Map<String,String> aliases;
+    private Map<String,String> parkAliases;
+    private Map commData;
+    private List<Map> commList;
+    private Map<String,String> commAliases;
+
+    // polygonMap has park polygons as keys, their names as values
+    // for use in click listener
     private Map<Polygon, String> polygonMap;
 
 
@@ -45,7 +55,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         parkData = JsonParser.getParkData(this);
         parkList = JsonParser.getParkList(parkData);
-        aliases = JsonParser.getParkAliases(parkData);
+        parkAliases = JsonParser.getAliases(parkData);
+
+        commData = JsonParser.getCommData(this);
+        commList = JsonParser.getCommList(commData);
+        commAliases = JsonParser.getAliases(commData);
+
 
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
@@ -58,17 +73,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }*/
 
-        /***
+        /**
         try {
             TestJackson.testJackson(getAssets().open(TestJackson.TEST_FILE));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ***/
+        **/
     }
 
 
-    /**
+    /*
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
@@ -80,24 +95,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        polygonMap = getPolys(mMap);
+        getPolys();
+        markCenters();
         /*
         for (Polygon poly : polygonMap.keySet()) {
             System.out.println(polygonMap.get(poly));
             System.out.println(poly.getPoints());
         }*/
-        mMap.setOnMapLoadedCallback(this);
+        //mMap.setOnMapLoadedCallback(this);
     }
 
-    // this method isn't working
+    //this method isn't working
     @Override
     public void onMapLoaded() {
-        LatLngBounds abqBounds = new LatLngBounds(
+        /*LatLngBounds abqBounds = new LatLngBounds(
                 new LatLng(34.946766, -106.471163), new LatLng(35.218054, -106.881796));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(abqBounds, 0));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(abqBounds, 0));*/
     }
+    
 
-    private Map getPolys(GoogleMap gmap) {
+    // puts polygons on GoogleMap, also adds them to polygon-parkname map
+    private void getPolys() {
         HashMap<Polygon,String> polygonMap = new HashMap<>();
         for (Map park : parkList)  {
             String name = (String) park.get("PARKNAME");
@@ -121,12 +139,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .addAll(vtxList)
                             .strokeColor(Color.RED)
                             .fillColor(Color.BLUE);
-                    Polygon newPoly = gmap.addPolygon(polyOpt);
+                    Polygon newPoly = mMap.addPolygon(polyOpt);
                     polygonMap.put(newPoly, name);
                 }
                }
             }
-            return polygonMap;
+        }
+
+        private void markCenters() {
+            for (Map ctr : commList) {
+                Map geometry = (Map) ctr.get("geometry");
+                double lat = (double) geometry.get("y");
+                double lon = (double) geometry.get("x");
+                String name = (String) ctr.get("CENTERNAME");
+                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
+            }
         }
 
     }

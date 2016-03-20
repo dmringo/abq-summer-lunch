@@ -34,12 +34,15 @@ import android.content.Context;
  */
 public class JsonParser {
     final static String PARKS_FILE = "parks.json";
-    final static ObjectMapper mapper = new ObjectMapper();
+    final static ObjectMapper parkMapper = new ObjectMapper();
+    final static String COMM_FILE = "community_centers.json";
+    final static ObjectMapper commMapper = new ObjectMapper();
+
 
     public static Map getParkData(Context ct)  {
         try {
             InputStream stream = ct.getAssets().open(PARKS_FILE);
-            Map map = mapper.readValue(stream, Map.class);
+            Map map = parkMapper.readValue(stream, Map.class);
             return map;
         }
         catch (IOException e) {
@@ -64,8 +67,31 @@ public class JsonParser {
         return parkList;
     }
 
-    public static Map getParkAliases(Map parkData) {
-        return (Map) parkData.get("fieldAliases");
+    public static Map getAliases(Map data) {
+        return (Map) data.get("fieldAliases");
     }
+
+    public static Map getCommData(Context ct)  {
+        try {
+            InputStream stream = ct.getAssets().open(COMM_FILE);
+            Map map = commMapper.readValue(stream, Map.class);
+            return map;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static List getCommList(Map commData) {
+        List features = (List) commData.get("features");
+        List commList = new ArrayList();
+        for (Object ctr : features) {
+            commList.add(ctr);
+        }
+        return commList;
+    }
+
 
 }
