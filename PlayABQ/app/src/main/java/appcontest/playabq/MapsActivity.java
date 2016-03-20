@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -45,7 +46,7 @@ public class MapsActivity extends FragmentActivity implements
     // polygonMap has park polygons as keys, their names as values
     // for use in click listener
     private Map<Polygon, String> polygonMap;
-    private Map<Marker, String> markerMap;
+    private Map<Marker, String> markerMap = new HashMap<>();
 
 
     @Override
@@ -110,22 +111,25 @@ public class MapsActivity extends FragmentActivity implements
             System.out.println(polygonMap.get(poly));
             System.out.println(poly.getPoints());
         }*/
-        //mMap.setOnMapLoadedCallback(this);
+        mMap.setOnMapLoadedCallback(this);
     }
 
     //this method isn't working
     @Override
     public void onMapLoaded() {
+        /*
+        Old abq rectangular bounds saved in case we need them...
         LatLngBounds abqBounds =
                 new LatLngBounds(
                 new LatLng(34.946766, -106.471163), new LatLng(35.218054, -106.881796));
+        */
 
-        LatLngBounds.Builder b = LatLngBounds.builder();
-        for(Marker m : markerMap.keySet()) b.include(m.getPosition());
-        for(Polygon p : polygonMap.keySet()) b.include(p.getPoints().get(0));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(b.build(),0));
-
+        /* roughly I-25 and I-40 */
+        final LatLng center = new LatLng(35.10998051198137, -106.61751497536898);
+        /* zoom level determined by trial and error */
+        float zoom = 10.6f;
+        CameraUpdate move = CameraUpdateFactory.newLatLngZoom(center, zoom);
+        mMap.animateCamera(move);
     }
     
 
@@ -169,7 +173,6 @@ public class MapsActivity extends FragmentActivity implements
                 double lon = (double) geometry.get("x");
                 String name = (String) ctr.get("CENTERNAME");
                 Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
-
                 markerMap.put(m, name);
             }
         }
