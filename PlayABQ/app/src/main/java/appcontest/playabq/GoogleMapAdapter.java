@@ -31,6 +31,7 @@ public class GoogleMapAdapter implements
         GoogleMap.OnInfoWindowClickListener,
         GoogleMap.OnInfoWindowCloseListener,
         GoogleMap.OnInfoWindowLongClickListener
+
 {
 
     public static final GoogleMapAdapter DEBUG_IMPL = new GoogleMapAdapter(){
@@ -42,8 +43,6 @@ public class GoogleMapAdapter implements
         @Override
         public void onPolygonClick(Polygon polygon) {
             Log.d("MAP-DBG", "Polygon click, ID: " + polygon.getId());
-            polygon.setClickable(false);
-            polygon.setVisible(false);
         }
 
         @Override
@@ -107,7 +106,6 @@ public class GoogleMapAdapter implements
 
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
-
     }
 
     @Override

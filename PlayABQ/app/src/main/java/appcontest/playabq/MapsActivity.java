@@ -1,8 +1,8 @@
 package appcontest.playabq;
 
 import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -10,19 +10,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +33,10 @@ public class MapsActivity extends FragmentActivity implements
     // aliases maps Json field names to their aliases
     private Map parkData;
     private List<Map> parkList;
-    private Map<String,String> parkAliases;
+    private Map<String, String> parkAliases;
     private Map commData;
     private List<Map> commList;
-    private Map<String,String> commAliases;
+    private Map<String, String> commAliases;
 
 
     // polygonMap has park polygons as keys, their names as values
@@ -57,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
         parkData = JsonParser.getParkData(this);
         parkList = JsonParser.getParkList(parkData);
@@ -80,12 +77,12 @@ public class MapsActivity extends FragmentActivity implements
         }*/
 
         /**
-        try {
-            TestJackson.testJackson(getAssets().open(TestJackson.TEST_FILE));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        **/
+         try {
+         TestJackson.testJackson(getAssets().open(TestJackson.TEST_FILE));
+         } catch (IOException e) {
+         e.printStackTrace();
+         }
+         **/
     }
 
 
@@ -105,8 +102,8 @@ public class MapsActivity extends FragmentActivity implements
         mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);
 
-        getPolys();
-        markCenters();
+//        getPolys();
+//        markCenters();
         GoogleMapAdapter adapter = new GoogleMapAdapter();
         adapter.setAllListeners(mMap);
 
@@ -118,7 +115,11 @@ public class MapsActivity extends FragmentActivity implements
         mMap.setOnMapLoadedCallback(this);
     }
 
-    //this method isn't working
+
+    /**
+     * Once the map is loaded (i.e. visible?) center it on Albuquerque and zoom to a city-ish
+     * level.  This is where polygon and marker loading methods are called.
+     */
     @Override
     public void onMapLoaded() {
         /*
@@ -133,14 +134,27 @@ public class MapsActivity extends FragmentActivity implements
         /* zoom level determined by trial and error */
         float zoom = 10.6f;
         CameraUpdate move = CameraUpdateFactory.newLatLngZoom(center, zoom);
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                getPolys();
+                markCenters();
+
+                /* set the cam listener to null so we don't always reload polygons and markers
+                on Map movement */
+                mMap.setOnCameraChangeListener(null);
+            }
+        });
         mMap.animateCamera(move);
+
     }
 
 
     // puts polygons on GoogleMap, also adds them to polygon-parkname map
     private void getPolys() {
-        HashMap<Polygon,String> polygonMap = new HashMap<>();
-        for (Map park : parkList)  {
+        HashMap<Polygon, String> polygonMap = new HashMap<>();
+        for (Map park : parkList) {
             String name = (String) park.get("PARKNAME");
             Map coords = (Map) park.get("geometry");
             // get arraylist of arraylists representing contiguous areas
@@ -150,7 +164,7 @@ public class MapsActivity extends FragmentActivity implements
                     //poly is arraylist of 2-element arraylists
                     // representing closed polygon
                     ArrayList coordList = (ArrayList) poly;
-                    List <LatLng> vtxList = new ArrayList<LatLng>();
+                    List<LatLng> vtxList = new ArrayList<LatLng>();
                     for (Object coord : coordList) {
                         ArrayList<Double> doubleList = (ArrayList) coord;
                         double lat = doubleList.get(1);
@@ -166,21 +180,21 @@ public class MapsActivity extends FragmentActivity implements
                     Polygon newPoly = mMap.addPolygon(polyOpt);
                     polygonMap.put(newPoly, name);
                 }
-               }
             }
         }
-
-        private void markCenters() {
-            for (Map ctr : commList) {
-                Map geometry = (Map) ctr.get("geometry");
-                double lat = (double) geometry.get("y");
-                double lon = (double) geometry.get("x");
-                String name = (String) ctr.get("CENTERNAME");
-                Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
-                markerMap.put(m, name);
-            }
-        }
-
     }
+
+    private void markCenters() {
+        for (Map ctr : commList) {
+            Map geometry = (Map) ctr.get("geometry");
+            double lat = (double) geometry.get("y");
+            double lon = (double) geometry.get("x");
+            String name = (String) ctr.get("CENTERNAME");
+            Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
+            markerMap.put(m, name);
+        }
+    }
+
+}
 
 
