@@ -62,6 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         commAliases = JsonParser.getAliases(commData);
 
 
+
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
             Map coords = (Map) park.get("geometry");
@@ -97,6 +98,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         getPolys();
         markCenters();
+        GoogleMapAdapter adapter = new GoogleMapAdapter();
+        adapter.setAllListeners(mMap);
+
         /*
         for (Polygon poly : polygonMap.keySet()) {
             System.out.println(polygonMap.get(poly));
@@ -112,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 new LatLng(34.946766, -106.471163), new LatLng(35.218054, -106.881796));
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(abqBounds, 0));*/
     }
-    
+
 
     // puts polygons on GoogleMap, also adds them to polygon-parkname map
     private void getPolys() {
