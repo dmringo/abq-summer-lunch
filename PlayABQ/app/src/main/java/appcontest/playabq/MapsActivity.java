@@ -67,6 +67,7 @@ public class MapsActivity extends FragmentActivity implements
         commAliases = JsonParser.getAliases(commData);
 
 
+
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
             Map coords = (Map) park.get("geometry");
@@ -106,6 +107,9 @@ public class MapsActivity extends FragmentActivity implements
 
         getPolys();
         markCenters();
+        GoogleMapAdapter adapter = new GoogleMapAdapter();
+        adapter.setAllListeners(mMap);
+
         /*
         for (Polygon poly : polygonMap.keySet()) {
             System.out.println(polygonMap.get(poly));
@@ -131,7 +135,7 @@ public class MapsActivity extends FragmentActivity implements
         CameraUpdate move = CameraUpdateFactory.newLatLngZoom(center, zoom);
         mMap.animateCamera(move);
     }
-    
+
 
     // puts polygons on GoogleMap, also adds them to polygon-parkname map
     private void getPolys() {

@@ -57,9 +57,22 @@ public class GoogleMapAdapter implements
         }
     };
 
+    public void setAllListeners(GoogleMap gMap) {
+        gMap.setOnMapClickListener(this);
+        gMap.setOnMapLongClickListener(this);
+        gMap.setOnMarkerClickListener(this);
+        gMap.setOnPolygonClickListener(this);
+        gMap.setOnMarkerDragListener(this);
+        gMap.setOnCameraChangeListener(this);
+        gMap.setOnGroundOverlayClickListener(this);
+        gMap.setOnInfoWindowClickListener(this);
+        gMap.setOnInfoWindowCloseListener(this);
+        gMap.setOnInfoWindowLongClickListener(this);
+    }
+
     @Override
     public void onMapClick(LatLng latLng) {
-
+        Log.d("MAP-DBG", "Click at: " + latLng.toString());
     }
 
     @Override
@@ -89,7 +102,7 @@ public class GoogleMapAdapter implements
 
     @Override
     public void onPolygonClick(Polygon polygon) {
-
+        Log.d("MAP-DBG", "Polygon click, ID: " + polygon.getId());
     }
 
     @Override
