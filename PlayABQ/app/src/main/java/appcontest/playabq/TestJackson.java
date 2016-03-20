@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TestJackson {
-    final static String TEST_FILE = "west_bluff.json";
+    final static String TEST_FILE = "community_centers.json";
     final static ObjectMapper mapper = new ObjectMapper();
 
     public static void testJackson(InputStream stream) {
