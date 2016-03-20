@@ -100,12 +100,13 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        /**
         mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);
-
-        getPolys();
-        markCenters();
+        **/
+        getPolys(mMap);
+        markCenters(mMap);
         GoogleMapAdapter adapter = new GoogleMapAdapter();
         adapter.setAllListeners(mMap);
 
@@ -134,7 +135,7 @@ public class MapsActivity extends FragmentActivity implements
 
 
     // puts polygons on GoogleMap, also adds them to polygon-parkname map
-    private void getPolys() {
+    private void getPolys(GoogleMap mMap) {
         HashMap<Polygon,String> polygonMap = new HashMap<>();
         for (Map park : parkList)  {
             String name = (String) park.get("PARKNAME");
@@ -166,7 +167,7 @@ public class MapsActivity extends FragmentActivity implements
             }
         }
 
-        private void markCenters() {
+        private void markCenters(GoogleMap mMap) {
             for (Map ctr : commList) {
                 Map geometry = (Map) ctr.get("geometry");
                 double lat = (double) geometry.get("y");
@@ -174,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements
                 String name = (String) ctr.get("CENTERNAME");
                 Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
 
-                markerMap.put(m, name);
+                //markerMap.put(m, name);
             }
         }
 
