@@ -1,6 +1,8 @@
 package appcontest.playabq;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,8 @@ public class Filter {
     /**
      *
      * @param requiredFeatures a list of preferred features for a park or community center.
-     * @return a list of community centers and parks that include all of the features
+     * @return a list of community centers and parks that include all of the features in sorted
+     * with increasing distance from user.
      */
     public List<Map> intersectGetLocationsWith(List<String>requiredFeatures) {
         currentFilteredLocations.clear();
@@ -46,13 +49,15 @@ public class Filter {
                     }
                 }
             }
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
         return currentFilteredLocations;
     }
 
     /**
      *
      * @param requiredFeatures a list of preferred features for a park or community center.
-     * @return a list of community centers and parks that include any of the features
+     * @return a list of community centers and parks that include any of the features in sorted
+     * with increasing distance from user.
      */
     public List<Map> unionGetLocationsWith(List<String>requiredFeatures) {
         currentFilteredLocations.clear();
@@ -68,6 +73,7 @@ public class Filter {
                 }
             }
         }
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
         return currentFilteredLocations;
     }
 
@@ -106,5 +112,35 @@ public class Filter {
         filterFeatures.add("OUTDOORBASKETBALL");
         filter.getLocationsWith(filterFeatures);
         filter.printLocations(); */
+    }
+
+
+    /**
+     * Comparator for sorting filtered lists based on distance from user.
+     */
+    public class DistanceFromUserComparator implements Comparator {
+        @Override
+        public int compare(Object lhs, Object rhs) {
+            float firstAreaDestance = ((DistanceAwareArea) lhs).getDistanceFromUser();
+            float secondAreaDistance = ((DistanceAwareArea) rhs).getDistanceFromUser();
+            if (firstAreaDestance>secondAreaDistance){
+                return 1;
+            }
+            else if (firstAreaDestance<secondAreaDistance) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+
+    /**
+     * Convenience class for comparator to use when comparing distances of areas.
+     */
+    public class DistanceAwareArea {
+        public float getDistanceFromUser() {
+            return 0;
+        }
     }
 }
