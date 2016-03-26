@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle bundle) {
+        Log.i("LOCATION", "onConnected called");
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -176,6 +177,12 @@ public class MainActivity extends AppCompatActivity
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     FINE_LOCATION_ACCESS_REQUEST);
+            Log.i("LOCATION", "requested permission");
+
+        } else {
+            Log.i("LOCATION", "Don't need to request permission");
+            getUserLocation();
+            Log.i("LOCATION", "Lat: " + userLocation.getLatitude() + "Long: " + userLocation.getLongitude());
         }
     }
 
