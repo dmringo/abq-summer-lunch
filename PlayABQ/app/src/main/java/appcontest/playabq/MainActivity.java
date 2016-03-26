@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Toast.makeText(this, "Granting permission allows us to display parks and community " +
-                        "centers preferenced by " + "locations nearest to you.",
+                Toast.makeText(this, "This allows the app to display parks and community " +
+                        "centers nearest to you.",
                         Toast.LENGTH_LONG).show();
             }
             ActivityCompat.requestPermissions(this,
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     Log.i("LOCATION", "Permission Denied");
                     Toast.makeText(this, "Without location permissions this app can not prioritize" +
-                                    "parks and community centers nearest to you.",
+                                    "areas nearest to you.",
                             Toast.LENGTH_LONG).show();
                 }
             }
