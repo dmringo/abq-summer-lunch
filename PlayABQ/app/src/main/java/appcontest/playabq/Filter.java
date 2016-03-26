@@ -19,6 +19,11 @@ public class Filter {
         currentFilteredLocations=new ArrayList<Map>();
     }
 
+    /**
+     *
+     * @param requiredFeatures a list of preferred features for a park or community center.
+     * @return a list of community centers and parks that include all of the features
+     */
     public List<Map> intersectGetLocationsWith(List<String>requiredFeatures) {
         currentFilteredLocations.clear();
             for (Map ctr : communityCenterList) {
@@ -44,6 +49,11 @@ public class Filter {
         return currentFilteredLocations;
     }
 
+    /**
+     *
+     * @param requiredFeatures a list of preferred features for a park or community center.
+     * @return a list of community centers and parks that include any of the features
+     */
     public List<Map> unionGetLocationsWith(List<String>requiredFeatures) {
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
@@ -62,6 +72,12 @@ public class Filter {
     }
 
 
+    /**
+     *
+     * @param location a park or community center
+     * @param feature a feature of a park or community center
+     * @return if the park or community center contains the feature based on the json file.
+     */
     private static boolean resemblesTruth(Map location,String feature) {
         Object predicate;
         if ((predicate=location.get(feature))==null)
@@ -70,6 +86,9 @@ public class Filter {
         return !(strPred.equalsIgnoreCase("false") || strPred.equals("0"));
     }
 
+    /**
+     * Convenience method to print the last filtered list of parks and centers
+     */
     public void printLocations()
     {
         for(Map location:currentFilteredLocations)
