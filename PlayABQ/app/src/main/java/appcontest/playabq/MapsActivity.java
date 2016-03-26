@@ -189,6 +189,8 @@ public class MapsActivity extends FragmentActivity implements
             Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
             markerMap.put(m, name);
         }
+
+
     }
 
 }
