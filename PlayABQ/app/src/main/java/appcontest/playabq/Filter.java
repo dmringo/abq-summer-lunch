@@ -1,5 +1,7 @@
 package appcontest.playabq;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +17,7 @@ public class Filter {
     private List<Map> communityCenterList;
     private List<Map> parkList;
     private List<Map> currentFilteredLocations;
+    private Location userLocation;
     public Filter(List<Map> commList, List<Map> prkList) {
         communityCenterList=commList;
         parkList=prkList;
@@ -24,10 +27,12 @@ public class Filter {
     /**
      *
      * @param requiredFeatures a list of preferred features for a park or community center.
+     * @param usrLoc is the location of the user (found using google location services)
      * @return a list of community centers and parks that include all of the features in sorted
      * with increasing distance from user.
      */
-    public List<Map> intersectGetLocationsWith(List<String>requiredFeatures) {
+    public List<Map> intersectGetLocationsWith(List<String>requiredFeatures, Location usrLoc) {
+        userLocation=usrLoc;
         currentFilteredLocations.clear();
             for (Map ctr : communityCenterList) {
                 for (String requiredFeature:requiredFeatures) {
@@ -56,10 +61,12 @@ public class Filter {
     /**
      *
      * @param requiredFeatures a list of preferred features for a park or community center.
+     * @param usrLoc is the location of the user (found using google location services)
      * @return a list of community centers and parks that include any of the features in sorted
      * with increasing distance from user.
      */
-    public List<Map> unionGetLocationsWith(List<String>requiredFeatures) {
+    public List<Map> unionGetLocationsWith(List<String>requiredFeatures, Location usrLoc) {
+        userLocation=usrLoc;
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
             for (Map ctr : communityCenterList) {
@@ -140,7 +147,12 @@ public class Filter {
      */
     public class DistanceAwareArea {
         public float getDistanceFromUser() {
-            return 0;
+                Map thisJSonDataObj = (Map) this;
+                Map geometry = (Map) thisJSonDataObj.get("geometry");
+                Location areaLoc = new Location("Area Loc");
+                areaLoc.setLatitude((double) geometry.get("y"));
+                areaLoc.setLongitude((double) geometry.get("x"));
+                return userLocation.distanceTo(areaLoc);
         }
     }
 }
