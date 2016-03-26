@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     GoogleApiClient mGoogleApiClient = null;
-
+    final int FINE_LOCATION_ACCESS_REQUEST=0;
+    private Location userLocation= new Location ("UserLocation");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity
 
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        0);
+                        FINE_LOCATION_ACCESS_REQUEST);
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
@@ -193,27 +194,13 @@ public class MainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case 0: {
+            case FINE_LOCATION_ACCESS_REQUEST: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    Location mLastLocation = null;
-                    int permissionCheck = ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION);
-
-                    mLastLocation=LocationServices.FusedLocationApi.getLastLocation(
-                            mGoogleApiClient);
-
-                    if (mLastLocation != null) {
-                        Log.i("LOCATION",String.valueOf(mLastLocation.getLatitude()));
-                        Log.i("LOCATION",String.valueOf(mLastLocation.getLongitude()));
-                    }
-                    else
-                        Log.i("LOCATION", "Last location null");
-
+                    Log.i("LOCATION", "Permission Granted");
                 } else {
                     Log.i("LOCATION", "Permission Denied");
                     // permission denied, boo! Disable the
@@ -221,7 +208,6 @@ public class MainActivity extends AppCompatActivity
                 }
                 return;
             }
-
             // other 'case' lines to check for other
             // permissions this app might request
         }
@@ -237,5 +223,23 @@ public class MainActivity extends AppCompatActivity
         super.onStop();
     }
 
-
+    public Location getUserLocation (){
+        Location mLastLocation = null;
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if(permissionCheck==PackageManager.PERMISSION_GRANTED) {
+            Location currentLoc=LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (currentLoc!=null) {
+                userLocation.setLatitude(currentLoc.getLatitude());
+                userLocation.setLongitude(currentLoc.getLongitude());
+            } else {
+                userLocation.setLatitude(35.113281);
+                userLocation.setLongitude(-106.621216);
+            }
+        } else {
+            userLocation.setLatitude(35.113281);
+            userLocation.setLongitude(-106.621216);
+        }
+        return userLocation;
+    }
 }
