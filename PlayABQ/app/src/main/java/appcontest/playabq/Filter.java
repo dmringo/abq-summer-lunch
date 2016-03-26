@@ -21,7 +21,9 @@ public class Filter {
     public Filter(List<Map> commList, List<Map> prkList) {
         communityCenterList=commList;
         parkList=prkList;
-        currentFilteredLocations=new ArrayList<Map>();
+
+        currentFilteredLocations=new ArrayList<Map>(commList);
+        currentFilteredLocations.addAll(parkList);
     }
 
     /**
@@ -110,15 +112,9 @@ public class Filter {
         }
     }
 
-    public static void filterExample()
+    public List<Map> filtered()
     {
-        /*
-        private List<String> filterFeatures= new ArrayList<String>();
-        Filter filter = new Filter(commList,parkList);
-        filterFeatures.add("GYMNASIUM");
-        filterFeatures.add("OUTDOORBASKETBALL");
-        filter.getLocationsWith(filterFeatures);
-        filter.printLocations(); */
+        return currentFilteredLocations;
     }
 
 
