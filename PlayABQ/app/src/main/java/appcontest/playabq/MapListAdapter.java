@@ -1,19 +1,38 @@
 package appcontest.playabq;
 
+import android.app.Activity;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Icon;
 import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by david on 3/25/16.
  */
 public class MapListAdapter implements ListAdapter {
 
+    final private List<Map> recs;
+    final private Activity context;
+    private List observers = new ArrayList();
+
+    public MapListAdapter(Activity context, List<Map> recs)
+    {
+        this.recs = recs;
+        this.context = context;
+    }
+
     final String[] items = {"Item 1", "Item 2"};
+
+
     /**
      * Indicates whether all the items in this adapter are enabled. If the
      * value returned by this method changes over time, there is no guarantee
@@ -25,7 +44,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public boolean areAllItemsEnabled() {
-        return false;
+        return true;
     }
 
     /**
@@ -51,7 +70,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
-
+        observers.add(observer);
     }
 
     /**
@@ -62,7 +81,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
-
+        observers.remove(observer);
     }
 
     /**
@@ -72,7 +91,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public int getCount() {
-        return items.length;
+        return recs.size();
     }
 
     /**
@@ -84,7 +103,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public Object getItem(int position) {
-        return items[position];
+        return recs.get(position);
     }
 
     /**
@@ -95,7 +114,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public long getItemId(int position) {
-        return items[position].hashCode();
+        return Util.getName(recs.get(position)).hashCode(); /* why not? */
     }
 
     /**
@@ -106,7 +125,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true; /* pretty sure this is true */
     }
 
     /**
@@ -129,7 +148,24 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        if (convertView == null) {
+            LayoutInflater inf = context.getLayoutInflater();
+            convertView = inf.inflate(R.layout.row_layout, null);
+        }
+        TextView name = (TextView) convertView.findViewById(R.id.list_name_text);
+        TextView dist = (TextView) convertView.findViewById(R.id.list_distance_text);
+        ImageView ico = (ImageView) convertView.findViewById(R.id.list_icon);
+        Map place = recs.get(position);
+
+        ico.setImageResource(Util.isCommCenter(place)?
+                R.drawable.ic_com_center :
+                R.drawable.ic_park);
+
+        dist.setText('\u221E'+" mi");
+
+        name.setText(Util.getName(place));
+        return convertView;
+
     }
 
     /**
@@ -145,6 +181,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public int getItemViewType(int position) {
+        /* TODO: Generalize.  @see #getViewTypeCount */
         return 0;
     }
 
@@ -164,7 +201,9 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public int getViewTypeCount() {
-        return 0;
+        /* TODO: Generalize? This is hard-coded.  Do we want more than one view here?
+        * */
+        return 1;
     }
 
     /**
@@ -175,6 +214,6 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return recs.isEmpty();
     }
 }

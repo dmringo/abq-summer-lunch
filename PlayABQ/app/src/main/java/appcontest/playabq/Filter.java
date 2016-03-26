@@ -15,10 +15,46 @@ public class Filter {
     private List<Map> communityCenterList;
     private List<Map> parkList;
     private List<Map> currentFilteredLocations;
+
     public Filter(List<Map> commList, List<Map> prkList) {
         communityCenterList=commList;
         parkList=prkList;
-        currentFilteredLocations=new ArrayList<Map>();
+
+        currentFilteredLocations=new ArrayList<Map>(commList);
+        currentFilteredLocations.addAll(parkList);
+    }
+
+    /**
+     *
+     * @param location a park or community center
+     * @param feature a feature of a park or community center
+     * @return if the park or community center contains the feature based on the json file.
+     */
+    private static boolean resemblesTruth(Map location,String feature) {
+        Object predicate;
+        if ((predicate=location.get(feature))==null)
+            return false;
+        String strPred = (String) predicate.toString();
+        return !(strPred.equalsIgnoreCase("false") || strPred.equals("0"));
+    }
+
+    public static void filterExample()
+    {
+        /*
+        private List<String> filterFeatures= new ArrayList<String>();
+        Filter filter = new Filter(commList,parkList);
+        filterFeatures.add("GYMNASIUM");
+        filterFeatures.add("OUTDOORBASKETBALL");
+        filter.getLocationsWith(filterFeatures);
+        filter.printLocations(); */
+    }
+
+    public List<Map> getParkList() {
+        return parkList;
+    }
+
+    public List<Map> getCommunityCenterList() {
+        return communityCenterList;
     }
 
     /**
@@ -77,21 +113,6 @@ public class Filter {
         return currentFilteredLocations;
     }
 
-
-    /**
-     *
-     * @param location a park or community center
-     * @param feature a feature of a park or community center
-     * @return if the park or community center contains the feature based on the json file.
-     */
-    private static boolean resemblesTruth(Map location,String feature) {
-        Object predicate;
-        if ((predicate=location.get(feature))==null)
-            return false;
-        String strPred = (String) predicate.toString();
-        return !(strPred.equalsIgnoreCase("false") || strPred.equals("0"));
-    }
-
     /**
      * Convenience method to print the last filtered list of parks and centers
      */
@@ -103,15 +124,9 @@ public class Filter {
         }
     }
 
-    public static void filterExample()
+    public List<Map> filtered()
     {
-        /*
-        private List<String> filterFeatures= new ArrayList<String>();
-        Filter filter = new Filter(commList,parkList);
-        filterFeatures.add("GYMNASIUM");
-        filterFeatures.add("OUTDOORBASKETBALL");
-        filter.getLocationsWith(filterFeatures);
-        filter.printLocations(); */
+        return currentFilteredLocations;
     }
 
 

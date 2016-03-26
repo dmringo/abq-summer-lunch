@@ -27,10 +27,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.List;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     GoogleApiClient mGoogleApiClient = null;
+
+    private Filter filter;
 
 
     @Override
@@ -76,20 +81,19 @@ public class MainActivity extends AppCompatActivity
                     .build();
         }
 
+        Map parkData = JsonParser.getParkData(this);
+        Map commData = JsonParser.getCommData(this);
+
+
+        filter = new Filter(JsonParser.getCommList(commData),JsonParser.getParkList(parkData));
 
 
         /* David's fuckery begins here.  Remove this comment before release! */
 
-//        ListView lv = (ListView) findViewById(R.id.listView);
-
+        ListView lv = (ListView) findViewById(R.id.list_view);
+        lv.setAdapter(new MapListAdapter(this,filter.filtered()));
     }
 
-
-    public void startMaps(View view)
-    {
-        Intent i = new Intent(this, MapsActivity.class);
-        startActivity(i);
-    }
 
     @Override
     public void onBackPressed() {
@@ -131,8 +135,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.go_to_maps) {
             Log.i("Main", "go_to_maps");
-            startActivity(new Intent(this, MapsActivity.class));
-            // Handle the camera action
+            Intent intent = new Intent(this, MapsActivity.class);
+            Bundle b = new Bundle();
+            /* TODO: figure out how to pass List of maps and parks to Map activity */
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
