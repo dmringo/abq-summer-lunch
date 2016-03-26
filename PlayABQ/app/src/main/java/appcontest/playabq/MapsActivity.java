@@ -67,6 +67,8 @@ public class MapsActivity extends FragmentActivity implements
         //noinspection unchecked
         commAliases = JsonParser.getAliases(commData);
 
+
+
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
             Map coords = (Map) park.get("geometry");
