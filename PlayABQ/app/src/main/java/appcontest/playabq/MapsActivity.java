@@ -31,8 +31,8 @@ public class MapsActivity extends FragmentActivity implements
     // data = raw map read from Json
     // list = list of maps, 1 per park/ctr
     // aliases maps Json field names to their aliases
-    private List<Map> parkList;
-    private List<Map> commList;
+    private ArrayList<Map<String, Object>> parkList;
+    private ArrayList<Map<String, Object>> commList;
 
 
 
@@ -120,7 +120,7 @@ public class MapsActivity extends FragmentActivity implements
         mMap.moveCamera(move);
 
         getPolys();
-        markCenters();
+        markAllCenters();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */
@@ -144,6 +144,7 @@ public class MapsActivity extends FragmentActivity implements
 
     // puts polygons on GoogleMap, also adds them to polygon-parkname map
     private void getPolys() {
+
         HashMap<Polygon, String> polygonMap = new HashMap<>();
         for (Map park : parkList) {
             /*
@@ -171,6 +172,7 @@ public class MapsActivity extends FragmentActivity implements
                             .clickable(true);
                     */
             String name = (String) park.get("PARKNAME");
+
             List<PolygonOptions> polyList = Util.getParkPolyOpt(park);
             for (PolygonOptions polyOpt : polyList) {
                 Polygon newPoly = mMap.addPolygon(polyOpt);
