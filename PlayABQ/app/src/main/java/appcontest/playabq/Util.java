@@ -93,10 +93,20 @@ public class Util {
         return polyList;
     }
 
+    /**
+     * Called from Main Activity
+     * @param loc location of user
+     */
     public static void setUserLocation(Location loc)
     {
         userLocation=loc;
     }
+
+    /**
+     *
+     * @param area the area you want to find the distance to from the user
+     * @return the distance from the user to the area in meters
+     */
     public static double getDistanceFromUser(Map area){
         Map geometry = (Map) area.get("geometry");
         Location areaLoc = new Location("Area Loc");
