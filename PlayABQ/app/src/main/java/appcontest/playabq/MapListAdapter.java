@@ -2,8 +2,6 @@ package appcontest.playabq;
 
 import android.app.Activity;
 import android.database.DataSetObserver;
-import android.graphics.drawable.Icon;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,7 @@ public class MapListAdapter implements ListAdapter {
         this.context = context;
     }
 
-    final String[] items = {"Item 1", "Item 2"};
+
 
 
     /**

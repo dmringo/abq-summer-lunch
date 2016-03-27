@@ -93,7 +93,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_rec_list">RecListActivity</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
