@@ -32,13 +32,10 @@ public class Filter {
     /**
      *
      * @param requiredFeatures a list of preferred features for a park or community center.
-     * @param usrLoc is the location of the user (found using google location services)
      * @return a list of community centers and parks that include all of the features in sorted
      * with increasing distance from user.
      */
-    public static ArrayList<Map<String,Object>> intersectGetLocationsWith(List<String>requiredFeatures,
-                                                                   Location usrLoc) {
-        userLocation=usrLoc;
+    public static ArrayList<Map<String,Object>> intersectGetLocationsWith(List<String>requiredFeatures) {
         currentFilteredLocations.clear();
             for (Map ctr : communityCenterList) {
                 for (String requiredFeature:requiredFeatures) {
@@ -67,12 +64,10 @@ public class Filter {
     /**
      *
      * @param requiredFeatures a list of preferred features for a park or community center.
-     * @param usrLoc is the location of the user (found using google location services)
      * @return a list of community centers and parks that include any of the features in sorted
      * with increasing distance from user.
      */
-    public static ArrayList<Map<String, Object>> unionGetLocationsWith(List<String> requiredFeatures, Location usrLoc) {
-        userLocation=usrLoc;
+    public static ArrayList<Map<String, Object>> unionGetLocationsWith(List<String> requiredFeatures) {
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
             for (Map ctr : communityCenterList) {
