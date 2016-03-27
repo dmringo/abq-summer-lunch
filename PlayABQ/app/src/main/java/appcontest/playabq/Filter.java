@@ -116,6 +116,29 @@ public class Filter {
         }
     }
 
+    /**
+     * @return the current filtered list to contain every park and community center
+     * it did not contain, while removing every area it did contain previously.
+     */
+    public static ArrayList<Map<String, Object>> negateCurrentFiltered(){
+        for (Map ctr : communityCenterList) {
+           if (currentFilteredLocations.contains(ctr)) {
+               currentFilteredLocations.remove(ctr);
+           } else {
+               currentFilteredLocations.add(ctr);
+           }
+        }
+        for (Map prk : parkList) {
+            if (currentFilteredLocations.contains(prk)) {
+                currentFilteredLocations.remove(prk);
+            } else {
+                currentFilteredLocations.add(prk);
+            }
+        }
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
+        return currentFilteredLocations;
+    }
+
     public static ArrayList<Map<String, Object>> filtered()
     {
         return currentFilteredLocations;
