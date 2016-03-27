@@ -1,6 +1,10 @@
 package appcontest.playabq;
 
+import android.location.Location;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,13 +17,24 @@ public class Filter {
     private List<Map> communityCenterList;
     private List<Map> parkList;
     private List<Map> currentFilteredLocations;
+    private Location userLocation;
     public Filter(List<Map> commList, List<Map> prkList) {
         communityCenterList=commList;
         parkList=prkList;
-        currentFilteredLocations=new ArrayList<Map>();
+
+        currentFilteredLocations=new ArrayList<Map>(commList);
+        currentFilteredLocations.addAll(parkList);
     }
 
-    public List<Map> intersectGetLocationsWith(List<String>requiredFeatures) {
+    /**
+     *
+     * @param requiredFeatures a list of preferred features for a park or community center.
+     * @param usrLoc is the location of the user (found using google location services)
+     * @return a list of community centers and parks that include all of the features in sorted
+     * with increasing distance from user.
+     */
+    public List<Map> intersectGetLocationsWith(List<String>requiredFeatures, Location usrLoc) {
+        userLocation=usrLoc;
         currentFilteredLocations.clear();
             for (Map ctr : communityCenterList) {
                 for (String requiredFeature:requiredFeatures) {
@@ -41,10 +56,19 @@ public class Filter {
                     }
                 }
             }
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
         return currentFilteredLocations;
     }
 
-    public List<Map> unionGetLocationsWith(List<String>requiredFeatures) {
+    /**
+     *
+     * @param requiredFeatures a list of preferred features for a park or community center.
+     * @param usrLoc is the location of the user (found using google location services)
+     * @return a list of community centers and parks that include any of the features in sorted
+     * with increasing distance from user.
+     */
+    public List<Map> unionGetLocationsWith(List<String>requiredFeatures, Location usrLoc) {
+        userLocation=usrLoc;
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
             for (Map ctr : communityCenterList) {
@@ -58,10 +82,17 @@ public class Filter {
                 }
             }
         }
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
         return currentFilteredLocations;
     }
 
 
+    /**
+     *
+     * @param location a park or community center
+     * @param feature a feature of a park or community center
+     * @return if the park or community center contains the feature based on the json file.
+     */
     private static boolean resemblesTruth(Map location,String feature) {
         Object predicate;
         if ((predicate=location.get(feature))==null)
@@ -70,6 +101,9 @@ public class Filter {
         return !(strPred.equalsIgnoreCase("false") || strPred.equals("0"));
     }
 
+    /**
+     * Convenience method to print the last filtered list of parks and centers
+     */
     public void printLocations()
     {
         for(Map location:currentFilteredLocations)
@@ -78,14 +112,43 @@ public class Filter {
         }
     }
 
-    public static void filterExample()
+    public List<Map> filtered()
     {
-        /*
-        private List<String> filterFeatures= new ArrayList<String>();
-        Filter filter = new Filter(commList,parkList);
-        filterFeatures.add("GYMNASIUM");
-        filterFeatures.add("OUTDOORBASKETBALL");
-        filter.getLocationsWith(filterFeatures);
-        filter.printLocations(); */
+        return currentFilteredLocations;
+    }
+
+
+    /**
+     * Comparator for sorting filtered lists based on distance from user.
+     */
+    public class DistanceFromUserComparator implements Comparator {
+        @Override
+        public int compare(Object lhs, Object rhs) {
+            float firstAreaDestance = ((DistanceAwareArea) lhs).getDistanceFromUser();
+            float secondAreaDistance = ((DistanceAwareArea) rhs).getDistanceFromUser();
+            if (firstAreaDestance>secondAreaDistance){
+                return 1;
+            }
+            else if (firstAreaDestance<secondAreaDistance) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+
+    /**
+     * Convenience class for comparator to use when comparing distances of areas.
+     */
+    public class DistanceAwareArea {
+        public float getDistanceFromUser() {
+                Map thisJSonDataObj = (Map) this;
+                Map geometry = (Map) thisJSonDataObj.get("geometry");
+                Location areaLoc = new Location("Area Loc");
+                areaLoc.setLatitude((double) geometry.get("y"));
+                areaLoc.setLongitude((double) geometry.get("x"));
+                return userLocation.distanceTo(areaLoc);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package appcontest.playabq;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,7 +10,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -30,12 +30,9 @@ public class MapsActivity extends FragmentActivity implements
     // data = raw map read from Json
     // list = list of maps, 1 per park/ctr
     // aliases maps Json field names to their aliases
-    private Map parkData;
     private List<Map> parkList;
-    private Map<String, String> parkAliases;
-    private Map commData;
     private List<Map> commList;
-    private Map<String, String> commAliases;
+
 
 
     // polygonMap has park polygons as keys, their names as values
@@ -53,19 +50,10 @@ public class MapsActivity extends FragmentActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        parkData = JsonParser.getParkData(this);
 
-        /* suppressing warnings to make Android Studio (and David) happy */
-        //noinspection unchecked
-        parkList = JsonParser.getParkList(parkData);
-        //noinspection unchecked
-        parkAliases = JsonParser.getAliases(parkData);
-
-        commData = JsonParser.getCommData(this);
-        //noinspection unchecked
-        commList = JsonParser.getCommList(commData);
-        //noinspection unchecked
-        commAliases = JsonParser.getAliases(commData);
+        Intent intent = getIntent();
+        parkList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.PARKLIST));
+        commList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.COMMLIST));
 
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
@@ -189,6 +177,8 @@ public class MapsActivity extends FragmentActivity implements
             Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
             markerMap.put(m, name);
         }
+
+
     }
 
 }
