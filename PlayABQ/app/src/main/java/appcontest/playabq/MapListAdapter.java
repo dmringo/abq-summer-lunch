@@ -157,17 +157,13 @@ public class MapListAdapter implements ListAdapter {
         Map place = recs.get(position);
 
         ico.setImageResource(Util.isCommCenter(place) ?
-                R.drawable.ic_com_center :
-                R.drawable.ic_park);
+                R.mipmap.ic_com_center :
+                R.mipmap.ic_park);
 
         Location uLoc = context.getUserLocation();
         String distance = "";
-        if(uLoc != null) {
-            float[] results = new float[3];
-            Location.distanceBetween(uLoc.getLatitude(), uLoc.getLongitude(),
-                    Util.getLat(place), Util.getLon(place), results);
-            distance = String.format("%.1f", Util.metersToMiles(results[0]));
-        }
+        if(uLoc != null) distance = String.format("%.1f", Util.getDistanceFromUser(place));
+
         dist.setText(distance);
 
         name.setText(Util.getName(place));

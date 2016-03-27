@@ -43,6 +43,10 @@ public class CSV2JSON {
 
     }
 
+    static void sayOne(){
+        System.out.println("ONE");
+    }
+
     /**
      * Produces the Java objects from the Community Center CSV that the Jackson library works with
      * to write JSON files.

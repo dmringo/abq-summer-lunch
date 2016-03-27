@@ -49,12 +49,9 @@ public class MapsActivity extends FragmentActivity implements
 
 
         Intent intent = getIntent();
-        ArrayList<Map<String,Object>> all =
-                (ArrayList<Map<String, Object>>) intent.getSerializableExtra(
-                        String.valueOf(R.string.FILTERED_DATA));
 
-        parkList = Filter.selectParks(all);
-        commList = Filter.selectCommCenters(all);
+        parkList = Filter.selectParks(Filter.filtered());
+        commList = Filter.selectCommCenters(Filter.filtered());
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
