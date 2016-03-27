@@ -45,15 +45,17 @@ public class MapsActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
 
         Intent intent = getIntent();
         parkList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.PARKLIST));
         commList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.COMMLIST));
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
@@ -112,8 +114,8 @@ public class MapsActivity extends FragmentActivity implements
          * rendering may be threaded and occur before we get the map centered on ABQ */
         mMap.moveCamera(move);
 
-        getPolys();
-        markCenters();
+        //getPolys();
+        markAllCenters();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */
@@ -139,6 +141,7 @@ public class MapsActivity extends FragmentActivity implements
     private void getPolys() {
         HashMap<Polygon, String> polygonMap = new HashMap<>();
         for (Map park : parkList) {
+            /*
             String name = (String) park.get("PARKNAME");
             Map coords = (Map) park.get("geometry");
             // get arraylist of arraylists representing contiguous areas
@@ -161,25 +164,30 @@ public class MapsActivity extends FragmentActivity implements
                             .strokeColor(Color.RED)
                             .fillColor(Color.BLUE)
                             .clickable(true);
-                    Polygon newPoly = mMap.addPolygon(polyOpt);
-                    polygonMap.put(newPoly, name);
-                }
+                    */
+            String name = (String) park.get("PARKNAME");
+            List<PolygonOptions> polyList = Util.getParkPolyOpt(park);
+            for (PolygonOptions polyOpt : polyList) {
+                Polygon newPoly = mMap.addPolygon(polyOpt);
+                polygonMap.put(newPoly, name);
             }
         }
     }
 
-    private void markCenters() {
+
+    private void markAllCenters() {
         for (Map ctr : commList) {
             Map geometry = (Map) ctr.get("geometry");
-            double lat = (double) geometry.get("y");
-            double lon = (double) geometry.get("x");
+            //double lat = (double) geometry.get("y");
+            //double lon = (double) geometry.get("x");
             String name = (String) ctr.get("CENTERNAME");
-            Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
+            MarkerOptions mkrOpt = Util.getCenterMkrOpt(name, geometry);
+            Marker m = mMap.addMarker(mkrOpt);
             markerMap.put(m, name);
         }
-
-
     }
+
+
 
 }
 
