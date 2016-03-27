@@ -18,6 +18,10 @@ import java.util.Map;
  */
 public class Util {
 
+    public static Location getUserLocation() {
+        return userLocation;
+    }
+
     private static Location userLocation = null;
     public static boolean isCommCenter(Map m)
     {
@@ -130,6 +134,9 @@ public class Util {
      * @return the distance from the user to the area in meters
      */
     public static double getDistanceFromUser(Map area){
+        if (userLocation == null) {
+            return Double.POSITIVE_INFINITY;
+        }
         Map geometry = (Map) area.get("geometry");
         Location areaLoc = new Location("Area Loc");
         areaLoc.setLatitude((double) geometry.get("y"));

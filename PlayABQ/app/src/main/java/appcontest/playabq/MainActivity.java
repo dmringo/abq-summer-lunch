@@ -26,6 +26,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         }
         toggle.syncState();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         initNavView(navigationView);
 
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity
         Map commData = JsonParser.getCommData(this);
 
         Filter.init(JsonParser.getCommList(commData), JsonParser.getParkList(parkData));
+
+
 
 
         /* David's fuckery begins here.  Remove this comment before release! */
@@ -220,6 +224,10 @@ public class MainActivity extends AppCompatActivity
 
     protected void onStart() {
         mGoogleApiClient.connect();
+        /*TODO: REMOVE THESE TESTES */
+        ArrayList<String> features = new ArrayList<>();
+        features.add("PLAYAREAS");
+        //Filter.intersectGetLocationsWith(features);
         super.onStart();
     }
 
@@ -244,6 +252,7 @@ public class MainActivity extends AppCompatActivity
                     mGoogleApiClient, LocationRequest.create(), locationListener=new LocationListener() {
                         @Override
                         public void onLocationChanged(Location location) {
+                            Log.i("LOC-CHANGE", "IT HAPPENED!");
                             Util.setUserLocation(location);
                             userLocation=location;
                         }
