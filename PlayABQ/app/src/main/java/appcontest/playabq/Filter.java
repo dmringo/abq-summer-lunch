@@ -141,8 +141,8 @@ public class Filter {
     public class DistanceFromUserComparator implements Comparator {
         @Override
         public int compare(Object lhs, Object rhs) {
-            float firstAreaDestance = ((DistanceAwareArea) lhs).getDistanceFromUser();
-            float secondAreaDistance = ((DistanceAwareArea) rhs).getDistanceFromUser();
+            double firstAreaDestance = getDistanceFromUser((Map) lhs);
+            double secondAreaDistance = getDistanceFromUser((Map) rhs);
             if (firstAreaDestance>secondAreaDistance){
                 return 1;
             }
@@ -153,19 +153,13 @@ public class Filter {
                 return 0;
             }
         }
-    }
 
-    /**
-     * Convenience class for comparator to use when comparing distances of areas.
-     */
-    public class DistanceAwareArea {
-        public float getDistanceFromUser() {
-                Map thisJSonDataObj = (Map) this;
-                Map geometry = (Map) thisJSonDataObj.get("geometry");
-                Location areaLoc = new Location("Area Loc");
-                areaLoc.setLatitude((double) geometry.get("y"));
-                areaLoc.setLongitude((double) geometry.get("x"));
-                return userLocation.distanceTo(areaLoc);
+        private double getDistanceFromUser(Map area){
+            Map geometry = (Map) area.get("geometry");
+            Location areaLoc = new Location("Area Loc");
+            areaLoc.setLatitude((double) geometry.get("y"));
+            areaLoc.setLongitude((double) geometry.get("x"));
+            return userLocation.distanceTo(areaLoc);
         }
     }
 }
