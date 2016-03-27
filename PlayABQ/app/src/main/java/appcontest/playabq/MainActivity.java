@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.Map;
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity
 
     GoogleApiClient mGoogleApiClient = null;
     final int FINE_LOCATION_ACCESS_REQUEST=0;
-    private Location userLocation= new Location ("UserLocation");
+    protected Location userLocation= new Location ("UserLocation");
+    private LocationListener locationListener;
 
 
     @Override
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         Map parkData = JsonParser.getParkData(this);
         Map commData = JsonParser.getCommData(this);
 
-        Filter.init(JsonParser.getCommList(commData),JsonParser.getParkList(parkData));
+        Filter.init(JsonParser.getCommList(commData), JsonParser.getParkList(parkData));
 
 
         /* David's fuckery begins here.  Remove this comment before release! */
@@ -179,6 +182,8 @@ public class MainActivity extends AppCompatActivity
             Log.i("LOCATION", "Don't need to request permission");
             Util.setUserLocation(getUserLocation());
             Log.i("LOCATION", "Lat: " + userLocation.getLatitude() + "Long: " + userLocation.getLongitude());
+            Log.i("LOCATION", "Starting location updates");
+            startLocationUpdates();
         }
     }
 
@@ -201,6 +206,8 @@ public class MainActivity extends AppCompatActivity
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i("LOCATION", "Permission Granted");
+                    Log.i("LOCATION", "Starting location updates");
+                    startLocationUpdates();
                 } else {
                     Log.i("LOCATION", "Permission Denied");
                     Toast.makeText(this, "Without location permissions this app can not prioritize" +
@@ -219,6 +226,34 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+    }
+
+    protected void onDestroy() {
+        stopLocationUpdates();
+        super.onDestroy();
+    }
+
+    /**
+     * Location updates if the user allows the permissions for location services
+     */
+    protected void startLocationUpdates() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if(permissionCheck==PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, LocationRequest.create(), locationListener=new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            Util.setUserLocation(location);
+                            userLocation=location;
+                        }
+                    });
+        }
+    }
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, locationListener);
     }
 
     public Location getUserLocation (){
@@ -240,4 +275,5 @@ public class MainActivity extends AppCompatActivity
         }
         return userLocation;
     }
+
 }
