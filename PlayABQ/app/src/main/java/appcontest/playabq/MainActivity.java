@@ -88,6 +88,9 @@ public class MainActivity extends AppCompatActivity
 
         ListView lv = (ListView) findViewById(R.id.list_view);
         lv.setAdapter(new MapListAdapter(this,Filter.filtered()));
+
+
+        drawer.openDrawer(GravityCompat.START);
     }
 
     private void initNavView(NavigationView nv) {
@@ -227,7 +230,7 @@ public class MainActivity extends AppCompatActivity
         /*TODO: REMOVE THESE TESTES */
         ArrayList<String> features = new ArrayList<>();
         features.add("PLAYAREAS");
-        //Filter.intersectGetLocationsWith(features);
+        Filter.intersectGetLocationsWith(features);
         super.onStart();
     }
 
