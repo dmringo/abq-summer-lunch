@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 
 public class MapsActivity extends FragmentActivity implements
@@ -30,9 +32,8 @@ public class MapsActivity extends FragmentActivity implements
     // data = raw map read from Json
     // list = list of maps, 1 per park/ctr
     // aliases maps Json field names to their aliases
-    private List<Map> parkList;
-    private List<Map> commList;
-
+    private ArrayList<Map<String,Object>> parkList;
+    private ArrayList<Map<String,Object>> commList;
 
 
     // polygonMap has park polygons as keys, their names as values
@@ -52,8 +53,12 @@ public class MapsActivity extends FragmentActivity implements
 
 
         Intent intent = getIntent();
-        parkList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.PARKLIST));
-        commList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.COMMLIST));
+        ArrayList<Map<String,Object>> all =
+                (ArrayList<Map<String, Object>>) intent.getSerializableExtra(
+                        String.valueOf(R.string.FILTERED_DATA));
+
+        parkList = Filter.selectParks(all);
+        commList = Filter.selectCommCenters(all);
 
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
@@ -142,29 +147,29 @@ public class MapsActivity extends FragmentActivity implements
             String name = (String) park.get("PARKNAME");
             Map coords = (Map) park.get("geometry");
             // get arraylist of arraylists representing contiguous areas
-            for (Object key : coords.keySet()) {
-                List polys = (List) coords.get(key);
-                for (Object poly : polys) {
-                    //poly is arraylist of 2-element arraylists
-                    // representing closed polygon
-                    ArrayList coordList = (ArrayList) poly;
-                    List<LatLng> vtxList = new ArrayList<LatLng>();
-                    for (Object coord : coordList) {
-                        @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
-                        double lat = doubleList.get(1);
-                        double lon = doubleList.get(0);
-                        LatLng latlon = new LatLng(lat, lon);
-                        vtxList.add(latlon);
-                    }
-                    PolygonOptions polyOpt = new PolygonOptions()
-                            .addAll(vtxList)
-                            .strokeColor(Color.RED)
-                            .fillColor(Color.BLUE)
-                            .clickable(true);
-                    Polygon newPoly = mMap.addPolygon(polyOpt);
-                    polygonMap.put(newPoly, name);
+
+            List polys = (List) coords.get("rings");
+            for (Object poly : polys) {
+                //poly is arraylist of 2-element arraylists
+                // representing closed polygon
+                ArrayList coordList = (ArrayList) poly;
+                List<LatLng> vtxList = new ArrayList<LatLng>();
+                for (Object coord : coordList) {
+                    @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
+                    double lat = doubleList.get(1);
+                    double lon = doubleList.get(0);
+                    LatLng latlon = new LatLng(lat, lon);
+                    vtxList.add(latlon);
                 }
+                PolygonOptions polyOpt = new PolygonOptions()
+                        .addAll(vtxList)
+                        .strokeColor(Color.RED)
+                        .fillColor(Color.BLUE)
+                        .clickable(true);
+                Polygon newPoly = mMap.addPolygon(polyOpt);
+                polygonMap.put(newPoly, name);
             }
+
         }
     }
 
