@@ -7,9 +7,7 @@
     android:padding="@dimen/design_navigation_separator_vertical_padding"
     android:orientation="horizontal"
     android:weightSum="1"
-
     android:divider="@color/colorPrimaryDark"
-
     android:baselineAligned="true"
     >
 
@@ -17,7 +15,6 @@
         android:layout_width="29dp"
         android:layout_height="32dp"
         android:id="@+id/list_icon"
-        android:background="@color/colorPrimary"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:layout_alignParentLeft="true"
@@ -26,20 +23,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/list_name_text"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:layout_toRightOf="@+id/list_icon"
         android:layout_toEndOf="@+id/list_icon"
+        android:layout_toLeftOf="@+id/list_distance_text"
+        android:layout_toStartOf="@+id/list_distance_text"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
         android:id="@+id/list_distance_text"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"

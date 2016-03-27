@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,8 +49,12 @@ public class MapsActivity extends FragmentActivity implements
 
 
         Intent intent = getIntent();
-        parkList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.PARKLIST));
-        commList = (List<Map>) intent.getSerializableExtra(String.valueOf(R.string.COMMLIST));
+        ArrayList<Map<String,Object>> all =
+                (ArrayList<Map<String, Object>>) intent.getSerializableExtra(
+                        String.valueOf(R.string.FILTERED_DATA));
+
+        parkList = Filter.selectParks(all);
+        commList = Filter.selectCommCenters(all);
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -114,8 +119,8 @@ public class MapsActivity extends FragmentActivity implements
          * rendering may be threaded and occur before we get the map centered on ABQ */
         mMap.moveCamera(move);
 
-        //getPolys();
-        markAllCenters();
+        getPolys();
+        markCenters();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */

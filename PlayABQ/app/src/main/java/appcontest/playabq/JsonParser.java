@@ -1,11 +1,12 @@
 package appcontest.playabq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,10 +40,10 @@ public class JsonParser {
     final static ObjectMapper commMapper = new ObjectMapper();
 
 
-    public static Map getParkData(Context ct)  {
+    public static Map<String,Object> getParkData(Context ct)  {
         try {
             InputStream stream = ct.getAssets().open(PARKS_FILE);
-            Map map = parkMapper.readValue(stream, Map.class);
+            Map<String,Object> map = parkMapper.readValue(stream, Map.class);
             return map;
         }
         catch (IOException e) {
@@ -51,30 +52,34 @@ public class JsonParser {
         return null;
     }
 
-    public static List getParkList(Map parkData) {
-        List features = (List) parkData.get("features");
-        List parkList = new ArrayList();
-        for (int i = 0; i < features.size(); i++) {
-            Map park = (Map) features.get(i);
-            Map parkMap = new LinkedHashMap();
+
+
+    public static ArrayList<Map<String, Object>> getParkList(Map parkData) {
+        ArrayList<Map<String,Object>> features = (ArrayList) parkData.get("features");
+        ArrayList<Map<String,Object>> parkList = new ArrayList();
+        for (Map park : features) {
+
+            Map<String,Object> parkMap = (Map) park.get("attributes");
+                    /*new LinkedHashMap();
             Set<Entry> attributes = ((Map) park.get("attributes")).entrySet();
             for (Map.Entry<String, String> entry : attributes) {
                 parkMap.put(entry.getKey(),entry.getValue());
-            }
+            }*/
             parkMap.put("geometry", park.get("geometry"));
+            setParkCenter(parkMap);
             parkList.add(parkMap);
         }
         return parkList;
     }
 
-    public static Map getAliases(Map data) {
+    public static Map<String,String> getAliases(Map data) {
         return (Map) data.get("fieldAliases");
     }
 
-    public static Map getCommData(Context ct)  {
+    public static Map<String,Object> getCommData(Context ct)  {
         try {
             InputStream stream = ct.getAssets().open(COMM_FILE);
-            Map map = commMapper.readValue(stream, Map.class);
+            Map<String,Object> map = commMapper.readValue(stream, Map.class);
             return map;
         }
         catch (IOException e) {
@@ -84,9 +89,9 @@ public class JsonParser {
     }
 
 
-    public static List getCommList(Map commData) {
+    public static ArrayList<Map<String,Object>> getCommList(Map commData) {
         List features = (List) commData.get("features");
-        List commList = new ArrayList();
+        ArrayList commList = new ArrayList();
         for (Object ctr : features) {
             commList.add(ctr);
         }
@@ -94,4 +99,18 @@ public class JsonParser {
     }
 
 
+    private static void setParkCenter(Map<String, Object> park)
+    {
+        LatLngBounds.Builder b = new LatLngBounds.Builder();
+        Map geometry = (Map) park.get("geometry");
+
+        List<List<List<Double>>> rings = (List) geometry.get("rings");
+        for(List<List<Double>> path : rings) {
+            for (List<Double> coords : path)
+                b.include(new LatLng(coords.get(1), coords.get(0)));
+        }
+        LatLng center = b.build().getCenter();
+        geometry.put("x",center.longitude);
+        geometry.put("y",center.latitude);
+    }
 }

@@ -2,8 +2,7 @@ package appcontest.playabq;
 
 import android.app.Activity;
 import android.database.DataSetObserver;
-import android.graphics.drawable.Icon;
-import android.support.v4.widget.TextViewCompat;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +19,17 @@ import java.util.Map;
  */
 public class MapListAdapter implements ListAdapter {
 
-    final private List<Map> recs;
-    final private Activity context;
+    final private ArrayList<Map<String, Object>> recs;
+    final private MainActivity context;
     private List observers = new ArrayList();
 
-    public MapListAdapter(Activity context, List<Map> recs)
+    public MapListAdapter(MainActivity context, ArrayList<Map<String, Object>> recs)
     {
         this.recs = recs;
         this.context = context;
     }
 
-    final String[] items = {"Item 1", "Item 2"};
+
 
 
     /**
@@ -157,13 +156,22 @@ public class MapListAdapter implements ListAdapter {
         ImageView ico = (ImageView) convertView.findViewById(R.id.list_icon);
         Map place = recs.get(position);
 
-        ico.setImageResource(Util.isCommCenter(place)?
+        ico.setImageResource(Util.isCommCenter(place) ?
                 R.drawable.ic_com_center :
                 R.drawable.ic_park);
 
-        dist.setText('\u221E'+" mi");
+        Location uLoc = context.getUserLocation();
+        String distance = "";
+        if(uLoc != null) {
+            float[] results = new float[3];
+            Location.distanceBetween(uLoc.getLatitude(), uLoc.getLongitude(),
+                    Util.getLat(place), Util.getLon(place), results);
+            distance = String.format("%.1f", Util.metersToMiles(results[0]));
+        }
+        dist.setText(distance);
 
         name.setText(Util.getName(place));
+
         return convertView;
 
     }
