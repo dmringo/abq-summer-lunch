@@ -18,16 +18,24 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private GoogleMap mMap;
+    private HashMap<String,Object> locData;
+    private String locName;
+    private boolean isPark;
+    private boolean isCtr;
     private LatLng location;
     private String[] features;
+    private GoogleMap mMap;
     private MapView mapView;
     private ListView listView;
 
@@ -37,21 +45,27 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        //Intent intent = getIntent();
-        //HashMap<Object,Object> locData = (HashMap<Object, Object>)intent.getSerializableExtra("data");
+        Intent intent = getIntent();
+        locData = (HashMap<String,Object>)intent.getSerializableExtra("data");
+        if (Util.isCommCenter(locData)) {
+            isCtr = true;
+        }
+        else {
+            isPark = true;
+        }
 
 
-        String name = "test name";
-        location =  new LatLng(35.110148212230001,-106.69786569233656);
+        /*location =  new LatLng(35.110148212230001,-106.69786569233656);
         features = new String[]{"HALFBASKETBALLCOURTS", "SOCCERFIELDS","LITSOFTBALLFIELDS",
                                     "something else", "something else",
                                     "something else", "something else",
                                     "something else", "something lse",
                                     "something else", "something else",
-                                    "something else", "something else"};
+                                    "something else", "something else"};*/
 
+        locName = Util.getName(locData);
         TextView textView = (TextView) findViewById(R.id.location_name);
-        textView.setText(name);
+        textView.setText(locName);
 
         mapView = (MapView) findViewById(R.id.location_map);
         mapView.onCreate(savedInstanceState);
@@ -67,12 +81,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.addMarker(new MarkerOptions()
-                .position(location)
-                .title("TEST"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-
-        //final View mapView = getSupportFragmentManager().findFragmentById(R.id.location_map).getView();
+        addToMap();
     }
 
     private void setUpList(String[] features) {
@@ -85,6 +94,21 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         listView = (ListView) findViewById(R.id.location_list);
         listView.setAdapter(itemsAdapter);
 
+    }
+
+    private void addToMap() {
+        if (isCtr) {
+            MarkerOptions mkrOpt = Util.getCenterMkrOpt(locName, (Map) locData.get("geometry"));
+            Marker m = mMap.addMarker(mkrOpt);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
+        }
+        if (isPark) {
+            List<PolygonOptions> polyList = Util.getParkPolyOpt(locData);
+            for (PolygonOptions polyOpt : polyList) {
+                Polygon newPoly = mMap.addPolygon(polyOpt);
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(Util.getParkCenter(locData)));
+        }
     }
 
 }
