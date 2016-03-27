@@ -67,8 +67,8 @@ public class Util {
         List<PolygonOptions>  polyList = new ArrayList<PolygonOptions>();
         Map coords = (Map) park.get("geometry");
         // get arraylist of arraylists representing contiguous areas
-        for (Object key : coords.keySet()) {
-            List polys = (List) coords.get(key);
+
+            List polys = (List) coords.get("rings");
             for (Object poly : polys) {
                 //poly is arraylist of 2-element arraylists
                 // representing closed polygon
@@ -87,7 +87,7 @@ public class Util {
                         .clickable(true);
                 polyList.add(polyOpt);
             }
-        }
+
         return polyList;
     }
 
@@ -106,6 +106,9 @@ public class Util {
      * @return the distance from the user to the area in meters
      */
     public static double getDistanceFromUser(Map area){
+        if (userLocation == null) {
+            return Double.POSITIVE_INFINITY;
+        }
         Map geometry = (Map) area.get("geometry");
         Location areaLoc = new Location("Area Loc");
         areaLoc.setLatitude((double) geometry.get("y"));
