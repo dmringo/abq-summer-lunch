@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     Log.i("LOCATION", "Permission Denied");
                     Toast.makeText(this, "Without location permissions this app can not prioritize" +
-                                    "areas nearest to you.",
+                                    " areas nearest to you.",
                             Toast.LENGTH_LONG).show();
                 }
             }
