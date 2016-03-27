@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 
 public class MapsActivity extends FragmentActivity implements
@@ -32,8 +31,9 @@ public class MapsActivity extends FragmentActivity implements
     // data = raw map read from Json
     // list = list of maps, 1 per park/ctr
     // aliases maps Json field names to their aliases
-    private ArrayList<Map<String,Object>> parkList;
-    private ArrayList<Map<String,Object>> commList;
+    private ArrayList<Map<String, Object>> parkList;
+    private ArrayList<Map<String, Object>> commList;
+
 
 
     // polygonMap has park polygons as keys, their names as values
@@ -46,10 +46,6 @@ public class MapsActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
 
         Intent intent = getIntent();
@@ -59,6 +55,12 @@ public class MapsActivity extends FragmentActivity implements
 
         parkList = Filter.selectParks(all);
         commList = Filter.selectCommCenters(all);
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         /*for (Map park : parkList)  {
             System.out.println(park.get("PARKNAME"));
@@ -118,7 +120,7 @@ public class MapsActivity extends FragmentActivity implements
         mMap.moveCamera(move);
 
         getPolys();
-        markCenters();
+        markAllCenters();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */
@@ -142,49 +144,57 @@ public class MapsActivity extends FragmentActivity implements
 
     // puts polygons on GoogleMap, also adds them to polygon-parkname map
     private void getPolys() {
+
         HashMap<Polygon, String> polygonMap = new HashMap<>();
         for (Map park : parkList) {
+            /*
             String name = (String) park.get("PARKNAME");
             Map coords = (Map) park.get("geometry");
             // get arraylist of arraylists representing contiguous areas
+            for (Object key : coords.keySet()) {
+                List polys = (List) coords.get(key);
+                for (Object poly : polys) {
+                    //poly is arraylist of 2-element arraylists
+                    // representing closed polygon
+                    ArrayList coordList = (ArrayList) poly;
+                    List<LatLng> vtxList = new ArrayList<LatLng>();
+                    for (Object coord : coordList) {
+                        @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
+                        double lat = doubleList.get(1);
+                        double lon = doubleList.get(0);
+                        LatLng latlon = new LatLng(lat, lon);
+                        vtxList.add(latlon);
+                    }
+                    PolygonOptions polyOpt = new PolygonOptions()
+                            .addAll(vtxList)
+                            .strokeColor(Color.RED)
+                            .fillColor(Color.BLUE)
+                            .clickable(true);
+                    */
+            String name = (String) park.get("PARKNAME");
 
-            List polys = (List) coords.get("rings");
-            for (Object poly : polys) {
-                //poly is arraylist of 2-element arraylists
-                // representing closed polygon
-                ArrayList coordList = (ArrayList) poly;
-                List<LatLng> vtxList = new ArrayList<LatLng>();
-                for (Object coord : coordList) {
-                    @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
-                    double lat = doubleList.get(1);
-                    double lon = doubleList.get(0);
-                    LatLng latlon = new LatLng(lat, lon);
-                    vtxList.add(latlon);
-                }
-                PolygonOptions polyOpt = new PolygonOptions()
-                        .addAll(vtxList)
-                        .strokeColor(Color.RED)
-                        .fillColor(Color.BLUE)
-                        .clickable(true);
+            List<PolygonOptions> polyList = Util.getParkPolyOpt(park);
+            for (PolygonOptions polyOpt : polyList) {
                 Polygon newPoly = mMap.addPolygon(polyOpt);
                 polygonMap.put(newPoly, name);
             }
-
         }
     }
 
-    private void markCenters() {
+
+    private void markAllCenters() {
         for (Map ctr : commList) {
             Map geometry = (Map) ctr.get("geometry");
-            double lat = (double) geometry.get("y");
-            double lon = (double) geometry.get("x");
+            //double lat = (double) geometry.get("y");
+            //double lon = (double) geometry.get("x");
             String name = (String) ctr.get("CENTERNAME");
-            Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(name));
+            MarkerOptions mkrOpt = Util.getCenterMkrOpt(name, geometry);
+            Marker m = mMap.addMarker(mkrOpt);
             markerMap.put(m, name);
         }
-
-
     }
+
+
 
 }
 

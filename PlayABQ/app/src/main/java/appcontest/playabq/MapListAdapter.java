@@ -162,12 +162,8 @@ public class MapListAdapter implements ListAdapter {
 
         Location uLoc = context.getUserLocation();
         String distance = "";
-        if(uLoc != null) {
-            float[] results = new float[3];
-            Location.distanceBetween(uLoc.getLatitude(), uLoc.getLongitude(),
-                    Util.getLat(place), Util.getLon(place), results);
-            distance = String.format("%.1f", Util.metersToMiles(results[0]));
-        }
+        if(uLoc != null) distance = String.format("%.1f", Util.getDistanceFromUser(place));
+
         dist.setText(distance);
 
         name.setText(Util.getName(place));
