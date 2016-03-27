@@ -120,7 +120,7 @@ public class Filter {
      * Changes the current filtered list to contain every park and community center
      * it did not contain, while removing every area it did contain previously.
      */
-    public static void negateCurrentFiltered(){
+    public static ArrayList<Map<String, Object>> negateCurrentFiltered(){
         for (Map ctr : communityCenterList) {
            if (currentFilteredLocations.contains(ctr)) {
                currentFilteredLocations.remove(ctr);
@@ -135,6 +135,8 @@ public class Filter {
                 currentFilteredLocations.add(prk);
             }
         }
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
+        return currentFilteredLocations;
     }
 
     public static ArrayList<Map<String, Object>> filtered()
