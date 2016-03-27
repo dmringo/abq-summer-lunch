@@ -17,15 +17,14 @@ import java.util.Map;
  * Class meant to filter the parsed json community center and map information.
  */
 public class Filter {
-    private ArrayList<Map<String, Object>> communityCenterList;
-    private ArrayList<Map<String, Object>> parkList;
-    private ArrayList<Map<String, Object>> currentFilteredLocations;
-    private Location userLocation;
+    private static ArrayList<Map<String, Object>> communityCenterList;
+    private static ArrayList<Map<String, Object>> parkList;
+    private static ArrayList<Map<String, Object>> currentFilteredLocations;
+    private static Location userLocation;
 
-    public Filter (ArrayList<Map<String, Object>> commList,  ArrayList<Map<String, Object>> prkList) {
+    public static void init (ArrayList<Map<String, Object>> commList,  ArrayList<Map<String, Object>> prkList) {
         communityCenterList= commList;
         parkList=prkList;
-
         currentFilteredLocations= new ArrayList<>(commList);
         currentFilteredLocations.addAll(parkList);
     }
@@ -37,7 +36,7 @@ public class Filter {
      * @return a list of community centers and parks that include all of the features in sorted
      * with increasing distance from user.
      */
-    public ArrayList<Map<String,Object>> intersectGetLocationsWith(List<String>requiredFeatures,
+    public static ArrayList<Map<String,Object>> intersectGetLocationsWith(List<String>requiredFeatures,
                                                                    Location usrLoc) {
         userLocation=usrLoc;
         currentFilteredLocations.clear();
@@ -72,7 +71,7 @@ public class Filter {
      * @return a list of community centers and parks that include any of the features in sorted
      * with increasing distance from user.
      */
-    public ArrayList<Map<String, Object>> unionGetLocationsWith(List<String> requiredFeatures, Location usrLoc) {
+    public static ArrayList<Map<String, Object>> unionGetLocationsWith(List<String> requiredFeatures, Location usrLoc) {
         userLocation=usrLoc;
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
@@ -109,7 +108,7 @@ public class Filter {
     /**
      * Convenience method to print the last filtered list of parks and centers
      */
-    public void printLocations()
+    public static void printLocations()
     {
         for(Map location:currentFilteredLocations)
         {
@@ -117,7 +116,7 @@ public class Filter {
         }
     }
 
-    public ArrayList<Map<String, Object>> filtered()
+    public static ArrayList<Map<String, Object>> filtered()
     {
         return currentFilteredLocations;
     }
@@ -132,34 +131,5 @@ public class Filter {
         ArrayList parks = new ArrayList();
         for(Map m : all) if(Util.isPark(m)) parks.add(m);
         return parks;
-    }
-
-
-    /**
-     * Comparator for sorting filtered lists based on distance from user.
-     */
-    public class DistanceFromUserComparator implements Comparator {
-        @Override
-        public int compare(Object lhs, Object rhs) {
-            double firstAreaDestance = getDistanceFromUser((Map) lhs);
-            double secondAreaDistance = getDistanceFromUser((Map) rhs);
-            if (firstAreaDestance>secondAreaDistance){
-                return 1;
-            }
-            else if (firstAreaDestance<secondAreaDistance) {
-                return -1;
-            }
-            else {
-                return 0;
-            }
-        }
-
-        private double getDistanceFromUser(Map area){
-            Map geometry = (Map) area.get("geometry");
-            Location areaLoc = new Location("Area Loc");
-            areaLoc.setLatitude((double) geometry.get("y"));
-            areaLoc.setLongitude((double) geometry.get("x"));
-            return userLocation.distanceTo(areaLoc);
-        }
     }
 }

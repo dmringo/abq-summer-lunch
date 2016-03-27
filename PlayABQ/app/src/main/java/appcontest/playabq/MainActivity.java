@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity
         Map parkData = JsonParser.getParkData(this);
         Map commData = JsonParser.getCommData(this);
 
-
-        filter = new Filter(JsonParser.getCommList(commData),JsonParser.getParkList(parkData));
+        Filter.init(JsonParser.getCommList(commData),JsonParser.getParkList(parkData));
 
 
         /* David's fuckery begins here.  Remove this comment before release! */
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity
 
         } else {
             Log.i("LOCATION", "Don't need to request permission");
-            getUserLocation();
+            Util.setUserLocation(getUserLocation());
             Log.i("LOCATION", "Lat: " + userLocation.getLatitude() + "Long: " + userLocation.getLongitude());
         }
     }

@@ -1,6 +1,7 @@
 package appcontest.playabq;
 
 import android.graphics.Color;
+import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 public class Util {
 
+    private static Location userLocation = null;
     public static boolean isCommCenter(Map m)
     {
         return m.containsKey("CENTERNAME");
@@ -89,5 +91,17 @@ public class Util {
             }
         }
         return polyList;
+    }
+
+    public static void setUserLocation(Location loc)
+    {
+        userLocation=loc;
+    }
+    public static double getDistanceFromUser(Map area){
+        Map geometry = (Map) area.get("geometry");
+        Location areaLoc = new Location("Area Loc");
+        areaLoc.setLatitude((double) geometry.get("y"));
+        areaLoc.setLongitude((double) geometry.get("x"));
+        return userLocation.distanceTo(areaLoc);
     }
 }
