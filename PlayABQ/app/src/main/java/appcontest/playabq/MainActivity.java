@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity
     GoogleApiClient mGoogleApiClient = null;
     final int FINE_LOCATION_ACCESS_REQUEST=0;
     private Location userLocation= new Location ("UserLocation");
-
-    private Filter filter;
 
 
     @Override
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        initNavView(navigationView);
 
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
@@ -80,7 +80,17 @@ public class MainActivity extends AppCompatActivity
         /* David's fuckery begins here.  Remove this comment before release! */
 
         ListView lv = (ListView) findViewById(R.id.list_view);
-        lv.setAdapter(new MapListAdapter(this,filter.filtered()));
+        lv.setAdapter(new MapListAdapter(this,Filter.filtered()));
+    }
+
+    private void initNavView(NavigationView nv) {
+        SubMenu parkMenu = nv.getMenu().addSubMenu("Park Filters");
+        parkMenu.setGroupCheckable(0,true,false);
+
+        for(String s : getResources().getStringArray(R.array.Park_Filter_Options))
+        {
+            parkMenu.add(0,Menu.NONE,Menu.NONE,s);
+        }
     }
 
 
@@ -125,20 +135,20 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.go_to_maps) {
             Log.i("Main", "go_to_maps");
             Intent intent = new Intent(this, MapsActivity.class);
-            intent.putExtra(String.valueOf(R.string.FILTERED_DATA), filter.filtered());
-//            startActivity(intent);
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            startActivity(intent);
 
         }
+//        else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
