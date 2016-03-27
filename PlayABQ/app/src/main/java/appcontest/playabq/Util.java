@@ -1,9 +1,5 @@
 package appcontest.playabq;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-
-import java.util.List;
 import java.util.Map;
 
 /**
