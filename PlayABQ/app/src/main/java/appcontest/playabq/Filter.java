@@ -2,14 +2,14 @@ package appcontest.playabq;
 
 import android.location.Location;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Stephen on 3/23/2016.
@@ -120,6 +120,18 @@ public class Filter {
     public ArrayList<Map<String, Object>> filtered()
     {
         return currentFilteredLocations;
+    }
+
+    public static ArrayList<Map<String, Object>> selectParks(ArrayList<Map<String, Object>> all) {
+        ArrayList parks = new ArrayList();
+        for(Map m : all) if(Util.isPark(m)) parks.add(m);
+        return parks;
+    }
+
+    public static ArrayList<Map<String, Object>> selectCommCenters(ArrayList<Map<String, Object>> all) {
+        ArrayList parks = new ArrayList();
+        for(Map m : all) if(Util.isPark(m)) parks.add(m);
+        return parks;
     }
 
 
