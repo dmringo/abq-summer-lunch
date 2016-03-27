@@ -23,6 +23,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
@@ -125,7 +128,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.go_to_maps) {
             Log.i("Main", "go_to_maps");
             Intent intent = new Intent(this, MapsActivity.class);
-            Bundle b = new Bundle();
+
+            intent.putExtra(String.valueOf(R.string.COMMLIST), filter.filtered());
+
+
             /* TODO: figure out how to pass List of maps and parks to Map activity */
 
         } else if (id == R.id.nav_gallery) {

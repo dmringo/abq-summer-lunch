@@ -2,11 +2,14 @@ package appcontest.playabq;
 
 import android.location.Location;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Stephen on 3/23/2016.
@@ -14,15 +17,16 @@ import java.util.Map;
  * Class meant to filter the parsed json community center and map information.
  */
 public class Filter {
-    private List<Map> communityCenterList;
-    private List<Map> parkList;
-    private List<Map> currentFilteredLocations;
+    private ArrayList<Map<String, Object>> communityCenterList;
+    private ArrayList<Map<String, Object>> parkList;
+    private ArrayList<Map<String, Object>> currentFilteredLocations;
     private Location userLocation;
-    public Filter(List<Map> commList, List<Map> prkList) {
-        communityCenterList=commList;
+
+    public Filter (ArrayList<Map<String, Object>> commList,  ArrayList<Map<String, Object>> prkList) {
+        communityCenterList= commList;
         parkList=prkList;
 
-        currentFilteredLocations=new ArrayList<Map>(commList);
+        currentFilteredLocations= new ArrayList<>(commList);
         currentFilteredLocations.addAll(parkList);
     }
 
@@ -33,7 +37,8 @@ public class Filter {
      * @return a list of community centers and parks that include all of the features in sorted
      * with increasing distance from user.
      */
-    public List<Map> intersectGetLocationsWith(List<String>requiredFeatures, Location usrLoc) {
+    public ArrayList<Map<String,Object>> intersectGetLocationsWith(List<String>requiredFeatures,
+                                                                   Location usrLoc) {
         userLocation=usrLoc;
         currentFilteredLocations.clear();
             for (Map ctr : communityCenterList) {
@@ -67,7 +72,7 @@ public class Filter {
      * @return a list of community centers and parks that include any of the features in sorted
      * with increasing distance from user.
      */
-    public List<Map> unionGetLocationsWith(List<String>requiredFeatures, Location usrLoc) {
+    public ArrayList<Map<String, Object>> unionGetLocationsWith(List<String> requiredFeatures, Location usrLoc) {
         userLocation=usrLoc;
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
@@ -112,7 +117,7 @@ public class Filter {
         }
     }
 
-    public List<Map> filtered()
+    public ArrayList<Map<String, Object>> filtered()
     {
         return currentFilteredLocations;
     }

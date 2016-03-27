@@ -162,6 +162,7 @@ public class MapListAdapter implements ListAdapter {
         dist.setText('\u221E'+" mi");
 
         name.setText(Util.getName(place));
+
         return convertView;
 
     }

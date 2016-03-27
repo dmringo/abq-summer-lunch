@@ -39,10 +39,10 @@ public class JsonParser {
     final static ObjectMapper commMapper = new ObjectMapper();
 
 
-    public static Map getParkData(Context ct)  {
+    public static Map<String,Object> getParkData(Context ct)  {
         try {
             InputStream stream = ct.getAssets().open(PARKS_FILE);
-            Map map = parkMapper.readValue(stream, Map.class);
+            Map<String,Object> map = parkMapper.readValue(stream, Map.class);
             return map;
         }
         catch (IOException e) {
@@ -51,9 +51,9 @@ public class JsonParser {
         return null;
     }
 
-    public static List getParkList(Map parkData) {
-        List features = (List) parkData.get("features");
-        List parkList = new ArrayList();
+    public static ArrayList<Map<String, Object>> getParkList(Map parkData) {
+        ArrayList features = (ArrayList) parkData.get("features");
+        ArrayList<Map<String,Object>> parkList = new ArrayList();
         for (int i = 0; i < features.size(); i++) {
             Map park = (Map) features.get(i);
             Map parkMap = new LinkedHashMap();
@@ -67,14 +67,14 @@ public class JsonParser {
         return parkList;
     }
 
-    public static Map getAliases(Map data) {
+    public static Map<String,String> getAliases(Map data) {
         return (Map) data.get("fieldAliases");
     }
 
-    public static Map getCommData(Context ct)  {
+    public static Map<String,Object> getCommData(Context ct)  {
         try {
             InputStream stream = ct.getAssets().open(COMM_FILE);
-            Map map = commMapper.readValue(stream, Map.class);
+            Map<String,Object> map = commMapper.readValue(stream, Map.class);
             return map;
         }
         catch (IOException e) {
@@ -84,9 +84,9 @@ public class JsonParser {
     }
 
 
-    public static List getCommList(Map commData) {
+    public static ArrayList<Map<String,Object>> getCommList(Map commData) {
         List features = (List) commData.get("features");
-        List commList = new ArrayList();
+        ArrayList commList = new ArrayList();
         for (Object ctr : features) {
             commList.add(ctr);
         }
