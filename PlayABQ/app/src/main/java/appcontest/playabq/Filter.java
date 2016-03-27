@@ -117,7 +117,7 @@ public class Filter {
     }
 
     /**
-     * Changes the current filtered list to contain every park and community center
+     * @return the current filtered list to contain every park and community center
      * it did not contain, while removing every area it did contain previously.
      */
     public static ArrayList<Map<String, Object>> negateCurrentFiltered(){
