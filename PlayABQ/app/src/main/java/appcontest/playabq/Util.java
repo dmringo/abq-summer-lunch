@@ -1,8 +1,13 @@
 package appcontest.playabq;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -17,6 +22,9 @@ import java.util.Map;
  * Created by david on 3/26/16.
  */
 public class Util {
+    private static String ccBaseColor = "#859bff";
+    private static String parkBaseColor = "#9ad48f";
+
 
     public static Location getUserLocation() {
         return userLocation;
@@ -36,12 +44,12 @@ public class Util {
     public static String getName(Map m) {
         if(isCommCenter(m)) return (String) m.get("CENTERNAME");
         else {
-            String[] capsString = ((String) m.get("PARKNAME")).split(" ");
+            String[] capsString = ((String) m.get("PARKNAME")).split("[ ]+");
             String newName = "";
             for (String str : capsString) {
-                str.toLowerCase();
-                String newStr = str.substring(0, 1).toUpperCase() + str.substring(1);
-                newName.concat(newStr+" ");
+                String lowerCase = str.toLowerCase()+" ";
+                String newStr = lowerCase.substring(0, 1).toUpperCase() + lowerCase.substring(1);
+                newName = newName.concat(newStr);
             }
             return newName.trim();
         }
@@ -61,15 +69,15 @@ public class Util {
         return meters * 0.000621371192;
     }
 
-    /**
-     * @param name      community center name
-     * @param geometry  map with lat("y") & lon("x")
-     * @return          MarkerOptions for community center
-     */
-    public static MarkerOptions getCenterMkrOpt(String name, Map<String, Object> geometry) {
-        double lat = (double) geometry.get("y");
-        double lon = (double) geometry.get("x");
-        return new MarkerOptions().position(new LatLng(lat, lon)).title(name);
+
+    public static MarkerOptions getCenterMkrOpt(Map<String, Object> center) {
+        String name = getName(center);
+        double lat = getLat(center);
+        double lon = getLon(center);
+        float[] hsv = new float[3];
+        Color.colorToHSV(Color.parseColor(ccBaseColor), hsv);
+        BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
+        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
     }
 
     /**
@@ -97,7 +105,8 @@ public class Util {
             }
             PolygonOptions polyOpt = new PolygonOptions()
                     .addAll(vtxList)
-                    .fillColor(Color.parseColor("#859bff"))
+                    .fillColor(R.color.parkBaseColor)
+                    .strokeColor(R.color.parkBaseColor)
                     .clickable(true);
             polyList.add(polyOpt);
         }
@@ -105,6 +114,7 @@ public class Util {
         return polyList;
     }
 
+    @Deprecated
     public static LatLng getParkCenter(Map<String, Object> park)
     {
         LatLngBounds.Builder b = new LatLngBounds.Builder();
@@ -117,6 +127,16 @@ public class Util {
         }
         LatLng center = b.build().getCenter();
         return center;
+    }
+
+    public static MarkerOptions getParkMkrOpt(Map<String, Object> park) {
+        String name = getName(park);
+        double lat = getLat(park);
+        double lon = getLon(park);
+        float[] hsv = new float[3];
+        Color.colorToHSV(Color.parseColor(parkBaseColor), hsv);
+        BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
+        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
     }
 
     /**

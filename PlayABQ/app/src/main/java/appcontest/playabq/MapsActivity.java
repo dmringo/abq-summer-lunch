@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -47,36 +49,14 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
-        Intent intent = getIntent();
-
         parkList = Filter.selectParks(Filter.filtered());
         commList = Filter.selectCommCenters(Filter.filtered());
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        /*for (Map park : parkList)  {
-            System.out.println(park.get("PARKNAME"));
-            Map coords = (Map) park.get("geometry");
-            for (Object key : coords.keySet()) {
-                List coordlist = (List) coords.get(key);
-                for (Object item : coordlist) {
-                    System.out.println(item.toString()); // returns array of points for poly
-                }
-            }
-        }*/
-
-        /**
-         try {
-         TestJackson.testJackson(getAssets().open(TestJackson.TEST_FILE));
-         } catch (IOException e) {
-         e.printStackTrace();
-         }
-         **/
     }
 
 
@@ -92,12 +72,12 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
+        /*mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
-        mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);
+        mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);*/
 
         GoogleMapAdapter adapter = new GoogleMapAdapter();
-        adapter.setAllListeners(mMap);
+        //adapter.setAllListeners(mMap);
 
         /*
         for (Polygon poly : polygonMap.keySet()) {
@@ -116,8 +96,9 @@ public class MapsActivity extends FragmentActivity implements
          * rendering may be threaded and occur before we get the map centered on ABQ */
         mMap.moveCamera(move);
 
-        getPolys();
+        //getPolys();
         markAllCenters();
+        markAllParks();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */
@@ -178,19 +159,22 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-
+    // puts markers for community centers on map
     private void markAllCenters() {
         for (Map ctr : commList) {
-            Map geometry = (Map) ctr.get("geometry");
-            //double lat = (double) geometry.get("y");
-            //double lon = (double) geometry.get("x");
-            String name = (String) ctr.get("CENTERNAME");
-            MarkerOptions mkrOpt = Util.getCenterMkrOpt(name, geometry);
+            MarkerOptions mkrOpt = Util.getCenterMkrOpt(ctr);
             Marker m = mMap.addMarker(mkrOpt);
-            markerMap.put(m, name);
+            //markerMap.put(m, name);
         }
     }
 
+    private void markAllParks() {
+        for (Map park : parkList) {
+            MarkerOptions mkrOpt = Util.getParkMkrOpt(park);
+            Marker m = mMap.addMarker(mkrOpt);
+        }
+
+    }
 
 
 }

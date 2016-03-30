@@ -25,8 +25,9 @@ public class Filter {
     public static void init (ArrayList<Map<String, Object>> commList,  ArrayList<Map<String, Object>> prkList) {
         communityCenterList= commList;
         parkList=prkList;
-        currentFilteredLocations= new ArrayList<>(commList);
-        currentFilteredLocations.addAll(parkList);
+        currentFilteredLocations= new ArrayList<>();
+        currentFilteredLocations.addAll(prkList);
+        currentFilteredLocations.addAll(commList);
     }
 
     /**
@@ -146,8 +147,8 @@ public class Filter {
     }
 
     public static ArrayList<Map<String, Object>> selectCommCenters(ArrayList<Map<String, Object>> all) {
-        ArrayList parks = new ArrayList();
-        for(Map m : all) if(Util.isPark(m)) parks.add(m);
-        return parks;
+        ArrayList commCenters = new ArrayList();
+        for(Map m : all) if(Util.isCommCenter(m)) commCenters.add(m);
+        return commCenters;
     }
 }

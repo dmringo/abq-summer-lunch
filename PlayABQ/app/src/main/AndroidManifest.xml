@@ -33,10 +33,11 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="appcontest.playabq.MapsActivity" />
+                android:value="appcontest.playabq.MainActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
@@ -44,12 +45,15 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LocationActivity">
-
+        <activity android:name=".LocationActivity"
+            android:label="@string/title_activity_location"
+            android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="appcontest.playabq.MainActivity" />
         </activity>
     </application>
 
