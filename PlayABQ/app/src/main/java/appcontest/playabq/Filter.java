@@ -93,7 +93,7 @@ public class Filter {
      * @param feature a feature of a park or community center
      * @return if the park or community center contains the feature based on the json file.
      */
-    private static boolean resemblesTruth(Map location,String feature) {
+    public static boolean resemblesTruth(Map location,String feature) {
         Object predicate;
         if ((predicate=location.get(feature))==null)
             return false;
