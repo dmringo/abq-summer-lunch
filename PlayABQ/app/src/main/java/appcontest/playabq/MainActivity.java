@@ -35,13 +35,14 @@ public class MainActivity extends AppCompatActivity
 
     GoogleApiClient mGoogleApiClient = null;
     final int FINE_LOCATION_ACCESS_REQUEST=0;
-    protected Location userLocation= new Location ("UserLocation");
     private LocationListener locationListener;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Util.setUserLocation(Util.getDefaultLocation());
 
         setContentView(R.layout.activity_main);
 
@@ -173,6 +174,9 @@ public class MainActivity extends AppCompatActivity
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
+            Util.setUserLocation(Util.getDefaultLocation());
+            Util.isTrackingUser = false;
+
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -187,9 +191,6 @@ public class MainActivity extends AppCompatActivity
 
         } else {
             Log.i("LOCATION", "Don't need to request permission");
-            Util.setUserLocation(getUserLocation());
-            Log.i("LOCATION", "Lat: " + userLocation.getLatitude() + "Long: " + userLocation.getLongitude());
-            Log.i("LOCATION", "Starting location updates");
             startLocationUpdates();
         }
     }
@@ -213,7 +214,6 @@ public class MainActivity extends AppCompatActivity
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i("LOCATION", "Permission Granted");
-                    Log.i("LOCATION", "Starting location updates");
                     startLocationUpdates();
                 } else {
                     Log.i("LOCATION", "Permission Denied");
@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity
      * Location updates if the user allows the permissions for location services
      */
     protected void startLocationUpdates() {
+        Log.i("LOCATION", "Starting location updates");
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if(permissionCheck==PackageManager.PERMISSION_GRANTED) {
@@ -256,10 +257,19 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onLocationChanged(Location location) {
                             Log.i("LOC-CHANGE", "IT HAPPENED!");
-                            Util.setUserLocation(location);
-                            userLocation=location;
+                            if (location!=null) {
+                                Util.setUserLocation(location);
+                                Util.isTrackingUser = true;
+                            }
+                            else {
+                                Util.setUserLocation(Util.getDefaultLocation());
+                                Util.isTrackingUser = false;
+                            }
                         }
                     });
+        } else {
+            Util.setUserLocation(Util.getDefaultLocation());
+            Util.isTrackingUser = false;
         }
     }
 
@@ -267,25 +277,4 @@ public class MainActivity extends AppCompatActivity
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, locationListener);
     }
-
-    public Location getUserLocation (){
-        Location mLastLocation = null;
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        if(permissionCheck==PackageManager.PERMISSION_GRANTED) {
-            Location currentLoc=LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (currentLoc!=null) {
-                userLocation.setLatitude(currentLoc.getLatitude());
-                userLocation.setLongitude(currentLoc.getLongitude());
-            } else {
-                userLocation.setLatitude(35.113281);
-                userLocation.setLongitude(-106.621216);
-            }
-        } else {
-            userLocation.setLatitude(35.113281);
-            userLocation.setLongitude(-106.621216);
-        }
-        return userLocation;
-    }
-
 }

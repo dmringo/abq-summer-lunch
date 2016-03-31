@@ -25,6 +25,7 @@ public class Util {
     private static String ccBaseColor = "#859bff";
     private static String parkBaseColor = "#9ad48f";
 
+    public static boolean isTrackingUser = false;
 
     public static Location getUserLocation() {
         return userLocation;
@@ -162,5 +163,12 @@ public class Util {
         areaLoc.setLatitude((double) geometry.get("y"));
         areaLoc.setLongitude((double) geometry.get("x"));
         return userLocation.distanceTo(areaLoc);
+    }
+
+    public static Location getDefaultLocation (){
+        Location defaultLocation = new Location("Default");
+        defaultLocation.setLatitude(35.113281);
+        defaultLocation.setLongitude(-106.621216);
+        return defaultLocation;
     }
 }
