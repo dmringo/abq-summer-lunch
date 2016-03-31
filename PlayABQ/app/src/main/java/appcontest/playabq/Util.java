@@ -24,6 +24,7 @@ import java.util.Map;
 public class Util {
     private static String ccBaseColor = "#859bff";
     private static String parkBaseColor = "#9ad48f";
+    private static String usrBaseColor = "#ffff80";
 
     public static boolean isTrackingUser = false;
 
@@ -79,6 +80,13 @@ public class Util {
         Color.colorToHSV(Color.parseColor(ccBaseColor), hsv);
         BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
         return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
+    }
+
+    public static MarkerOptions getUserMkrOpt() {
+        float[] hsv = new float[3];
+        Color.colorToHSV(Color.parseColor(usrBaseColor), hsv);
+        BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
+        return new MarkerOptions().position(new LatLng(getUserLocation().getLatitude(), getUserLocation().getLongitude())).title("My Location").icon(color);
     }
 
     /**
