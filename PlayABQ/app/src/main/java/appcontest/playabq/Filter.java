@@ -28,6 +28,7 @@ public class Filter {
         currentFilteredLocations= new ArrayList<>();
         currentFilteredLocations.addAll(prkList);
         currentFilteredLocations.addAll(commList);
+        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
     }
 
     /**

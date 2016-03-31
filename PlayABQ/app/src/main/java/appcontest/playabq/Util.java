@@ -32,7 +32,7 @@ public class Util {
         return userLocation;
     }
 
-    private static Location userLocation = null;
+    private static Location userLocation = getDefaultLocation();
     public static boolean isCommCenter(Map m)
     {
         return m.containsKey("CENTERNAME");
