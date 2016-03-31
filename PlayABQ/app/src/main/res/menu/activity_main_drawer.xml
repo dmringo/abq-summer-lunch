@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filter_drawer">
 
-    <group android:checkableBehavior="all">
+    <group android:id="@+id/map_group">
         <item
             android:id="@+id/go_to_maps"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="GO TO MAPS"
+            android:icon="@drawable/ic_map_24dp"
+            android:title="View Map"
             />
     </group>
-    <!--<item-->
-            <!--android:id="@+id/nav_gallery"-->
-            <!--android:icon="@drawable/ic_menu_gallery"-->
-            <!--android:title="Gallery" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_slideshow"-->
-            <!--android:icon="@drawable/ic_menu_slideshow"-->
-            <!--android:title="Slideshow" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_manage"-->
-            <!--android:icon="@drawable/ic_menu_manage"-->
-            <!--android:title="Tools" />-->
-    <!--</group>-->
 
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</>-->
-    <!--</item>-->
+    <!-- Header group, helps delineate header from filter items -->
+    <group>
+        <item
+            android:id="@+id/park_header"
+            android:title="@string/park_filter_title"
+            android:icon="@drawable/ic_park"
+            android:onClick="expandFilters"
+            />
+    </group>
+
+    <group android:id="@+id/park_filters"
+        android:checkableBehavior="all"
+        android:enabled="false"
+        android:visible="false">
+
+    </group>
+
+    <!-- Header group, helps delineate header from filter items -->
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/comm_header"
+            android:title="@string/comm_filter_title"
+            android:icon="@drawable/ic_comm"
+            android:onClick="expandFilters"
+            />
+    </group>
+    <group android:id="@+id/comm_filters"
+        android:checkableBehavior="all"
+        android:enabled="false"
+        android:visible="false">
+
+
+    </group>
+
 
 </menu>

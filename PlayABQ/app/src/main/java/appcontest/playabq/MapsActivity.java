@@ -1,10 +1,12 @@
 package appcontest.playabq;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
@@ -18,6 +20,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.maps.android.clustering.ClusterItem;
+import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,13 +41,12 @@ public class MapsActivity extends FragmentActivity implements
     private ArrayList<Map<String, Object>> parkList;
     private ArrayList<Map<String, Object>> commList;
 
-
-
     // polygonMap has park polygons as keys, their names as values
     // for use in click listener
     //private Map<Polygon, String> polygonMap;
-    private Map<Marker, String> markerMap = new HashMap<>();
+   // private Map<Marker, String> markerMap = new HashMap<>();
 
+    private ClusterManager<ClusterIndicator> mClusterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,20 +89,33 @@ public class MapsActivity extends FragmentActivity implements
             System.out.println(poly.getPoints());
         }*/
 
+        //settup clustering
+        mClusterManager = new ClusterManager<ClusterIndicator>(this, mMap);
+        mMap.setOnCameraChangeListener(mClusterManager);
+        mMap.setOnMarkerClickListener(mClusterManager);
+        mClusterManager.setRenderer(new MyClusterRenderer(this,mMap,mClusterManager));
 
-        /* roughly I-25 and I-40 */
-        final LatLng center = new LatLng(35.10998051198137, -106.61751497536898);
+        // if user isn't tracked this will defaultly be the center of ABQ
+        LatLng center = new LatLng(Util.getUserLocation().getLatitude(),Util.getUserLocation().getLongitude());
+
+        //found by trial + error
+        float zoom = 10.6f;
+
+        //zoom closer to user if user is tracked
+        if(Util.isTrackingUser)
+        {
+            zoom=12;
+        }
         /* zoom level determined by trial and error */
-        final float zoom = 10.6f;
         CameraUpdate move = CameraUpdateFactory.newLatLngZoom(center, zoom);
 
         /* let the map register the move before we try to add polygons and markers,
          * rendering may be threaded and occur before we get the map centered on ABQ */
         mMap.moveCamera(move);
 
-        //getPolys();
         markAllCenters();
         markAllParks();
+        markUserLocation();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */
@@ -162,27 +179,40 @@ public class MapsActivity extends FragmentActivity implements
     // puts markers for community centers on map
     private void markAllCenters() {
         for (Map ctr : commList) {
-            MarkerOptions mkrOpt = Util.getCenterMkrOpt(ctr, getResources());
-            Marker m = mMap.addMarker(mkrOpt);
-            //markerMap.put(m.getTitle(), m);
+            double lat = Util.getLat(ctr);
+            double lon = Util.getLon(ctr);
+            String name = Util.getName(ctr);
+            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getCenterMkrOpt(ctr));
+            mClusterManager.addItem(clusterIndicator);
         }
     }
 
     private void markAllParks() {
         for (Map park : parkList) {
-            MarkerOptions mkrOpt = Util.getParkMkrOpt(park, getResources());
-            Marker m = mMap.addMarker(mkrOpt);
-            //markerMap.put(m, m.getTitle());
+            double lat = Util.getLat(park);
+            double lon = Util.getLon(park);
+            String name = Util.getName(park);
+            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getParkMkrOpt(park));
+            mClusterManager.addItem(clusterIndicator);
         }
+    }
 
+    private void markUserLocation() {
+        if(Util.isTrackingUser) {
+            MarkerOptions mkrOpt = Util.getUserMkrOpt();
+            Marker m = mMap.addMarker(mkrOpt);
+            m.showInfoWindow();
+        }
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Intent intent = new Intent(this, LocationActivity.class);
-        HashMap locData = (HashMap) getMarkerData(marker);
-        intent.putExtra("data", locData);
-        startActivity(intent);
+        if (!marker.getTitle().equals("My Location")) {
+            Intent intent = new Intent(this, LocationActivity.class);
+            HashMap locData = (HashMap) getMarkerData(marker);
+            intent.putExtra("data", locData);
+            startActivity(intent);
+        }
     }
 
     private Map<String, Object> getMarkerData(Marker m) {
@@ -203,6 +233,20 @@ public class MapsActivity extends FragmentActivity implements
         return locData;
     }
 
+    class MyClusterRenderer extends DefaultClusterRenderer<ClusterIndicator> {
+
+        public MyClusterRenderer(Context context, GoogleMap map,
+                               ClusterManager<ClusterIndicator> clusterManager) {
+            super(context, map, clusterManager);
+        }
+
+        @Override
+        protected void onBeforeClusterItemRendered(ClusterIndicator item, MarkerOptions markerOptions) {
+            markerOptions.icon(item.getIcon());
+            markerOptions.title(item.getTitle());
+            super.onBeforeClusterItemRendered(item, markerOptions);
+        }
+    }
 }
 
 

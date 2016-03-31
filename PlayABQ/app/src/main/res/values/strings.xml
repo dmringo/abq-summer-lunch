@@ -12,6 +12,8 @@
     <string name="PARKLIST">Park data</string>
     <string name="COMMLIST">Comm Data</string>
     <string name="FILTERED_DATA">Filtered locations</string>
+    <string name="park_filter_title">Park Filters</string>
+    <string name="comm_filter_title">Community Center Filters</string>
     <string-array name="Park_Filter_Options">
         <item>Lit Tennis Courts</item>
         <item>Unlit Tennis Courts</item>

@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,9 +34,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private final String TAG = getClass().getSimpleName();
     GoogleApiClient mGoogleApiClient = null;
     final int FINE_LOCATION_ACCESS_REQUEST=0;
     private LocationListener locationListener;
+    private boolean parkFiltersOpen = false;
+    private boolean commFiltersOpen = false;
 
 
     @Override
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         Util.setUserLocation(Util.getDefaultLocation());
+        Util.isTrackingUser = false;
 
         setContentView(R.layout.activity_main);
 
@@ -67,7 +72,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-        /* Stephen's fuckery begins here.  Remove this comment before release! */
         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -94,14 +98,31 @@ public class MainActivity extends AppCompatActivity
         drawer.openDrawer(GravityCompat.START);
     }
 
-    private void initNavView(NavigationView nv) {
-        SubMenu parkMenu = nv.getMenu().addSubMenu("Park Filters");
-        parkMenu.setGroupCheckable(0,true,false);
+    public void expandFilters(MenuItem item)
+    {
 
-        for(String s : getResources().getStringArray(R.array.Park_Filter_Options))
-        {
-            parkMenu.add(0,Menu.NONE,Menu.NONE,s);
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        Menu menu = nav.getMenu();
+
+
+        if(item.getTitle() == getString(R.string.park_filter_title)) {
+
+            menu.setGroupEnabled(R.id.park_filters, !parkFiltersOpen);
+            menu.setGroupVisible(R.id.park_filters, !parkFiltersOpen);
+            parkFiltersOpen = !parkFiltersOpen;
         }
+        if(item.getTitle() == getString(R.string.comm_filter_title)) {
+
+            menu.setGroupEnabled(R.id.comm_filters, !commFiltersOpen);
+            menu.setGroupVisible(R.id.comm_filters, !commFiltersOpen);
+            commFiltersOpen = !commFiltersOpen;
+        }
+
+            
+    }
+
+    private void initNavView(NavigationView nv) {
+
     }
 
 
@@ -228,9 +249,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         mGoogleApiClient.connect();
         /*TODO: REMOVE THESE TESTES */
-        ArrayList<String> features = new ArrayList<>();
-        features.add("PLAYAREAS");
-        Filter.intersectGetLocationsWith(features);
+       // ArrayList<String> features = new ArrayList<>();
+       // features.add("PLAYAREAS");
+       // Filter.intersectGetLocationsWith(features);
         super.onStart();
     }
 
@@ -277,4 +298,6 @@ public class MainActivity extends AppCompatActivity
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, locationListener);
     }
+
+
 }
