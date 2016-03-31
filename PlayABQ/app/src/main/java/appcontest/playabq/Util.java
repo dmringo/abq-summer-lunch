@@ -1,6 +1,6 @@
 package appcontest.playabq;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -22,6 +22,8 @@ import java.util.Map;
  * Created by david on 3/26/16.
  */
 public class Util {
+
+
     private static String ccBaseColor = "#859bff";
     private static String parkBaseColor = "#9ad48f";
 
@@ -71,14 +73,16 @@ public class Util {
     }
 
 
-    public static MarkerOptions getCenterMkrOpt(Map<String, Object> center) {
+    public static MarkerOptions getCenterMkrOpt(Map<String, Object> center, Resources res) {
         String name = getName(center);
         double lat = getLat(center);
         double lon = getLon(center);
         float[] hsv = new float[3];
         Color.colorToHSV(Color.parseColor(ccBaseColor), hsv);
         BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
-        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
+
+        BitmapDescriptor ico = makeMarkerBitmapDescr(res, R.drawable.ic_com_center);
+        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(ico);
     }
 
     /**
@@ -130,14 +134,38 @@ public class Util {
         return center;
     }
 
-    public static MarkerOptions getParkMkrOpt(Map<String, Object> park) {
+    public static MarkerOptions getParkMkrOpt(Map<String, Object> park, Resources res) {
         String name = getName(park);
         double lat = getLat(park);
         double lon = getLon(park);
         float[] hsv = new float[3];
         Color.colorToHSV(Color.parseColor(parkBaseColor), hsv);
         BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
-        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
+
+        BitmapDescriptor ico = makeMarkerBitmapDescr(res, R.drawable.ic_park);
+
+        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(ico);
+    }
+
+
+    /*  */
+
+    /**
+     * This is a sort of hacky way of setting the icons to a reasonable size.
+     * Not sure if it's really portable.  - David
+     * TODO: test on other devices
+     *
+     * @param res  Resources for app
+     * @param resId Resource ID for the drawable object to make a marker for
+     * @return BitmapDescriptor to use for a MarkerOptions object
+     */
+    private static BitmapDescriptor makeMarkerBitmapDescr(Resources res, int resId) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inSampleSize = 3;
+        Bitmap bm = BitmapFactory.decodeResource(res, resId,
+                opts);
+        BitmapDescriptor ico = BitmapDescriptorFactory.fromBitmap(bm);
+        return ico;
     }
 
     /**

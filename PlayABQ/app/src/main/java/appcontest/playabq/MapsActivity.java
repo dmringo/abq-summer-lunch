@@ -162,7 +162,7 @@ public class MapsActivity extends FragmentActivity implements
     // puts markers for community centers on map
     private void markAllCenters() {
         for (Map ctr : commList) {
-            MarkerOptions mkrOpt = Util.getCenterMkrOpt(ctr);
+            MarkerOptions mkrOpt = Util.getCenterMkrOpt(ctr, getResources());
             Marker m = mMap.addMarker(mkrOpt);
             //markerMap.put(m.getTitle(), m);
         }
@@ -170,7 +170,7 @@ public class MapsActivity extends FragmentActivity implements
 
     private void markAllParks() {
         for (Map park : parkList) {
-            MarkerOptions mkrOpt = Util.getParkMkrOpt(park);
+            MarkerOptions mkrOpt = Util.getParkMkrOpt(park, getResources());
             Marker m = mMap.addMarker(mkrOpt);
             //markerMap.put(m, m.getTitle());
         }
