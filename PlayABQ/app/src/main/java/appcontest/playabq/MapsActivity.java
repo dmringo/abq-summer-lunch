@@ -26,7 +26,7 @@ import java.util.Map;
 
 
 public class MapsActivity extends FragmentActivity implements
-        OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
+        OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     // park/comm variables:
@@ -40,7 +40,7 @@ public class MapsActivity extends FragmentActivity implements
 
     // polygonMap has park polygons as keys, their names as values
     // for use in click listener
-    private Map<Polygon, String> polygonMap;
+    //private Map<Polygon, String> polygonMap;
     private Map<Marker, String> markerMap = new HashMap<>();
 
 
@@ -75,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements
         /*mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);*/
-
+        mMap.setOnInfoWindowClickListener(this);
         GoogleMapAdapter adapter = new GoogleMapAdapter();
         //adapter.setAllListeners(mMap);
 
@@ -164,7 +164,7 @@ public class MapsActivity extends FragmentActivity implements
         for (Map ctr : commList) {
             MarkerOptions mkrOpt = Util.getCenterMkrOpt(ctr);
             Marker m = mMap.addMarker(mkrOpt);
-            //markerMap.put(m, name);
+            //markerMap.put(m.getTitle(), m);
         }
     }
 
@@ -172,10 +172,36 @@ public class MapsActivity extends FragmentActivity implements
         for (Map park : parkList) {
             MarkerOptions mkrOpt = Util.getParkMkrOpt(park);
             Marker m = mMap.addMarker(mkrOpt);
+            //markerMap.put(m, m.getTitle());
         }
 
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(this, LocationActivity.class);
+        HashMap locData = (HashMap) getMarkerData(marker);
+        intent.putExtra("data", locData);
+        startActivity(intent);
+    }
+
+    private Map<String, Object> getMarkerData(Marker m) {
+        String name = m.getTitle();
+        Map <String, Object> locData = null;
+        for (Map map : parkList) {
+            if (Util.getName(map).equals(name)) {
+                locData = map;
+            }
+        }
+        if (locData == null) {
+            for (Map map : commList) {
+                if (Util.getName(map).equals(name)) {
+                    locData = map;
+                }
+            }
+        }
+        return locData;
+    }
 
 }
 

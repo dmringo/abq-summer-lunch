@@ -1,5 +1,6 @@
 package appcontest.playabq;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -47,7 +48,7 @@ public class GoogleMapAdapter implements
 
         @Override
         public boolean onMarkerClick(Marker marker) {
-            Log.d("MAP-DBG", "Marker clicked: " + marker.getTitle());
+            //Log.d("MAP-DBG", "Marker clicked: " + marker.getTitle());
 
             /* returning false allows default Map behavior to occur as normal,
              return true to indicate that event has been consumed and default Map behavior
@@ -64,7 +65,7 @@ public class GoogleMapAdapter implements
         gMap.setOnMarkerDragListener(this);
         gMap.setOnCameraChangeListener(this);
         gMap.setOnGroundOverlayClickListener(this);
-        gMap.setOnInfoWindowClickListener(this);
+        //gMap.setOnInfoWindowClickListener(this);
         gMap.setOnInfoWindowCloseListener(this);
         gMap.setOnInfoWindowLongClickListener(this);
     }

@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private boolean isPark;
     private boolean isCtr;
     private LatLng location;
-    private String[] features;
+    private ArrayList<String> features;
     private GoogleMap mMap;
     private MapView mapView;
     private ListView listView;
@@ -55,13 +56,19 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
 
-        /*location =  new LatLng(35.110148212230001,-106.69786569233656);
+        /*
         features = new String[]{"HALFBASKETBALLCOURTS", "SOCCERFIELDS","LITSOFTBALLFIELDS",
                                     "something else", "something else",
                                     "something else", "something else",
                                     "something else", "something lse",
                                     "something else", "something else",
                                     "something else", "something else"};*/
+        features = new ArrayList<String>();
+        for (String key : locData.keySet()) {
+            if (Filter.resemblesTruth(locData, key)) {
+                features.add(key);
+            }
+        }
 
         locName = Util.getName(locData);
         TextView textView = (TextView) findViewById(R.id.location_name);
@@ -84,7 +91,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         addToMap();
     }
 
-    private void setUpList(String[] features) {
+    private void setUpList(ArrayList<String> features) {
         ArrayAdapter itemsAdapter;
         itemsAdapter = new ArrayAdapter(this, android.R.layout.test_list_item, features);
 
@@ -97,18 +104,21 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void addToMap() {
-        if (isCtr) {
-            MarkerOptions mkrOpt = Util.getCenterMkrOpt(locName, (Map) locData.get("geometry"));
+        MarkerOptions mkrOpt = Util.getParkMkrOpt(locData);
+        Marker m = mMap.addMarker(mkrOpt);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
+        /*if (isCtr) {
+            MarkerOptions mkrOpt = Util.getCenterMkrOpt(locData);
             Marker m = mMap.addMarker(mkrOpt);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
-        }
-        if (isPark) {
+        }*/
+        /*if (isPark) {
             List<PolygonOptions> polyList = Util.getParkPolyOpt(locData);
             for (PolygonOptions polyOpt : polyList) {
                 Polygon newPoly = mMap.addPolygon(polyOpt);
             }
             mMap.moveCamera(CameraUpdateFactory.newLatLng(Util.getParkCenter(locData)));
-        }
+        }*/
     }
 
 }
