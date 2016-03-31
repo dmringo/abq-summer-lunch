@@ -6,4 +6,6 @@
     <color name="colorAccentDark">#5867a9</color>
     <color name="ccBaseColor">#859bff</color>
     <color name="parkBaseColor">#9ad48f</color>
+    <color name="logoPurple">#382885</color>
+    <color name="logoPurpleLight">#9378bf</color>
 </resources>

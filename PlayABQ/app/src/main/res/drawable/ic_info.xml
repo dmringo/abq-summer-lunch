@@ -1,0 +1,14 @@
+<!-- XML generated from Google Drawing and modified by David for App -->
+<vector android:height="24dp" android:viewportHeight="132.41208"
+    android:viewportWidth="125.80577" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#ffffff"
+        android:pathData="m1.64,66.21l0,0c0,-35.54 27.43,-64.35 61.26,-64.35l0,0c16.25,0 31.83,6.78 43.32,18.85c11.49,12.07 17.94,28.43 17.94,45.5l0,0c0,35.54 -27.43,64.35 -61.26,64.35l0,0c-33.83,0 -61.26,-28.81 -61.26,-64.35z"
+        android:strokeColor="#00000000" android:strokeLineCap="square"/>
+    <path android:fillColor="#00000000"
+        android:pathData="m1.64,66.21l0,0c0,-35.54 27.43,-64.35 61.26,-64.35l0,0c16.25,0 31.83,6.78 43.32,18.85c11.49,12.07 17.94,28.43 17.94,45.5l0,0c0,35.54 -27.43,64.35 -61.26,64.35l0,0c-33.83,0 -61.26,-28.81 -61.26,-64.35z"
+        android:strokeColor="#382885" android:strokeLineCap="butt"
+        android:strokeLineJoin="round" android:strokeWidth="3.0"/>
+    <path android:fillColor="#382885"
+        android:pathData="m54.31,36.71l0,-16.25l17.56,0l0,16.25l-17.56,0zM54.31,112.08l0,-66.38l17.56,0l0,66.38l-17.56,0z"
+        android:strokeColor="#00000000" android:strokeLineCap="square"/>
+</vector>

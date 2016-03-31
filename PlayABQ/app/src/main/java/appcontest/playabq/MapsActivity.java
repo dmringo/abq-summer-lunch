@@ -182,7 +182,7 @@ public class MapsActivity extends FragmentActivity implements
             double lat = Util.getLat(ctr);
             double lon = Util.getLon(ctr);
             String name = Util.getName(ctr);
-            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getCenterMkrOpt(ctr));
+            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getMarker(ctr, this));
             mClusterManager.addItem(clusterIndicator);
         }
     }
@@ -192,7 +192,7 @@ public class MapsActivity extends FragmentActivity implements
             double lat = Util.getLat(park);
             double lon = Util.getLon(park);
             String name = Util.getName(park);
-            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getParkMkrOpt(park));
+            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getMarker(park,this));
             mClusterManager.addItem(clusterIndicator);
         }
     }
