@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         Util.setUserLocation(Util.getDefaultLocation());
+        Util.isTrackingUser = false;
 
         setContentView(R.layout.activity_main);
 
@@ -228,9 +229,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         mGoogleApiClient.connect();
         /*TODO: REMOVE THESE TESTES */
-        ArrayList<String> features = new ArrayList<>();
-        features.add("PLAYAREAS");
-        Filter.intersectGetLocationsWith(features);
+       // ArrayList<String> features = new ArrayList<>();
+       // features.add("PLAYAREAS");
+       // Filter.intersectGetLocationsWith(features);
         super.onStart();
     }
 

@@ -4,11 +4,12 @@ package appcontest.playabq;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.maps.android.clustering.ClusterItem;
 
 /**
  * Created by Stephen on 3/30/2016.
  */
-public class ClusterIndicator implements com.google.maps.android.clustering.ClusterItem{
+public class ClusterIndicator implements ClusterItem{
     private final LatLng clusterPosition;
     private final MarkerOptions mrkrOptions;
     public ClusterIndicator(double lat, double lng, MarkerOptions markerOptions) {

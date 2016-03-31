@@ -95,9 +95,13 @@ public class MapsActivity extends FragmentActivity implements
         mMap.setOnMarkerClickListener(mClusterManager);
         mClusterManager.setRenderer(new MyClusterRenderer(this,mMap,mClusterManager));
 
+        // if user isn't tracked this will defaultly be the center of ABQ
         LatLng center = new LatLng(Util.getUserLocation().getLatitude(),Util.getUserLocation().getLongitude());
+
+        //found by trial + error
         float zoom = 10.6f;
 
+        //zoom closer to user if user is tracked
         if(Util.isTrackingUser)
         {
             zoom=12;
@@ -109,11 +113,9 @@ public class MapsActivity extends FragmentActivity implements
          * rendering may be threaded and occur before we get the map centered on ABQ */
         mMap.moveCamera(move);
 
-        //getPolys();
         markAllCenters();
         markAllParks();
         markUserLocation();
-        //addClusterItems();
 
         /* onMapLoaded does nothing at the moment, but we'll probably forget to add this if we start
          * using it again, so let's leave this here for now */
@@ -182,7 +184,6 @@ public class MapsActivity extends FragmentActivity implements
             String name = Util.getName(ctr);
             ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getCenterMkrOpt(ctr));
             mClusterManager.addItem(clusterIndicator);
-            //markerMap.put(m.getTitle(), m);
         }
     }
 
@@ -193,7 +194,6 @@ public class MapsActivity extends FragmentActivity implements
             String name = Util.getName(park);
             ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getParkMkrOpt(park));
             mClusterManager.addItem(clusterIndicator);
-            //markerMap.put(m, m.getTitle());
         }
     }
 
@@ -202,18 +202,6 @@ public class MapsActivity extends FragmentActivity implements
             MarkerOptions mkrOpt = Util.getUserMkrOpt();
             Marker m = mMap.addMarker(mkrOpt);
             m.showInfoWindow();
-        }
-    }
-
-    private void addClusterItems() {
-        for (Map park : parkList) {
-            double lat = Util.getLat(park);
-            double lon = Util.getLon(park);
-            String name = Util.getName(park);
-            ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getParkMkrOpt(park));
-            mClusterManager.addItem(clusterIndicator);
-
-            //markerMap.put(m.getTitle(), m);
         }
     }
 
