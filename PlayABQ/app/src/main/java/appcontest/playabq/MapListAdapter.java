@@ -160,7 +160,7 @@ public class MapListAdapter implements ListAdapter {
                 R.mipmap.ic_com_center :
                 R.mipmap.ic_park);
 
-        Location uLoc = context.getUserLocation();
+        Location uLoc = Util.getUserLocation();
         String distance = "";
         if(uLoc != null) distance = String.format("%.1f", Util.getDistanceFromUser(place));
 
