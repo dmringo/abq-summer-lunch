@@ -11,36 +11,39 @@
     </group>
 
     <!-- Header group, helps delineate header from filter items -->
-    <group>
-        <item
-            android:id="@+id/park_header"
-            android:title="@string/park_filter_title"
-            android:icon="@drawable/ic_park"
-            android:onClick="expandFilters"
-            />
-    </group>
+    <item
+        android:id="@+id/park_header"
+        android:title="@string/park_filter_title"
+        android:icon="@drawable/ic_park"
+
+        android:onClick="expandFilters"
+        android:orderInCategory="@integer/parkFilterOrder"
+        />
+
 
     <group android:id="@+id/park_filters"
         android:checkableBehavior="all"
         android:enabled="false"
-        android:visible="false">
-
+        android:visible="false"
+        android:orderInCategory="@integer/parkFilterOrder">
     </group>
 
     <!-- Header group, helps delineate header from filter items -->
-    <group android:checkableBehavior="none">
-        <item
-            android:id="@+id/comm_header"
-            android:title="@string/comm_filter_title"
-            android:icon="@drawable/ic_comm"
-            android:onClick="expandFilters"
-            />
-    </group>
+
+    <item
+        android:id="@+id/comm_header"
+        android:title="@string/comm_filter_title"
+        android:icon="@drawable/ic_comm"
+
+        android:onClick="expandFilters"
+        android:orderInCategory="@integer/commFilterOrder"
+        />
+
     <group android:id="@+id/comm_filters"
         android:checkableBehavior="all"
         android:enabled="false"
-        android:visible="false">
-
+        android:visible="false"
+        android:orderInCategory="@integer/commFilterOrder">
 
     </group>
 

@@ -1,9 +1,11 @@
 package appcontest.playabq;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -12,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -26,13 +29,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.Polygon;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, MenuItem.OnMenuItemClickListener {
 
     private final String TAG = getClass().getSimpleName();
     GoogleApiClient mGoogleApiClient = null;
@@ -66,10 +70,9 @@ public class MainActivity extends AppCompatActivity
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        initNavView(navigationView);
-
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
+            initNavView(navigationView);
         }
 
         // Create an instance of GoogleAPIClient.
@@ -86,14 +89,8 @@ public class MainActivity extends AppCompatActivity
 
         Filter.init(JsonParser.getCommList(commData), JsonParser.getParkList(parkData));
 
-
-
-
-        /* David's fuckery begins here.  Remove this comment before release! */
-
         ListView lv = (ListView) findViewById(R.id.list_view);
         lv.setAdapter(new MapListAdapter(this,Filter.filtered()));
-
 
         drawer.openDrawer(GravityCompat.START);
     }
@@ -121,8 +118,25 @@ public class MainActivity extends AppCompatActivity
             
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void initNavView(NavigationView nv) {
-
+        Menu menu = nv.getMenu();
+        MenuItem item;
+        int i = 0;
+        for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
+        {
+            menu.add(R.id.park_filters, R.integer.parkFilterOrder ,Menu.NONE ,p)
+                    .setActionView(new AppCompatCheckBox(this))
+                    .setOnMenuItemClickListener(this)
+                    .setVisible(false);
+        }
+        for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
+        {
+            menu.add(R.id.comm_filters, R.integer.commFilterOrder, Menu.NONE,cc)
+                    .setActionView(new AppCompatCheckBox(this))
+                    .setOnMenuItemClickListener(this)
+                    .setVisible(false);
+        }
     }
 
 
@@ -248,10 +262,8 @@ public class MainActivity extends AppCompatActivity
 
     protected void onStart() {
         mGoogleApiClient.connect();
-        /*TODO: REMOVE THESE TESTES */
-       // ArrayList<String> features = new ArrayList<>();
-       // features.add("PLAYAREAS");
-       // Filter.intersectGetLocationsWith(features);
+
+
         super.onStart();
     }
 
@@ -300,4 +312,18 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Called when a menu item has been invoked.  This is the first code
+     * that is executed; if it returns true, no other callbacks will be
+     * executed.
+     *
+     * @param item The menu item that was invoked.
+     * @return Return true to consume this click and prevent others from
+     * executing.
+     */
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        item.getActionView().performClick();
+        return true;
+    }
 }
