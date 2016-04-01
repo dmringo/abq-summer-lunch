@@ -2,30 +2,23 @@ package appcontest.playabq;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
@@ -45,14 +38,7 @@ public class MapsActivity extends FragmentActivity implements
     // aliases maps Json field names to their aliases
     private ArrayList<Map<String, Object>> parkList;
     private ArrayList<Map<String, Object>> commList;
-    private HashMap<String,String> ctrAliases;
-    private HashMap<String,String> parkAliases;
 
-
-    // polygonMap has park polygons as keys, their names as values
-    // for use in click listener
-    //private Map<Polygon, String> polygonMap;
-   // private Map<Marker, String> markerMap = new HashMap<>();
 
     private ClusterManager<ClusterIndicator> mClusterManager;
 
@@ -61,9 +47,6 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        Intent intent = getIntent();
-        parkAliases = (HashMap) intent.getExtras().get("parkAliases");
-        ctrAliases = (HashMap) intent.getExtras().get("ctrAliases");
         parkList = Filter.selectParks(Filter.filtered());
         commList = Filter.selectCommCenters(Filter.filtered());
 
@@ -87,20 +70,11 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        /*mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
-        mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
-        mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);*/
         mMap.setOnInfoWindowClickListener(this);
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
 
         GoogleMapAdapter adapter = new GoogleMapAdapter();
-        //adapter.setAllListeners(mMap);
 
-        /*
-        for (Polygon poly : polygonMap.keySet()) {
-            System.out.println(polygonMap.get(poly));
-            System.out.println(poly.getPoints());
-        }*/
 
         //settup clustering
         mClusterManager = new ClusterManager<ClusterIndicator>(this, mMap);
@@ -155,30 +129,7 @@ public class MapsActivity extends FragmentActivity implements
 
         HashMap<Polygon, String> polygonMap = new HashMap<>();
         for (Map park : parkList) {
-            /*
-            String name = (String) park.get("PARKNAME");
-            Map coords = (Map) park.get("geometry");
-            // get arraylist of arraylists representing contiguous areas
-            for (Object key : coords.keySet()) {
-                List polys = (List) coords.get(key);
-                for (Object poly : polys) {
-                    //poly is arraylist of 2-element arraylists
-                    // representing closed polygon
-                    ArrayList coordList = (ArrayList) poly;
-                    List<LatLng> vtxList = new ArrayList<LatLng>();
-                    for (Object coord : coordList) {
-                        @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
-                        double lat = doubleList.get(1);
-                        double lon = doubleList.get(0);
-                        LatLng latlon = new LatLng(lat, lon);
-                        vtxList.add(latlon);
-                    }
-                    PolygonOptions polyOpt = new PolygonOptions()
-                            .addAll(vtxList)
-                            .strokeColor(Color.RED)
-                            .fillColor(Color.BLUE)
-                            .clickable(true);
-                    */
+
             String name = (String) park.get("PARKNAME");
 
             List<PolygonOptions> polyList = Util.getParkPolyOpt(park);
@@ -193,10 +144,10 @@ public class MapsActivity extends FragmentActivity implements
     private void markAllCenters() {
         for (Map ctr : commList) {
             MarkerOptions mkrOpt = (MarkerOptions) ctr.get("MarkerOptions");
-            //Marker m = mMap.addMarker(mkrOpt);
+
             double lat = Util.getLat(ctr);
             double lon = Util.getLon(ctr);
-            String name = Util.getName(ctr);
+
             ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getMarker(ctr, this));
             mClusterManager.addItem(clusterIndicator);
         }
@@ -205,10 +156,10 @@ public class MapsActivity extends FragmentActivity implements
     private void markAllParks() {
         for (Map park : parkList) {
             MarkerOptions mkrOpt = (MarkerOptions) park.get("MarkerOptions");
-            //Marker m = mMap.addMarker(mkrOpt);
+
             double lat = Util.getLat(park);
             double lon = Util.getLon(park);
-            String name = Util.getName(park);
+
             ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getMarker(park,this));
             mClusterManager.addItem(clusterIndicator);
         }
@@ -228,8 +179,7 @@ public class MapsActivity extends FragmentActivity implements
             Intent intent = new Intent(this, LocationActivity.class);
             HashMap locData = (HashMap) getMarkerData(marker);
             intent.putExtra("data", locData);
-            intent.putExtra("ctrAliases",ctrAliases);
-            intent.putExtra("parkAliases",parkAliases);
+
             startActivity(intent);
         }
     }
@@ -274,7 +224,9 @@ public class MapsActivity extends FragmentActivity implements
                 mContents = getLayoutInflater().inflate(R.layout.info_window_layout, null);
                 TextView titleUi = ((TextView) mContents.findViewById(R.id.title_window));
                 titleUi.setText(title);
-                int info = R.drawable.ic_comm;
+                int info = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
+                        R.drawable.ic_info : R.drawable.ic_info_bmp;
+
                 ((ImageView) mContents.findViewById(R.id.info)).setImageResource(info);
                 ((ImageView) mContents.findViewById(R.id.info)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }

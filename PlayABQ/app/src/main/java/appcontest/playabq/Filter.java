@@ -11,6 +11,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +22,23 @@ import java.util.Map;
  * Class meant to filter the parsed json community center and map information.
  */
 public class Filter {
-    private static ArrayList<Map<String, Object>> communityCenterList;
-    private static ArrayList<Map<String, Object>> parkList;
-    private static ArrayList<Map<String, Object>> currentFilteredLocations;
+    private static ArrayList<HashMap<String, Object>> communityCenterList;
+    private static ArrayList<HashMap<String, Object>> parkList;
+    private static ArrayList<HashMap<String, Object>> currentFilteredLocations;
+    private static ArrayList<String> currentFields = new ArrayList<>();
     private static Location userLocation;
+    private static Comparator<? super HashMap<String, Object>> comparator =
+            new DistanceFromUserComparator();
 
-    public static void init (ArrayList<Map<String, Object>> commList,  ArrayList<Map<String, Object>> prkList) {
+    public static void init (ArrayList<HashMap<String, Object>> commList,
+                             ArrayList<HashMap<String, Object>> prkList) {
         communityCenterList= commList;
         parkList=prkList;
 
         currentFilteredLocations= new ArrayList<>();
         currentFilteredLocations.addAll(prkList);
         currentFilteredLocations.addAll(commList);
-        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
+        sort();
     }
 
     /**
@@ -41,29 +47,32 @@ public class Filter {
      * @return a list of community centers and parks that include all of the features in sorted
      * with increasing distance from user.
      */
-    public static ArrayList<Map<String,Object>> intersectGetLocationsWith(List<String>requiredFeatures) {
+    public static ArrayList<HashMap<String, Object>> intersectGetLocationsWith(List<String> requiredFeatures) {
         currentFilteredLocations.clear();
-            for (Map ctr : communityCenterList) {
+        currentFilteredLocations.addAll(parkList);
+        currentFilteredLocations.addAll(communityCenterList);
+            for (HashMap ctr : communityCenterList) {
                 for (String requiredFeature:requiredFeatures) {
-                    if (!resemblesTruth(ctr, requiredFeature)) {
-                        currentFilteredLocations.remove(ctr);
-                        break;
-                    } else if (!currentFilteredLocations.contains(ctr)) {
-                        currentFilteredLocations.add(ctr);
+                    if (ctr.containsKey(requiredFeature))
+                    {
+                        if(!resemblesTruth(ctr, requiredFeature)) {
+                            currentFilteredLocations.remove(ctr);
+                            break;
+                        }
                     }
                 }
             }
-            for (Map prk : parkList) {
+            for (HashMap prk : parkList) {
                 for (String requiredFeature:requiredFeatures) {
-                    if (!resemblesTruth(prk, requiredFeature)) {
-                        currentFilteredLocations.remove(prk);
-                        break;
-                    } else if (!currentFilteredLocations.contains(prk)) {
-                        currentFilteredLocations.add(prk);
+                    if(prk.containsKey(requiredFeature)) {
+                        if (!resemblesTruth(prk, requiredFeature)) {
+                            currentFilteredLocations.remove(prk);
+                            break;
+                        }
                     }
                 }
             }
-        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
+        sort();
         return currentFilteredLocations;
     }
 
@@ -73,21 +82,25 @@ public class Filter {
      * @return a list of community centers and parks that include any of the features in sorted
      * with increasing distance from user.
      */
-    public static ArrayList<Map<String, Object>> unionGetLocationsWith(List<String> requiredFeatures) {
+    public static ArrayList<HashMap<String, Object>> unionGetLocationsWith(List<String> requiredFeatures) {
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
-            for (Map ctr : communityCenterList) {
-                if (resemblesTruth(ctr, requiredFeature) && !currentFilteredLocations.contains(ctr)) {
+            for (HashMap ctr : communityCenterList) {
+                if (ctr.containsKey(requiredFeature) &&
+                        resemblesTruth(ctr, requiredFeature) &&
+                        !currentFilteredLocations.contains(ctr)) {
                     currentFilteredLocations.add(ctr);
                 }
             }
-            for (Map prk : parkList) {
-                if (resemblesTruth(prk, requiredFeature) && !currentFilteredLocations.contains(prk)) {
+            for (HashMap prk : parkList) {
+                if (prk.containsKey(requiredFeature) &&
+                        resemblesTruth(prk, requiredFeature)
+                        && !currentFilteredLocations.contains(prk)) {
                     currentFilteredLocations.add(prk);
                 }
             }
         }
-        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
+        sort();
         return currentFilteredLocations;
     }
 
@@ -121,39 +134,65 @@ public class Filter {
      * @return the current filtered list to contain every park and community center
      * it did not contain, while removing every area it did contain previously.
      */
-    public static ArrayList<Map<String, Object>> negateCurrentFiltered(){
-        for (Map ctr : communityCenterList) {
+    public static ArrayList<HashMap<String, Object>> negateCurrentFiltered(){
+        for (HashMap ctr : communityCenterList) {
            if (currentFilteredLocations.contains(ctr)) {
                currentFilteredLocations.remove(ctr);
            } else {
                currentFilteredLocations.add(ctr);
            }
         }
-        for (Map prk : parkList) {
+        for (HashMap prk : parkList) {
             if (currentFilteredLocations.contains(prk)) {
                 currentFilteredLocations.remove(prk);
             } else {
                 currentFilteredLocations.add(prk);
             }
         }
-        Collections.sort(currentFilteredLocations, new DistanceFromUserComparator());
+
+        sort();
         return currentFilteredLocations;
     }
 
-    public static ArrayList<Map<String, Object>> filtered()
+    public static ArrayList<HashMap<String, Object>> filtered()
     {
         return currentFilteredLocations;
     }
 
-    public static ArrayList<Map<String, Object>> selectParks(ArrayList<Map<String, Object>> all) {
+    public static ArrayList<Map<String, Object>> selectParks(ArrayList<HashMap<String, Object>> all) {
         ArrayList parks = new ArrayList();
         for(Map m : all) if(Util.isPark(m)) parks.add(m);
         return parks;
     }
 
-    public static ArrayList<Map<String, Object>> selectCommCenters(ArrayList<Map<String, Object>> all) {
+    public static ArrayList<Map<String, Object>> selectCommCenters(ArrayList<HashMap<String, Object>> all) {
         ArrayList commCenters = new ArrayList();
         for(Map m : all) if(Util.isCommCenter(m)) commCenters.add(m);
         return commCenters;
+    }
+
+    public static void addRequirement(String key) {
+        currentFields.add(key);
+
+        Iterator<HashMap<String, Object>> iterator = currentFilteredLocations.iterator();
+        while(iterator.hasNext())
+        {
+            HashMap m = iterator.next();
+            if(m.containsKey(key) && !resemblesTruth(m, key))
+            {
+                iterator.remove();
+            }
+        }
+        sort();
+    }
+
+    public static void sort() {
+        Collections.sort(currentFilteredLocations, comparator);
+    }
+
+
+    public static void removeRequirement(String key) {
+        currentFields.remove(key);
+        intersectGetLocationsWith(currentFields);
     }
 }

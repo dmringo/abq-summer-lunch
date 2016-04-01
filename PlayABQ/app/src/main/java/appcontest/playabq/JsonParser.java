@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,15 +56,15 @@ public class JsonParser {
 
 
 
-    public static ArrayList<Map<String, Object>> getParkList(Map parkData) {
-        ArrayList<Map<String,Object>> features = (ArrayList) parkData.get("features");
-        ArrayList<Map<String,Object>> parkList = new ArrayList();
+    public static ArrayList<HashMap<String, Object>> getParkList(Map parkData) {
+        ArrayList<HashMap<String,Object>> features = (ArrayList) parkData.get("features");
+        ArrayList<HashMap<String,Object>> parkList = new ArrayList();
         List<String> parksRead = new ArrayList<String>();
         for (Map park : features) {
-            Map<String,Object> parkMap = (Map) park.get("attributes");
+            HashMap<String,Object> parkMap = (HashMap<String, Object>) park.get("attributes");
 
             // See if is duplicate
-            if (parksRead.contains((String) parkMap.get("PARKNAME"))) {
+            if (parksRead.contains(parkMap.get("PARKNAME"))) {
                 String name = (String) parkMap.get("PARKNAME");
                 Map oldMap = null;
                 for (Map pk : parkList) {
@@ -99,8 +100,8 @@ public class JsonParser {
         }
     }
 
-    public static Map<String,String> getAliases(Map data) {
-        return (Map) data.get("fieldAliases");
+    public static HashMap<String,String> getAliases(Map data) {
+        return (HashMap) data.get("fieldAliases");
     }
 
     public static Map<String,Object> getCommData(Context ct)  {
@@ -116,7 +117,7 @@ public class JsonParser {
     }
 
 
-    public static ArrayList<Map<String,Object>> getCommList(Map commData) {
+    public static ArrayList<HashMap<String, Object>> getCommList(Map commData) {
         List features = (List) commData.get("features");
         ArrayList commList = new ArrayList();
         for (Object ctr : features) {
