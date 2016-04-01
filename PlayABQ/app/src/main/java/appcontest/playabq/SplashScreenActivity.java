@@ -39,6 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity implements
     GoogleApiClient mGoogleApiClient = null;
     final int FINE_LOCATION_ACCESS_REQUEST=0;
     private LocationListener locationListener;
+    private boolean hasLoadedGoogleAPI = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +94,13 @@ public class SplashScreenActivity extends AppCompatActivity implements
     /** Called when the user clicks the Send button */
     public void getStarted() {
         // Do something in response to button
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if(hasLoadedGoogleAPI) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "One moment, waiting for location information. Please try again.",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -124,6 +130,7 @@ public class SplashScreenActivity extends AppCompatActivity implements
             Log.i("LOCATION", "Don't need to request permission");
             startLocationUpdates();
         }
+        hasLoadedGoogleAPI=true;
     }
 
     protected void onStart() {
