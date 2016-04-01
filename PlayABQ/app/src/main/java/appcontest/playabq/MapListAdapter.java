@@ -161,6 +161,8 @@ public class MapListAdapter implements ListAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(context, LocationActivity.class);
                 intent.putExtra("data", place);
+                if(Util.isPark(place)) intent.putExtra("parkAliases", context.parkAliases);
+                else intent.putExtra("ctrAliases", context.ctrAliases);
                 context.startActivity(intent);
             }
         });
@@ -170,7 +172,7 @@ public class MapListAdapter implements ListAdapter {
 
         Location uLoc = Util.getUserLocation();
         String distance = "";
-        if(uLoc != null) distance = String.format("%.1f",
+        if(uLoc != null) distance = String.format("%.1f mi",
                 Util.metersToMiles(Util.getDistanceFromUser(place)));
 
         dist.setText(distance);
