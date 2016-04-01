@@ -224,8 +224,7 @@ public class MapsActivity extends FragmentActivity implements
                 mContents = getLayoutInflater().inflate(R.layout.info_window_layout, null);
                 TextView titleUi = ((TextView) mContents.findViewById(R.id.title_window));
                 titleUi.setText(title);
-                int info = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
-                        R.drawable.ic_info : R.drawable.ic_info_bmp;
+                int info = R.drawable.ic_info;
 
                 ((ImageView) mContents.findViewById(R.id.info)).setImageResource(info);
                 ((ImageView) mContents.findViewById(R.id.info)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
