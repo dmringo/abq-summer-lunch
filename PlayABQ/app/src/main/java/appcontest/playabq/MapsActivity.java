@@ -37,14 +37,7 @@ public class MapsActivity extends FragmentActivity implements
     // aliases maps Json field names to their aliases
     private ArrayList<Map<String, Object>> parkList;
     private ArrayList<Map<String, Object>> commList;
-//    private HashMap<String,String> ctrAliases;
-//    private HashMap<String,String> parkAliases;
 
-
-    // polygonMap has park polygons as keys, their names as values
-    // for use in click listener
-    //private Map<Polygon, String> polygonMap;
-   // private Map<Marker, String> markerMap = new HashMap<>();
 
     private ClusterManager<ClusterIndicator> mClusterManager;
 
@@ -76,20 +69,11 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        /*mMap.setOnMapClickListener(GoogleMapAdapter.DEBUG_IMPL);
-        mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
-        mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);*/
         mMap.setOnInfoWindowClickListener(this);
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
 
         GoogleMapAdapter adapter = new GoogleMapAdapter();
-        //adapter.setAllListeners(mMap);
 
-        /*
-        for (Polygon poly : polygonMap.keySet()) {
-            System.out.println(polygonMap.get(poly));
-            System.out.println(poly.getPoints());
-        }*/
 
         //settup clustering
         mClusterManager = new ClusterManager<ClusterIndicator>(this, mMap);
@@ -144,30 +128,7 @@ public class MapsActivity extends FragmentActivity implements
 
         HashMap<Polygon, String> polygonMap = new HashMap<>();
         for (Map park : parkList) {
-            /*
-            String name = (String) park.get("PARKNAME");
-            Map coords = (Map) park.get("geometry");
-            // get arraylist of arraylists representing contiguous areas
-            for (Object key : coords.keySet()) {
-                List polys = (List) coords.get(key);
-                for (Object poly : polys) {
-                    //poly is arraylist of 2-element arraylists
-                    // representing closed polygon
-                    ArrayList coordList = (ArrayList) poly;
-                    List<LatLng> vtxList = new ArrayList<LatLng>();
-                    for (Object coord : coordList) {
-                        @SuppressWarnings("unchecked") ArrayList<Double> doubleList = (ArrayList) coord;
-                        double lat = doubleList.get(1);
-                        double lon = doubleList.get(0);
-                        LatLng latlon = new LatLng(lat, lon);
-                        vtxList.add(latlon);
-                    }
-                    PolygonOptions polyOpt = new PolygonOptions()
-                            .addAll(vtxList)
-                            .strokeColor(Color.RED)
-                            .fillColor(Color.BLUE)
-                            .clickable(true);
-                    */
+
             String name = (String) park.get("PARKNAME");
 
             List<PolygonOptions> polyList = Util.getParkPolyOpt(park);
@@ -182,10 +143,10 @@ public class MapsActivity extends FragmentActivity implements
     private void markAllCenters() {
         for (Map ctr : commList) {
             MarkerOptions mkrOpt = (MarkerOptions) ctr.get("MarkerOptions");
-            //Marker m = mMap.addMarker(mkrOpt);
+
             double lat = Util.getLat(ctr);
             double lon = Util.getLon(ctr);
-            String name = Util.getName(ctr);
+
             ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getMarker(ctr, this));
             mClusterManager.addItem(clusterIndicator);
         }
@@ -194,10 +155,10 @@ public class MapsActivity extends FragmentActivity implements
     private void markAllParks() {
         for (Map park : parkList) {
             MarkerOptions mkrOpt = (MarkerOptions) park.get("MarkerOptions");
-            //Marker m = mMap.addMarker(mkrOpt);
+
             double lat = Util.getLat(park);
             double lon = Util.getLon(park);
-            String name = Util.getName(park);
+
             ClusterIndicator clusterIndicator = new ClusterIndicator(lat,lon,Util.getMarker(park,this));
             mClusterManager.addItem(clusterIndicator);
         }
@@ -217,8 +178,6 @@ public class MapsActivity extends FragmentActivity implements
             Intent intent = new Intent(this, LocationActivity.class);
             HashMap locData = (HashMap) getMarkerData(marker);
             intent.putExtra("data", locData);
-//            intent.putExtra("ctrAliases",ctrAliases);
-//            intent.putExtra("parkAliases",parkAliases);
             startActivity(intent);
         }
     }

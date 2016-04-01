@@ -55,7 +55,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         String[] possFeatures;
         if (Util.isCommCenter(locData)) {
             isCtr = true;
-            aliases = Util.aliases;//(Map) (intent.getSerializableExtra("ctrAliases"));
+            aliases = Util.aliases;
         }
         else {
             isPark = true;
@@ -97,10 +97,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mapView = (MapView) findViewById(R.id.location_map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        /**SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.location_map);
-        mapFragment.getMapAsync(this);**/
+
 
         setUpList(features);
     }
@@ -115,9 +112,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         ArrayAdapter itemsAdapter;
         itemsAdapter = new ArrayAdapter(this, android.R.layout.test_list_item, features);
 
-        //ArrayAdapter<String> itemsAdapter =
-        //        new ArrayAdapter<String>(this, R.layout.activity_location, R.id.loc_list_item, features);
-
         listView = (ListView) findViewById(R.id.location_list);
         listView.setAdapter(itemsAdapter);
 
@@ -127,18 +121,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         MarkerOptions mkrOpt = Util.getMarker(locData, this);
         Marker m = mMap.addMarker(mkrOpt);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
-        /*if (isCtr) {
-            MarkerOptions mkrOpt = Util.getCenterMkrOpt(locData);
-            Marker m = mMap.addMarker(mkrOpt);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
-        }*/
-        /*if (isPark) {
-            List<PolygonOptions> polyList = Util.getParkPolyOpt(locData);
-            for (PolygonOptions polyOpt : polyList) {
-                Polygon newPoly = mMap.addPolygon(polyOpt);
-            }
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(Util.getParkCenter(locData)));
-        }*/
     }
 
 }

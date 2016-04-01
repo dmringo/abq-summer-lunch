@@ -194,8 +194,6 @@ public class MainActivity extends AppCompatActivity
             Log.i("OptItem", key);
         }
 
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -203,6 +201,7 @@ public class MainActivity extends AppCompatActivity
 
 
     protected void onStart() {
+        Filter.sort();
         super.onStart();
     }
 

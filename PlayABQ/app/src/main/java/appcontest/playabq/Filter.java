@@ -186,7 +186,7 @@ public class Filter {
         sort();
     }
 
-    private static void sort() {
+    public static void sort() {
         Collections.sort(currentFilteredLocations, comparator);
     }
 
