@@ -1,5 +1,6 @@
 package appcontest.playabq;
 
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.location.Location;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +29,6 @@ public class MapListAdapter implements ListAdapter {
         this.recs = recs;
         this.context = context;
     }
-
-
 
 
     /**
@@ -153,18 +153,26 @@ public class MapListAdapter implements ListAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.list_name_text);
         TextView dist = (TextView) convertView.findViewById(R.id.list_distance_text);
         ImageView ico = (ImageView) convertView.findViewById(R.id.list_icon);
-        Map place = recs.get(position);
+        final HashMap<String,Object> place = (HashMap<String, Object>) recs.get(position);
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, LocationActivity.class);
+                intent.putExtra("data", place);
+                context.startActivity(intent);
+            }
+        });
         ico.setImageResource(Util.isCommCenter(place) ?
                 R.drawable.ic_comm :
                 R.drawable.ic_park);
 
         Location uLoc = Util.getUserLocation();
         String distance = "";
-        if(uLoc != null) distance = String.format("%.1f", Util.getDistanceFromUser(place));
+        if(uLoc != null) distance = String.format("%.1f",
+                Util.metersToMiles(Util.getDistanceFromUser(place)));
 
         dist.setText(distance);
-
         name.setText(Util.getName(place));
 
         return convertView;

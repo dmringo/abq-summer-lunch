@@ -1,5 +1,7 @@
 package appcontest.playabq;
 
+import android.annotation.TargetApi;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -138,6 +141,7 @@ public class Util {
     }
 
 
+
     public static MarkerOptions getMarker(Map<String, Object> loc, Context ctx)
     {
         int drawableId = isPark(loc) ? R.drawable.ic_park : R.drawable.ic_comm;
@@ -146,7 +150,6 @@ public class Util {
         BitmapDescriptor ico = makeMarkerBitmapDescr(ctx, drawableId);
 
         return new MarkerOptions().position(new LatLng(lat, lon)).title(getName(loc)).icon(ico);
-
     }
 
 
@@ -161,9 +164,11 @@ public class Util {
      * @param drawableId Resource ID for the drawable object to make a marker for
      * @return BitmapDescriptor to use for a MarkerOptions object
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static BitmapDescriptor makeMarkerBitmapDescr(Context ctx, int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(ctx, drawableId);
         Bitmap bm;
+
         if (drawable instanceof VectorDrawable){
             int h = drawable.getIntrinsicHeight();
             int w = drawable.getIntrinsicWidth();
