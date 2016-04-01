@@ -102,7 +102,7 @@ public class Filter {
         Object predicate;
         if ((predicate=location.get(feature))==null)
             return false;
-        String strPred = (String) predicate.toString();
+        String strPred = predicate.toString();
         return !(strPred.equalsIgnoreCase("false") || strPred.equals("0"));
     }
 
