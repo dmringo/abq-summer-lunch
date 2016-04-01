@@ -262,7 +262,10 @@ public class MapsActivity extends FragmentActivity implements
         public View getInfoContents(Marker marker) {
             View mContents;
             String title = marker.getTitle();
-            if (title.equals("My Location")) {
+            if (title==null){
+                mContents = null;
+            }
+            else if (title.equals("My Location")) {
                 mContents = getLayoutInflater().inflate(R.layout.my_location_info_layout, null);
                 TextView titleUi = ((TextView) mContents.findViewById(R.id.my_title_window));
                 titleUi.setText(title);
@@ -275,18 +278,6 @@ public class MapsActivity extends FragmentActivity implements
                 ((ImageView) mContents.findViewById(R.id.info)).setImageResource(info);
                 ((ImageView) mContents.findViewById(R.id.info)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }
-            /*int badge;
-            Map mrkData = getMarkerData(marker);
-            if (Util.isCommCenter(mrkData)) {
-                badge = R.mipmap.ic_com_center;
-            }
-            else {
-                badge = R.mipmap.ic_park;
-            }
-            ((ImageView) mContents.findViewById(R.id.badge)).setImageResource(badge);
-            //((ImageView) mContents.findViewById(R.id.badge)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            */
-
             return mContents;
         }
     }
