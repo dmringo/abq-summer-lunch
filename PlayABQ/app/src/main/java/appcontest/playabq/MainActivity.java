@@ -15,24 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -42,13 +32,12 @@ public class MainActivity extends AppCompatActivity
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
 
-    private HashMap<String,String> ctrAliases;
-    private HashMap<String,String> parkAliases;
+    HashMap<String,String> ctrAliases;
+    HashMap<String,String> parkAliases;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,6 +68,7 @@ public class MainActivity extends AppCompatActivity
         }*/
 
         MapsInitializer.initialize(getApplicationContext());
+
         Map parkData = JsonParser.getParkData(this);
         Map commData = JsonParser.getCommData(this);
         parkAliases = (HashMap) JsonParser.getAliases(parkData);
@@ -91,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         }
         ArrayList<Map<String, Object>> parkList = JsonParser.getParkList(parkData);
         for (Map park : parkList) {
-            MarkerOptions mkrOpt = Util.getMarker(park,this);
+            MarkerOptions mkrOpt = Util.getMarker(park, this);
             park.put("MarkerOptions", mkrOpt);
         }
         Filter.init(commList, parkList);
@@ -135,7 +125,7 @@ public class MainActivity extends AppCompatActivity
             
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+
     private void initNavView(NavigationView nv) {
         Menu menu = nv.getMenu();
         AppCompatImageView iv1 = new AppCompatImageView(this);
@@ -144,8 +134,10 @@ public class MainActivity extends AppCompatActivity
         iv2.setImageResource(R.drawable.ic_add_24dp);
 
 
-        menu.findItem(R.id.park_header).setActionView(iv1);
-        menu.findItem(R.id.comm_header).setActionView(iv2);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            menu.findItem(R.id.park_header).setActionView(iv1);
+            menu.findItem(R.id.comm_header).setActionView(iv2);
+        }
 
 
 

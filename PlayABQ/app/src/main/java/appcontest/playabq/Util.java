@@ -1,5 +1,6 @@
 package appcontest.playabq;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,18 +10,18 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.google.android.gms.maps.model.LatLngBounds;
-
 import java.util.Map;
 
 /**
@@ -138,15 +139,20 @@ public class Util {
     }
 
 
+
     public static MarkerOptions getMarker(Map<String, Object> loc, Context ctx)
     {
-        int drawableId = isPark(loc) ? R.drawable.ic_park : R.drawable.ic_comm;
+        int drawableId;
+        boolean isPark = isPark(loc);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            drawableId = isPark ? R.drawable.ic_park : R.drawable.ic_comm;
+        else
+            drawableId = isPark ? R.drawable.ic_park_bmp : R.drawable.ic_comm_bmp;
         double lat = getLat(loc);
         double lon = getLon(loc);
         BitmapDescriptor ico = makeMarkerBitmapDescr(ctx, drawableId);
 
         return new MarkerOptions().position(new LatLng(lat, lon)).title(getName(loc)).icon(ico);
-
     }
 
 
@@ -161,22 +167,25 @@ public class Util {
      * @param drawableId Resource ID for the drawable object to make a marker for
      * @return BitmapDescriptor to use for a MarkerOptions object
      */
+
     private static BitmapDescriptor makeMarkerBitmapDescr(Context ctx, int drawableId) {
         Drawable drawable = ContextCompat.getDrawable(ctx, drawableId);
         Bitmap bm;
-        if (drawable instanceof VectorDrawable){
+
+        if(drawable instanceof BitmapDrawable) {
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inSampleSize = 3;
+            bm = BitmapFactory.decodeResource(ctx.getResources(), drawableId,
+                    opts);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+                drawable instanceof VectorDrawable){
             int h = drawable.getIntrinsicHeight();
             int w = drawable.getIntrinsicWidth();
             drawable.setBounds(0, 0, w, h);
             bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bm);
             drawable.draw(canvas);
-        }
-        else if(drawable instanceof BitmapDrawable) {
-            BitmapFactory.Options opts = new BitmapFactory.Options();
-            opts.inSampleSize = 3;
-            bm = BitmapFactory.decodeResource(ctx.getResources(), drawableId,
-                    opts);
         }
         else throw new IllegalArgumentException("Bad drawable for Markers");
 
