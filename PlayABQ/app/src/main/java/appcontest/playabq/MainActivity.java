@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -236,7 +237,6 @@ public class MainActivity extends AppCompatActivity
      * @param isChecked  The new checked state of buttonView.
      */
     @Override
-    @UiThread
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         String key = Util.keyByAlias((String) buttonView.getTag());
         if (key != null) {
