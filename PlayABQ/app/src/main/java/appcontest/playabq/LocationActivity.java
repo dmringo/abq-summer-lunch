@@ -104,7 +104,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void addToMap() {
-        MarkerOptions mkrOpt = Util.getParkMkrOpt(locData);
+        MarkerOptions mkrOpt = Util.getMarker(locData, this);
         Marker m = mMap.addMarker(mkrOpt);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
         /*if (isCtr) {

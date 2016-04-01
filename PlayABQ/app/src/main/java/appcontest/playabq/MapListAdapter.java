@@ -1,6 +1,5 @@
 package appcontest.playabq;
 
-import android.app.Activity;
 import android.database.DataSetObserver;
 import android.location.Location;
 import android.view.LayoutInflater;
@@ -157,8 +156,8 @@ public class MapListAdapter implements ListAdapter {
         Map place = recs.get(position);
 
         ico.setImageResource(Util.isCommCenter(place) ?
-                R.mipmap.ic_com_center :
-                R.mipmap.ic_park);
+                R.drawable.ic_comm :
+                R.drawable.ic_park);
 
         Location uLoc = Util.getUserLocation();
         String distance = "";

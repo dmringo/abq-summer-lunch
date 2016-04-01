@@ -3,8 +3,13 @@ package appcontest.playabq;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
+import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -22,6 +27,8 @@ import java.util.Map;
  * Created by david on 3/26/16.
  */
 public class Util {
+
+
     private static String ccBaseColor = "#859bff";
     private static String parkBaseColor = "#9ad48f";
     private static String usrBaseColor = "#ffff80";
@@ -72,15 +79,7 @@ public class Util {
     }
 
 
-    public static MarkerOptions getCenterMkrOpt(Map<String, Object> center) {
-        String name = getName(center);
-        double lat = getLat(center);
-        double lon = getLon(center);
-        float[] hsv = new float[3];
-        Color.colorToHSV(Color.parseColor(ccBaseColor), hsv);
-        BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
-        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
-    }
+
 
     public static MarkerOptions getUserMkrOpt() {
         float[] hsv = new float[3];
@@ -138,15 +137,54 @@ public class Util {
         return center;
     }
 
-    public static MarkerOptions getParkMkrOpt(Map<String, Object> park) {
-        String name = getName(park);
-        double lat = getLat(park);
-        double lon = getLon(park);
-        float[] hsv = new float[3];
-        Color.colorToHSV(Color.parseColor(parkBaseColor), hsv);
-        BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
-        return new MarkerOptions().position(new LatLng(lat, lon)).title(name).icon(color);
+
+    public static MarkerOptions getMarker(Map<String, Object> loc, Context ctx)
+    {
+        int drawableId = isPark(loc) ? R.drawable.ic_park : R.drawable.ic_comm;
+        double lat = getLat(loc);
+        double lon = getLon(loc);
+        BitmapDescriptor ico = makeMarkerBitmapDescr(ctx, drawableId);
+
+        return new MarkerOptions().position(new LatLng(lat, lon)).title(getName(loc)).icon(ico);
+
     }
+
+
+    /*  */
+
+    /**
+     * This is a sort of hacky way of setting the icons to a reasonable size.
+     * Not sure if it's really portable.  - David
+     * TODO: test on other devices
+     *
+     * @param ctx  Resources for app
+     * @param drawableId Resource ID for the drawable object to make a marker for
+     * @return BitmapDescriptor to use for a MarkerOptions object
+     */
+    private static BitmapDescriptor makeMarkerBitmapDescr(Context ctx, int drawableId) {
+        Drawable drawable = ContextCompat.getDrawable(ctx, drawableId);
+        Bitmap bm;
+        if (drawable instanceof VectorDrawable){
+            int h = drawable.getIntrinsicHeight();
+            int w = drawable.getIntrinsicWidth();
+            drawable.setBounds(0, 0, w, h);
+            bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bm);
+            drawable.draw(canvas);
+        }
+        else if(drawable instanceof BitmapDrawable) {
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inSampleSize = 3;
+            bm = BitmapFactory.decodeResource(ctx.getResources(), drawableId,
+                    opts);
+        }
+        else throw new IllegalArgumentException("Bad drawable for Markers");
+
+        BitmapDescriptor ico = BitmapDescriptorFactory.fromBitmap(bm);
+        return ico;
+    }
+
+
 
     /**
      * Called from Main Activity
