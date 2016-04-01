@@ -4,47 +4,44 @@
 
     <group android:id="@+id/map_group">
         <item
+            android:title="View Map"
             android:id="@+id/go_to_maps"
             android:icon="@drawable/ic_map_24dp"
-            android:title="View Map"
             />
     </group>
 
     <!-- Header group, helps delineate header from filter items -->
+    <group>
     <item
         android:id="@+id/park_header"
         android:title="@string/park_filter_title"
         android:icon="@drawable/ic_park"
-
         android:onClick="expandFilters"
         android:orderInCategory="@integer/parkFilterOrder"
         />
-
+    </group>
 
     <group android:id="@+id/park_filters"
         android:checkableBehavior="all"
         android:enabled="false"
-        android:visible="false"
-        android:orderInCategory="@integer/parkFilterOrder">
+        android:visible="false">
     </group>
 
     <!-- Header group, helps delineate header from filter items -->
-
+    <group>
     <item
         android:id="@+id/comm_header"
         android:title="@string/comm_filter_title"
         android:icon="@drawable/ic_comm"
-
         android:onClick="expandFilters"
         android:orderInCategory="@integer/commFilterOrder"
         />
+    </group>
 
     <group android:id="@+id/comm_filters"
         android:checkableBehavior="all"
         android:enabled="false"
-        android:visible="false"
-        android:orderInCategory="@integer/commFilterOrder">
-
+        android:visible="false">
     </group>
 
 

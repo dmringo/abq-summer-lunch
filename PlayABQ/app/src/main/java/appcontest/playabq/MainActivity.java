@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
 
+    private final String TAG = getClass().getSimpleName();
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
 
@@ -61,21 +63,28 @@ public class MainActivity extends AppCompatActivity
         drawer.openDrawer(GravityCompat.START);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void expandFilters(MenuItem item)
     {
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         Menu menu = nav.getMenu();
 
-        
-
         if(item.getTitle() == getString(R.string.park_filter_title)) {
+            ((AppCompatImageView)item.getActionView())
+            .setImageResource(parkFiltersOpen ?
+                    R.drawable.ic_add_24dp :
+                    R.drawable.ic_remove_24dp);
 
             menu.setGroupEnabled(R.id.park_filters, !parkFiltersOpen);
             menu.setGroupVisible(R.id.park_filters, !parkFiltersOpen);
             parkFiltersOpen = !parkFiltersOpen;
         }
         if(item.getTitle() == getString(R.string.comm_filter_title)) {
+            ((AppCompatImageView)item.getActionView())
+                    .setImageResource(commFiltersOpen ?
+                            R.drawable.ic_add_24dp :
+                            R.drawable.ic_remove_24dp);
 
             menu.setGroupEnabled(R.id.comm_filters, !commFiltersOpen);
             menu.setGroupVisible(R.id.comm_filters, !commFiltersOpen);
@@ -88,18 +97,27 @@ public class MainActivity extends AppCompatActivity
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void initNavView(NavigationView nv) {
         Menu menu = nv.getMenu();
-        MenuItem item;
-        int i = 0;
+        AppCompatImageView iv1 = new AppCompatImageView(this);
+        AppCompatImageView iv2 = new AppCompatImageView(this);
+        iv1.setImageResource(R.drawable.ic_add_24dp);
+        iv2.setImageResource(R.drawable.ic_add_24dp);
+
+
+        menu.findItem(R.id.park_header).setActionView(iv1);
+        menu.findItem(R.id.comm_header).setActionView(iv2);
+
+
+
         for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
         {
-            menu.add(R.id.park_filters, Menu.NONE, R.integer.parkFilterOrder,p)
+            menu.add(R.id.park_filters, Menu.NONE, getResources().getInteger(R.integer.parkFilterOrder),p)
                     .setActionView(new AppCompatCheckBox(this))
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
         }
         for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
         {
-            menu.add(R.id.comm_filters, Menu.NONE, R.integer.commFilterOrder,cc)
+            menu.add(R.id.comm_filters, Menu.NONE, getResources().getInteger(R.integer.commFilterOrder),cc)
                     .setActionView(new AppCompatCheckBox(this))
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
