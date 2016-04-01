@@ -193,7 +193,7 @@ public class MapsActivity extends FragmentActivity implements
     private void markAllCenters() {
         for (Map ctr : commList) {
             MarkerOptions mkrOpt = (MarkerOptions) ctr.get("MarkerOptions");
-            Marker m = mMap.addMarker(mkrOpt);
+            //Marker m = mMap.addMarker(mkrOpt);
             double lat = Util.getLat(ctr);
             double lon = Util.getLon(ctr);
             String name = Util.getName(ctr);
@@ -205,7 +205,7 @@ public class MapsActivity extends FragmentActivity implements
     private void markAllParks() {
         for (Map park : parkList) {
             MarkerOptions mkrOpt = (MarkerOptions) park.get("MarkerOptions");
-            Marker m = mMap.addMarker(mkrOpt);
+            //Marker m = mMap.addMarker(mkrOpt);
             double lat = Util.getLat(park);
             double lon = Util.getLon(park);
             String name = Util.getName(park);
