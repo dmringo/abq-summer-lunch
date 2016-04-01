@@ -14,17 +14,38 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener,MenuItem.OnMenuItemClickListener
+         {
+
+    //AdapterView.OnItemClickListener,View.OnClickListener
 
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
 
+    private HashMap<String,String> ctrAliases;
+    private HashMap<String,String> parkAliases;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +71,32 @@ public class MainActivity extends AppCompatActivity
             initNavView(navigationView);
         }
 
+        /* Create an instance of GoogleAPIClient.
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }*/
+
+        MapsInitializer.initialize(getApplicationContext());
         Map parkData = JsonParser.getParkData(this);
         Map commData = JsonParser.getCommData(this);
+        parkAliases = (HashMap) JsonParser.getAliases(parkData);
+        ctrAliases = (HashMap) JsonParser.getAliases(commData);
 
-        Filter.init(JsonParser.getCommList(commData), JsonParser.getParkList(parkData));
+        ArrayList<Map<String, Object>> commList = JsonParser.getCommList(commData);
+        for (Map ctr : commList) {
+            MarkerOptions mkrOpt = Util.getMarker(ctr, this);
+            ctr.put("MarkerOptions", mkrOpt);
+        }
+        ArrayList<Map<String, Object>> parkList = JsonParser.getParkList(parkData);
+        for (Map park : parkList) {
+            MarkerOptions mkrOpt = Util.getMarker(park,this);
+            park.put("MarkerOptions", mkrOpt);
+        }
+        Filter.init(commList, parkList);
 
         ListView lv = (ListView) findViewById(R.id.list_view);
         lv.setAdapter(new MapListAdapter(this,Filter.filtered()));
@@ -67,6 +110,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         Menu menu = nav.getMenu();
 
+        ListView lv = (ListView) findViewById(R.id.list_view);
+        //lv.setOnItemClickListener(this);
+        lv.setAdapter(new MapListAdapter(this,Filter.filtered()));
         
 
         if(item.getTitle() == getString(R.string.park_filter_title)) {
@@ -150,6 +196,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.go_to_maps) {
             Log.i("Main", "go_to_maps");
             Intent intent = new Intent(this, MapsActivity.class);
+            intent.putExtra("ctrAliases",ctrAliases);
+            intent.putExtra("parkAliases",parkAliases);
             startActivity(intent);
         }
 //        else if (id == R.id.nav_gallery) {
