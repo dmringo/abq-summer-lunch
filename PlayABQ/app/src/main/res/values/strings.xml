@@ -47,5 +47,27 @@
         <item>Adult Programs</item>
         <item>Boxing Facility</item>
     </string-array>
+    <string-array name="park_ignore">
+        <item>geometry</item>
+        <item>OBJECTID</item>
+        <item>PARKNAME</item>
+        <item>PARKSTATUS</item>
+        <item>ACRES</item>
+        <item>DEVELOPEDACRES</item>
+        <item>JURISDICTION</item>
+        <item>created_user</item>
+        <item>created_date</item>
+        <item>last_edited_user</item>
+        <item>last_edited_date</item>
+        <item>MarkerOptions</item>
+    </string-array>
+    <string-array name="ctr_ignore">
+        <item>CENTERNAME</item>
+        <item>geometry</item>
+        <item>LATITUDE</item>
+        <item>LONGITUDE</item>
+        <item>REGULARHOURS</item>
+        <item>MarkerOptions</item>
+    </string-array>
 
 </resources>
