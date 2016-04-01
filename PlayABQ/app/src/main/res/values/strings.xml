@@ -70,7 +70,10 @@
         <item>LATITUDE</item>
         <item>LONGITUDE</item>
         <item>REGULARHOURS</item>
+        <item>WEBSITE</item>
         <item>MarkerOptions</item>
     </string-array>
+
+    <string name="abq_park_website">https://www.cabq.gov/parksandrecreation/parks</string>
 
 </resources>

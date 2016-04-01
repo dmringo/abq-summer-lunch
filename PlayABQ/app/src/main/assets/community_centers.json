@@ -16,7 +16,8 @@
     "REGULARHOURS" : "Regular Hours",
     "YOUTHPROGRAMS" : "Youth Programs",
     "ADULTPROGRAMS" : "Adult Programs",
-    "BOXINGFACILITY" : "Boxing Facility"
+    "BOXINGFACILITY" : "Boxing Facility",
+    "WEBSITE" : "Website"
   },
   "geometryType" : "esriGeometryPoint",
   "spatialReference" : {
@@ -39,6 +40,7 @@
     "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p; Sat 8a-3p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/cesar-chavez-community-center",
     "geometry" : {
       "x" : -106.565422,
       "y" : 35.064991
@@ -59,6 +61,7 @@
     "REGULARHOURS" : "Mon-Fri 8a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/dennis-chavez-community-center",
     "geometry" : {
       "x" : -106.64077,
       "y" : 35.065849
@@ -79,6 +82,7 @@
     "REGULARHOURS" : "Mon-Thu 7a-7p; Fri 7a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/herman-sanchez-community-center",
     "geometry" : {
       "x" : -106.649193,
       "y" : 35.064331
@@ -100,6 +104,7 @@
     "YOUTHPROGRAMS" : false,
     "ADULTPROGRAMS" : false,
     "BOXINGFACILITY" : true,
+    "WESBITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/jack-candelaria-community-center",
     "geometry" : {
       "x" : -106.647522,
       "y" : 35.054749
@@ -120,6 +125,7 @@
     "REGULARHOURS" : "Mon-Fri 8a-5p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/loma-linda-community-center-therapeutic-recreation-program",
     "geometry" : {
       "x" : -106.621819,
       "y" : 35.063839
@@ -138,6 +144,7 @@
     "ARTROOM" : false,
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 7a-6p",
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/singing-arrow-community-center",
     "geometry" : {
       "x" : -106.501762,
       "y" : 35.064499
@@ -158,6 +165,7 @@
     "REGULARHOURS" : "Mon-Thu 7:30a-7p; Fri 7:30a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/thomas-bell-community-center",
     "geometry" : {
       "x" : -106.63089,
       "y" : 35.053196
@@ -177,6 +185,7 @@
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 7a-6p",
     "YOUTHPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/whittier-center",
     "geometry" : {
       "x" : -106.588425,
       "y" : 35.06551
@@ -197,6 +206,7 @@
     "REGULARHOURS" : "Mon-Thu 7:30a-8p; Fri 7:30a-6p; Sat 9a-1p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/holiday-park-center",
     "geometry" : {
       "x" : -106.50946,
       "y" : 35.123402
@@ -217,6 +227,7 @@
     "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/jeanne-bellamah-center",
     "geometry" : {
       "x" : -106.519379,
       "y" : 35.092377
@@ -236,6 +247,7 @@
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 7a-6p",
     "YOUTHPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/mckinley-community-center",
     "geometry" : {
       "x" : -106.592552,
       "y" : 35.122017
@@ -256,6 +268,7 @@
     "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/mesa-verde-community-center",
     "geometry" : {
       "x" : -106.558571,
       "y" : 35.083561
@@ -275,6 +288,7 @@
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 1:30p-5:30p",
     "YOUTHPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northeast/snow-park-center",
     "geometry" : {
       "x" : -106.537514,
       "y" : 35.102081
@@ -295,6 +309,7 @@
     "REGULARHOURS" : "Mon-Thu 7a-8p; Fri 7a-7p; Sat 8a-12p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southwest/alamosa-community-center",
     "geometry" : {
       "x" : -106.712585,
       "y" : 35.073032
@@ -314,6 +329,7 @@
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 9a-6p",
     "YOUTHPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southwest/westgate-community-center",
     "geometry" : {
       "x" : -106.737915,
       "y" : 35.049751
@@ -334,6 +350,7 @@
     "REGULARHOURS" : "Mon-Thu 7:30a-7p; Fri 7:30a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/central/barelas-community-center",
     "geometry" : {
       "x" : -106.655663,
       "y" : 35.077522
@@ -354,6 +371,7 @@
     "REGULARHOURS" : "Mon-Fri 9a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/central/heights-community-center",
     "geometry" : {
       "x" : -106.624252,
       "y" : 35.073647
@@ -374,6 +392,7 @@
     "REGULARHOURS" : "Mon-Thu 9a-8p; Fri 9a-6p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/central/wells-park-community-center",
     "geometry" : {
       "x" : -106.650757,
       "y" : 35.096081
@@ -394,6 +413,7 @@
     "REGULARHOURS" : "Mon-Fri 8a-9p; Sat 9a-3p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/don-newton-taylor-ranch-community-center",
     "geometry" : {
       "x" : -106.69529,
       "y" : 35.155781
@@ -414,6 +434,7 @@
     "REGULARHOURS" : "Mon-Thu 8a-8p; Fri 8a-6p; Sat 10a-2p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/los-duranes-community-center",
     "geometry" : {
       "x" : -106.68013,
       "y" : 35.110176
@@ -433,6 +454,7 @@
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 12:30p-6p",
     "YOUTHPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/pat-hurley-center",
     "geometry" : {
       "x" : -106.69725,
       "y" : 35.089428
@@ -451,6 +473,7 @@
     "ARTROOM" : false,
     "SENIORMEALS" : false,
     "REGULARHOURS" : "Mon-Fri 8a-5p",
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/valle-del-norte-community-center",
     "geometry" : {
       "x" : -106.664383,
       "y" : 35.123325
@@ -471,6 +494,7 @@
     "REGULARHOURS" : "Mon-Thu 7a-8p; Fri 7a-6p; Sat 8a-1p",
     "YOUTHPROGRAMS" : true,
     "ADULTPROGRAMS" : true,
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/northwest/west-mesa-community-center",
     "geometry" : {
       "x" : -106.701904,
       "y" : 35.097179
