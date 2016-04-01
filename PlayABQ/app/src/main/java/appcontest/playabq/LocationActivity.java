@@ -52,7 +52,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         Intent intent = getIntent();
         locData = (HashMap<String,Object>)intent.getSerializableExtra("data");
-        String[] possFeatures;
+
         aliases = Util.aliases;
         if (Util.isCommCenter(locData)) {
             isCtr = true;
@@ -63,8 +63,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             fieldsToIgnore = Arrays.asList(getResources().getStringArray(R.array.park_ignore));
         }
 
-
-        features = new ArrayList<String>();
+        features = new ArrayList<>();
         for (String key : locData.keySet()) {
             //System.out.println(key+" "+locData.get(key)+" "+Filter.resemblesTruth(locData, key));
             if (Filter.resemblesTruth(locData, key)){
