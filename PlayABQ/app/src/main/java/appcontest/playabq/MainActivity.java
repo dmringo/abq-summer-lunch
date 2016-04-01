@@ -1,15 +1,10 @@
 package appcontest.playabq;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,46 +14,25 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.Polygon;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, MenuItem.OnMenuItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final String TAG = getClass().getSimpleName();
-    GoogleApiClient mGoogleApiClient = null;
-    final int FINE_LOCATION_ACCESS_REQUEST=0;
-    private LocationListener locationListener;
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Util.setUserLocation(Util.getDefaultLocation());
-        Util.isTrackingUser = false;
 
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -73,15 +47,6 @@ public class MainActivity extends AppCompatActivity
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
             initNavView(navigationView);
-        }
-
-        // Create an instance of GoogleAPIClient.
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
         }
 
         Map parkData = JsonParser.getParkData(this);
@@ -101,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         Menu menu = nav.getMenu();
 
+        
 
         if(item.getTitle() == getString(R.string.park_filter_title)) {
 
@@ -139,14 +105,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     }
 
@@ -182,7 +150,6 @@ public class MainActivity extends AppCompatActivity
             Log.i("Main", "go_to_maps");
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
-
         }
 //        else if (id == R.id.nav_gallery) {
 //
@@ -201,129 +168,19 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i("LOCATION", "onConnected called");
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            Util.setUserLocation(Util.getDefaultLocation());
-            Util.isTrackingUser = false;
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Toast.makeText(this, "This allows the app to display parks and community " +
-                        "centers nearest to you.",
-                        Toast.LENGTH_LONG).show();
-            }
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    FINE_LOCATION_ACCESS_REQUEST);
-            Log.i("LOCATION", "requested permission");
-
-        } else {
-            Log.i("LOCATION", "Don't need to request permission");
-            startLocationUpdates();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case FINE_LOCATION_ACCESS_REQUEST: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.i("LOCATION", "Permission Granted");
-                    startLocationUpdates();
-                } else {
-                    Log.i("LOCATION", "Permission Denied");
-                    Toast.makeText(this, "Without location permissions this app can not prioritize" +
-                                    " areas nearest to you.",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
 
     protected void onStart() {
-        mGoogleApiClient.connect();
-
-
-        super.onStart();
+                super.onStart();
     }
 
     protected void onStop() {
-        mGoogleApiClient.disconnect();
+        //mGoogleApiClient.disconnect();
         super.onStop();
     }
 
     protected void onDestroy() {
-        stopLocationUpdates();
+        //stopLocationUpdates();
         super.onDestroy();
     }
 
-    /**
-     * Location updates if the user allows the permissions for location services
-     */
-    protected void startLocationUpdates() {
-        Log.i("LOCATION", "Starting location updates");
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        if(permissionCheck==PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(
-                    mGoogleApiClient, LocationRequest.create(), locationListener=new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            Log.i("LOC-CHANGE", "IT HAPPENED!");
-                            if (location!=null) {
-                                Util.setUserLocation(location);
-                                Util.isTrackingUser = true;
-                            }
-                            else {
-                                Util.setUserLocation(Util.getDefaultLocation());
-                                Util.isTrackingUser = false;
-                            }
-                        }
-                    });
-        } else {
-            Util.setUserLocation(Util.getDefaultLocation());
-            Util.isTrackingUser = false;
-        }
-    }
-
-    protected void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(
-                mGoogleApiClient, locationListener);
-    }
-
-
-    /**
-     * Called when a menu item has been invoked.  This is the first code
-     * that is executed; if it returns true, no other callbacks will be
-     * executed.
-     *
-     * @param item The menu item that was invoked.
-     * @return Return true to consume this click and prevent others from
-     * executing.
-     */
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        item.getActionView().performClick();
-        return true;
-    }
 }
