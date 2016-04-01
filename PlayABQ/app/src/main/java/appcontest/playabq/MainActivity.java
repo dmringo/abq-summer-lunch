@@ -92,14 +92,14 @@ public class MainActivity extends AppCompatActivity
         int i = 0;
         for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
         {
-            menu.add(R.id.park_filters, Menu.NONE, R.integer.parkFilterOrder,p)
+            menu.add(R.id.park_filters, Menu.NONE, Menu.NONE,p)
                     .setActionView(new AppCompatCheckBox(this))
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
         }
         for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
         {
-            menu.add(R.id.comm_filters, Menu.NONE, R.integer.commFilterOrder,cc)
+            menu.add(R.id.comm_filters, Menu.NONE, Menu.NONE,cc)
                     .setActionView(new AppCompatCheckBox(this))
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
