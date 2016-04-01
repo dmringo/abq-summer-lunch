@@ -54,6 +54,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         if (Util.isCommCenter(locData)) {
             isCtr = true;
             aliases = (Map) (intent.getSerializableExtra("ctrAliases"));
+            fieldsToIgnore = Arrays.asList(getResources().getStringArray(R.array.ctr_ignore));
         }
         else {
             isPark = true;
@@ -79,7 +80,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 }
             }
         }
-
+        if (isCtr) {
+            features.add(0, (String) locData.get("REGULARHOURS"));
+        }
 
         locName = Util.getName(locData);
         TextView textView = (TextView) findViewById(R.id.location_name);
