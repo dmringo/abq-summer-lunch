@@ -104,7 +104,7 @@
     "YOUTHPROGRAMS" : false,
     "ADULTPROGRAMS" : false,
     "BOXINGFACILITY" : true,
-    "WESBITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/jack-candelaria-community-center",
+    "WEBSITE" : "http://www.cabq.gov/family/facilities-centers/community-center-locations/southeast/jack-candelaria-community-center",
     "geometry" : {
       "x" : -106.647522,
       "y" : 35.054749
