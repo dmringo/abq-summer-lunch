@@ -3,6 +3,9 @@ package appcontest.playabq;
 import android.location.Location;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class Filter {
     public static void init (ArrayList<Map<String, Object>> commList,  ArrayList<Map<String, Object>> prkList) {
         communityCenterList= commList;
         parkList=prkList;
+
         currentFilteredLocations= new ArrayList<>();
         currentFilteredLocations.addAll(prkList);
         currentFilteredLocations.addAll(commList);

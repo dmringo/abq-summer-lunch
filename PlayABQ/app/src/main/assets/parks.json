@@ -188,7 +188,7 @@
   {
    "attributes": {
     "OBJECTID": 175127,
-    "PARKNAME": "WEST BLUFF",
+    "PARKNAME": "WEST BLUFF PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 2.3175488899999999,
@@ -406,7 +406,7 @@
   {
    "attributes": {
     "OBJECTID": 175128,
-    "PARKNAME": "AZTEC",
+    "PARKNAME": "AZTEC PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 5.5388133799999997,
@@ -826,7 +826,7 @@
   {
    "attributes": {
     "OBJECTID": 175130,
-    "PARKNAME": "RIDGECREST",
+    "PARKNAME": "RIDGECREST PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 1.07108442,
@@ -944,7 +944,7 @@
   {
    "attributes": {
     "OBJECTID": 175131,
-    "PARKNAME": "SUNDORO SOUTH",
+    "PARKNAME": "SUNDORO SOUTH PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 3.3318692300000001,
@@ -1794,7 +1794,7 @@
   {
    "attributes": {
     "OBJECTID": 175132,
-    "PARKNAME": "LAUREN C BOLLES",
+    "PARKNAME": "LAUREN C. BOLLES PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 4.6579613599999998,
@@ -2004,7 +2004,7 @@
   {
    "attributes": {
     "OBJECTID": 175133,
-    "PARKNAME": "WESTGATE COMMUNITY",
+    "PARKNAME": "WESTGATE COMMUNITY CENTER PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 6.9432668299999998,
@@ -2206,7 +2206,7 @@
   {
    "attributes": {
     "OBJECTID": 175134,
-    "PARKNAME": "EAST SAN JOSE",
+    "PARKNAME": "EAST SAN JOSE PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 3.7730004199999998,
@@ -2324,7 +2324,7 @@
   {
    "attributes": {
     "OBJECTID": 175135,
-    "PARKNAME": "EL OSO GRANDE",
+    "PARKNAME": "EL OSO GRANDE PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 11.823030190000001,
@@ -2458,7 +2458,7 @@
   {
    "attributes": {
     "OBJECTID": 175136,
-    "PARKNAME": "CITY VIEW ESTATES",
+    "PARKNAME": "CITY VIEW ESTATES PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 4.0489880999999999,
@@ -2728,7 +2728,7 @@
   {
    "attributes": {
     "OBJECTID": 175137,
-    "PARKNAME": "TIGUEX",
+    "PARKNAME": "TIGUEX PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 8.29929658,
@@ -3098,7 +3098,7 @@
   {
    "attributes": {
     "OBJECTID": 175138,
-    "PARKNAME": "WESTGATE HEIGHTS",
+    "PARKNAME": "WESTGATE HEIGHTS PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 6.7804224700000004,
@@ -6804,7 +6804,7 @@
   {
    "attributes": {
     "OBJECTID": 175139,
-    "PARKNAME": "BURTON",
+    "PARKNAME": "BURTON PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 8.5340785300000004,
@@ -8936,7 +8936,7 @@
   {
    "attributes": {
     "OBJECTID": 175141,
-    "PARKNAME": "VALLEY HAVEN",
+    "PARKNAME": "VALLEY HAVEN PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 0.62424278,
@@ -9240,7 +9240,7 @@
   {
    "attributes": {
     "OBJECTID": 175143,
-    "PARKNAME": "STARDUST SKIES",
+    "PARKNAME": "STARDUST SKIES PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 11.0130836,
@@ -9894,7 +9894,7 @@
   {
    "attributes": {
     "OBJECTID": 175144,
-    "PARKNAME": "ALTURA",
+    "PARKNAME": "ALTURA PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 6.1709226399999997,
@@ -10336,7 +10336,7 @@
   {
    "attributes": {
     "OBJECTID": 175145,
-    "PARKNAME": "DESERT SPRINGS",
+    "PARKNAME": "DESERT SPRINGS PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 3.6730536900000001,
@@ -12474,7 +12474,7 @@
   {
    "attributes": {
     "OBJECTID": 175146,
-    "PARKNAME": "GRISHAM",
+    "PARKNAME": "GRISHAM PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 5.2078610999999997,
@@ -12752,7 +12752,7 @@
   {
    "attributes": {
     "OBJECTID": 175147,
-    "PARKNAME": "ERNIE TAYLOR",
+    "PARKNAME": "ERNIE TAYLOR PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 0.88319541000000001,
@@ -12818,7 +12818,7 @@
   {
    "attributes": {
     "OBJECTID": 175148,
-    "PARKNAME": "CARDWELL",
+    "PARKNAME": "CARDWELL PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 0.85000430000000005,
@@ -13096,7 +13096,7 @@
   {
    "attributes": {
     "OBJECTID": 175149,
-    "PARKNAME": "McCOLLUM ELEM SCHOOL",
+    "PARKNAME": "McCOLLUM ELEMENTARY SCHOOL",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 4.8256424300000003,
@@ -13222,7 +13222,7 @@
   {
    "attributes": {
     "OBJECTID": 175150,
-    "PARKNAME": "GUADALUPE",
+    "PARKNAME": "GUADALUPE PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 0.23673094,
@@ -13288,7 +13288,7 @@
   {
    "attributes": {
     "OBJECTID": 175151,
-    "PARKNAME": "TUSCANY",
+    "PARKNAME": "TUSCANY PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 0.92100029999999999,
@@ -13390,7 +13390,7 @@
   {
    "attributes": {
     "OBJECTID": 175152,
-    "PARKNAME": "MONTANO WEST",
+    "PARKNAME": "MONTANO WEST PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 1.2826013999999999,
@@ -13484,7 +13484,7 @@
   {
    "attributes": {
     "OBJECTID": 175153,
-    "PARKNAME": "NOR ESTE",
+    "PARKNAME": "NOR ESTE PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 6.67106595,
@@ -17722,7 +17722,7 @@
   {
    "attributes": {
     "OBJECTID": 175154,
-    "PARKNAME": "CALLE DE VIDA",
+    "PARKNAME": "CALLE DE VIDA PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 2.0191164599999998,
@@ -19016,7 +19016,7 @@
   {
    "attributes": {
     "OBJECTID": 175155,
-    "PARKNAME": "WILSON",
+    "PARKNAME": "WILSON PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 3.7049271099999999,
@@ -19118,7 +19118,7 @@
   {
    "attributes": {
     "OBJECTID": 175156,
-    "PARKNAME": "PARADISE MEADOWS",
+    "PARKNAME": "PARADISE MEADOWS PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 1.1198289699999999,
@@ -20192,7 +20192,7 @@
   {
    "attributes": {
     "OBJECTID": 175157,
-    "PARKNAME": "SNOW",
+    "PARKNAME": "SNOW PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 8.8369847200000002,
@@ -20730,7 +20730,7 @@
   {
    "attributes": {
     "OBJECTID": 175158,
-    "PARKNAME": "RICHLAND HILLS",
+    "PARKNAME": "RICHLAND HILLS PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 2.0815082600000001,
@@ -20904,7 +20904,7 @@
   {
    "attributes": {
     "OBJECTID": 175159,
-    "PARKNAME": "TUSCANY",
+    "PARKNAME": "TUSCANY PARK",
     "PARKSTATUS": "U",
     "JURISDICTION": "CITY",
     "ACRES": 7.3776593999999998,
@@ -22628,7 +22628,7 @@
   {
    "attributes": {
     "OBJECTID": 175160,
-    "PARKNAME": "VILLELLA",
+    "PARKNAME": "VILLELLA PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 3.6810604200000001,
@@ -22738,7 +22738,7 @@
   {
    "attributes": {
     "OBJECTID": 175161,
-    "PARKNAME": "ARROYO DEL OSO",
+    "PARKNAME": "ARROYO DEL OSO PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 35.072180070000002,
@@ -23132,7 +23132,7 @@
   {
    "attributes": {
     "OBJECTID": 175162,
-    "PARKNAME": "VALLEY GARDENS",
+    "PARKNAME": "VALLEY GARDENS PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 4.7843860999999999,
@@ -23370,7 +23370,7 @@
   {
    "attributes": {
     "OBJECTID": 175163,
-    "PARKNAME": "LAZY DAY",
+    "PARKNAME": "LAZY DAY PARK",
     "PARKSTATUS": "D",
     "JURISDICTION": "CITY",
     "ACRES": 1.99405861,

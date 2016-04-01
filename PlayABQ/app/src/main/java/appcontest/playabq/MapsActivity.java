@@ -6,7 +6,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
@@ -40,6 +45,9 @@ public class MapsActivity extends FragmentActivity implements
     // aliases maps Json field names to their aliases
     private ArrayList<Map<String, Object>> parkList;
     private ArrayList<Map<String, Object>> commList;
+    private HashMap<String,String> ctrAliases;
+    private HashMap<String,String> parkAliases;
+
 
     // polygonMap has park polygons as keys, their names as values
     // for use in click listener
@@ -53,6 +61,9 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        Intent intent = getIntent();
+        parkAliases = (HashMap) intent.getExtras().get("parkAliases");
+        ctrAliases = (HashMap) intent.getExtras().get("ctrAliases");
         parkList = Filter.selectParks(Filter.filtered());
         commList = Filter.selectCommCenters(Filter.filtered());
 
@@ -80,6 +91,8 @@ public class MapsActivity extends FragmentActivity implements
         mMap.setOnPolygonClickListener(GoogleMapAdapter.DEBUG_IMPL);
         mMap.setOnMarkerClickListener(GoogleMapAdapter.DEBUG_IMPL);*/
         mMap.setOnInfoWindowClickListener(this);
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+
         GoogleMapAdapter adapter = new GoogleMapAdapter();
         //adapter.setAllListeners(mMap);
 
@@ -179,6 +192,8 @@ public class MapsActivity extends FragmentActivity implements
     // puts markers for community centers on map
     private void markAllCenters() {
         for (Map ctr : commList) {
+            MarkerOptions mkrOpt = (MarkerOptions) ctr.get("MarkerOptions");
+            Marker m = mMap.addMarker(mkrOpt);
             double lat = Util.getLat(ctr);
             double lon = Util.getLon(ctr);
             String name = Util.getName(ctr);
@@ -189,6 +204,8 @@ public class MapsActivity extends FragmentActivity implements
 
     private void markAllParks() {
         for (Map park : parkList) {
+            MarkerOptions mkrOpt = (MarkerOptions) park.get("MarkerOptions");
+            Marker m = mMap.addMarker(mkrOpt);
             double lat = Util.getLat(park);
             double lon = Util.getLon(park);
             String name = Util.getName(park);
@@ -211,6 +228,8 @@ public class MapsActivity extends FragmentActivity implements
             Intent intent = new Intent(this, LocationActivity.class);
             HashMap locData = (HashMap) getMarkerData(marker);
             intent.putExtra("data", locData);
+            intent.putExtra("ctrAliases",ctrAliases);
+            intent.putExtra("parkAliases",parkAliases);
             startActivity(intent);
         }
     }
@@ -231,6 +250,45 @@ public class MapsActivity extends FragmentActivity implements
             }
         }
         return locData;
+    }
+
+    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+        //@Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        //@Override
+        public View getInfoContents(Marker marker) {
+            View mContents;
+            String title = marker.getTitle();
+            if (title.equals("My Location")) {
+                mContents = getLayoutInflater().inflate(R.layout.my_location_info_layout, null);
+                TextView titleUi = ((TextView) mContents.findViewById(R.id.my_title_window));
+                titleUi.setText(title);
+            }
+            else {
+                mContents = getLayoutInflater().inflate(R.layout.info_window_layout, null);
+                TextView titleUi = ((TextView) mContents.findViewById(R.id.title_window));
+                titleUi.setText(title);
+                int info = R.drawable.ic_comm;
+                ((ImageView) mContents.findViewById(R.id.info)).setImageResource(info);
+                ((ImageView) mContents.findViewById(R.id.info)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            }
+            /*int badge;
+            Map mrkData = getMarkerData(marker);
+            if (Util.isCommCenter(mrkData)) {
+                badge = R.mipmap.ic_com_center;
+            }
+            else {
+                badge = R.mipmap.ic_park;
+            }
+            ((ImageView) mContents.findViewById(R.id.badge)).setImageResource(badge);
+            //((ImageView) mContents.findViewById(R.id.badge)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            */
+
+            return mContents;
+        }
     }
 
     class MyClusterRenderer extends DefaultClusterRenderer<ClusterIndicator> {

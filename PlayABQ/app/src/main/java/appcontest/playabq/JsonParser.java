@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,19 +58,45 @@ public class JsonParser {
     public static ArrayList<Map<String, Object>> getParkList(Map parkData) {
         ArrayList<Map<String,Object>> features = (ArrayList) parkData.get("features");
         ArrayList<Map<String,Object>> parkList = new ArrayList();
+        List<String> parksRead = new ArrayList<String>();
         for (Map park : features) {
-
             Map<String,Object> parkMap = (Map) park.get("attributes");
-                    /*new LinkedHashMap();
-            Set<Entry> attributes = ((Map) park.get("attributes")).entrySet();
-            for (Map.Entry<String, String> entry : attributes) {
-                parkMap.put(entry.getKey(),entry.getValue());
-            }*/
-            parkMap.put("geometry", park.get("geometry"));
-            setParkCenter(parkMap);
-            parkList.add(parkMap);
+
+            // See if is duplicate
+            if (parksRead.contains((String) parkMap.get("PARKNAME"))) {
+                String name = (String) parkMap.get("PARKNAME");
+                Map oldMap = null;
+                for (Map pk : parkList) {
+                    if (pk.get("PARKNAME").equals(name)){
+                        oldMap = pk;
+                        break;
+                    }
+                }
+                readDuplicate(oldMap,parkMap);
+            }
+            else {
+                parkMap.put("geometry", park.get("geometry"));
+                setParkCenter(parkMap);
+                parkList.add(parkMap);
+                parksRead.add((String) parkMap.get("PARKNAME"));
+            }
         }
         return parkList;
+    }
+
+    private static void readDuplicate(Map<String, Object> oldMap, Map<String, Object> newMap) {
+        String[] toIgnoreArr = {"geometry", "OBJECTID", "PARKNAME", "PARKSTATUS", "JURISDICTION", "ACRES", "DEVELOPEDACRES",
+                "created_user", "created_date", "last_edited_user", "last_edited_date"};
+        List toIgnore = Arrays.asList(toIgnoreArr);
+        for (String key : oldMap.keySet()) {
+            if (toIgnore.contains(key)) { continue; }
+            else {
+                int oldVal = (int) oldMap.get(key);
+                int newVal = (int) newMap.get(key);
+                int total = newVal + oldVal;
+                oldMap.put(key,total);
+            }
+        }
     }
 
     public static Map<String,String> getAliases(Map data) {
