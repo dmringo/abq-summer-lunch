@@ -15,21 +15,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class MapsActivity extends FragmentActivity implements
-        OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,GoogleMap.OnInfoWindowClickListener {
+        OnMapReadyCallback, GoogleMap.OnMapLoadedCallback,GoogleMap.OnInfoWindowClickListener,
+        ClusterManager.OnClusterClickListener {
 
     private GoogleMap mMap;
     // park/comm variables:
@@ -78,9 +83,11 @@ public class MapsActivity extends FragmentActivity implements
 
         //settup clustering
         mClusterManager = new ClusterManager<ClusterIndicator>(this, mMap);
+
         mMap.setOnCameraChangeListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
         mClusterManager.setRenderer(new MyClusterRenderer(this,mMap,mClusterManager));
+        mClusterManager.setOnClusterClickListener(this);
 
         // if user isn't tracked this will defaultly be the center of ABQ
         LatLng center = new LatLng(Util.getUserLocation().getLatitude(),Util.getUserLocation().getLongitude());
@@ -200,6 +207,18 @@ public class MapsActivity extends FragmentActivity implements
             }
         }
         return locData;
+    }
+
+    @Override
+    public boolean onClusterClick(Cluster cluster) {
+        LatLngBounds.Builder builder = LatLngBounds.builder();
+        Collection<ClusterItem> items = cluster.getItems();
+        for (ClusterItem item : items) {
+            builder.include(item.getPosition());
+        }
+        final LatLngBounds bounds = builder.build();
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        return true;
     }
 
     class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
