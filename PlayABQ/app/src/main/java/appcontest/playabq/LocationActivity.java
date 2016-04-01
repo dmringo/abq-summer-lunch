@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private GoogleMap mMap;
     private MapView mapView;
     private ListView listView;
-
+    private Map<String,String> aliases;
+    private List<String> fieldsToIgnore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         Intent intent = getIntent();
         locData = (HashMap<String,Object>)intent.getSerializableExtra("data");
+        String[] possFeatures;
         if (Util.isCommCenter(locData)) {
             isCtr = true;
+            aliases = (Map) (intent.getSerializableExtra("ctrAliases"));
         }
         else {
             isPark = true;
+            aliases = (Map) intent.getSerializableExtra("parkAliases");
+            fieldsToIgnore = Arrays.asList(getResources().getStringArray(R.array.park_ignore));
         }
 
 
@@ -65,10 +71,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                                     "something else", "something else"};*/
         features = new ArrayList<String>();
         for (String key : locData.keySet()) {
-            if (Filter.resemblesTruth(locData, key)) {
-                features.add(key);
+            System.out.println(key+" "+locData.get(key)+" "+Filter.resemblesTruth(locData, key));
+            if (Filter.resemblesTruth(locData, key)){
+                if (!fieldsToIgnore.contains(key)) {
+                    features.add(aliases.get(key));
+
+                }
             }
         }
+
 
         locName = Util.getName(locData);
         TextView textView = (TextView) findViewById(R.id.location_name);

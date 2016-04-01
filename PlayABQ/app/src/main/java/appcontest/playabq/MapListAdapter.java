@@ -6,6 +6,7 @@ import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -227,4 +228,6 @@ public class MapListAdapter implements ListAdapter {
     public boolean isEmpty() {
         return recs.isEmpty();
     }
+
+
 }
