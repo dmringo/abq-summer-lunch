@@ -184,8 +184,9 @@ public class MapListAdapter extends BaseAdapter implements ListAdapter {
 
         Location uLoc = Util.getUserLocation();
         String distance = "";
-        if(uLoc != null) distance = String.format("%.1f mi",
-                Util.metersToMiles(Util.getDistanceFromUser(place)));
+        if(uLoc != null && Util.isTrackingUser)
+            distance = String.format("%.1f mi",
+                    Util.metersToMiles(Util.getDistanceFromUser(place)));
 
         dist.setText(distance);
         name.setText(Util.getName(place));
