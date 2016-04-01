@@ -18,8 +18,9 @@ import android.widget.ListView;
 
 import java.util.Map;
 
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
 
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
@@ -91,14 +92,14 @@ public class MainActivity extends AppCompatActivity
         int i = 0;
         for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
         {
-            menu.add(R.id.park_filters, R.integer.parkFilterOrder ,Menu.NONE ,p)
+            menu.add(R.id.park_filters, Menu.NONE, R.integer.parkFilterOrder,p)
                     .setActionView(new AppCompatCheckBox(this))
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
         }
         for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
         {
-            menu.add(R.id.comm_filters, R.integer.commFilterOrder, Menu.NONE,cc)
+            menu.add(R.id.comm_filters, Menu.NONE, R.integer.commFilterOrder,cc)
                     .setActionView(new AppCompatCheckBox(this))
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
@@ -183,4 +184,19 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
     }
 
+    /**
+     * Called when a menu item has been invoked.  This is the first code
+     * that is executed; if it returns true, no other callbacks will be
+     * executed.
+     *
+     * @param item The menu item that was invoked.
+     * @return Return true to consume this click and prevent others from
+     * executing.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        item.getActionView().performClick();
+        return false;
+    }
 }

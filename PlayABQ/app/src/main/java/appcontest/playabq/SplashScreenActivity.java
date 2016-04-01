@@ -45,7 +45,8 @@ public class SplashScreenActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
 
         ImageView image = (ImageView) findViewById(R.id.imageView2);
-        image.setImageResource(R.drawable.ic_launcher);
+
+        image.setImageResource(R.drawable.ic_logo);
 
 
         Util.setUserLocation(Util.getDefaultLocation());
