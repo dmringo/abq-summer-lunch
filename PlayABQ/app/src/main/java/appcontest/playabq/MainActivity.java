@@ -21,7 +21,9 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
+        implements
+        NavigationView.OnNavigationItemSelectedListener,
+        MenuItem.OnMenuItemClickListener {
 
     private final String TAG = getClass().getSimpleName();
     private boolean parkFiltersOpen = false;
