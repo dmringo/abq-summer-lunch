@@ -16,6 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static appcontest.playabq.Filter.FilterMode.INTERSECT;
+import static appcontest.playabq.Filter.FilterMode.UNION;
+
 /**
  * Created by Stephen on 3/23/2016.
  *
@@ -24,12 +27,17 @@ import java.util.Map;
 public class Filter {
     private static ArrayList<HashMap<String, Object>> communityCenterList;
     private static ArrayList<HashMap<String, Object>> parkList;
+    private static ArrayList<HashMap<String, Object>> allLocs = new ArrayList<>();
     private static ArrayList<HashMap<String, Object>> currentFilteredLocations;
     private static ArrayList<String> currentFields = new ArrayList<>();
     private static Location userLocation;
     private static Comparator<? super HashMap<String, Object>> comparator =
             new DistanceFromUserComparator();
+    private static FilterMode MODE = INTERSECT;
 
+    public enum FilterMode{
+        UNION, INTERSECT
+    }
     public static void init (ArrayList<HashMap<String, Object>> commList,
                              ArrayList<HashMap<String, Object>> prkList) {
         communityCenterList= commList;
@@ -38,6 +46,7 @@ public class Filter {
         currentFilteredLocations= new ArrayList<>();
         currentFilteredLocations.addAll(prkList);
         currentFilteredLocations.addAll(commList);
+        allLocs.addAll(currentFilteredLocations);
         sort();
     }
 
@@ -49,29 +58,16 @@ public class Filter {
      */
     public static ArrayList<HashMap<String, Object>> intersectGetLocationsWith(List<String> requiredFeatures) {
         currentFilteredLocations.clear();
-        currentFilteredLocations.addAll(parkList);
-        currentFilteredLocations.addAll(communityCenterList);
-            for (HashMap ctr : communityCenterList) {
-                for (String requiredFeature:requiredFeatures) {
-                    if (ctr.containsKey(requiredFeature))
-                    {
-                        if(!resemblesTruth(ctr, requiredFeature)) {
-                            currentFilteredLocations.remove(ctr);
-                            break;
-                        }
-                    }
+        currentFilteredLocations.addAll(allLocs);
+
+        for (HashMap ctr : allLocs) {
+            for (String requiredFeature:requiredFeatures) {
+                if(!resemblesTruth(ctr, requiredFeature)) {
+                    currentFilteredLocations.remove(ctr);
+                    break;
                 }
             }
-            for (HashMap prk : parkList) {
-                for (String requiredFeature:requiredFeatures) {
-                    if(prk.containsKey(requiredFeature)) {
-                        if (!resemblesTruth(prk, requiredFeature)) {
-                            currentFilteredLocations.remove(prk);
-                            break;
-                        }
-                    }
-                }
-            }
+        }
         sort();
         return currentFilteredLocations;
     }
@@ -85,18 +81,10 @@ public class Filter {
     public static ArrayList<HashMap<String, Object>> unionGetLocationsWith(List<String> requiredFeatures) {
         currentFilteredLocations.clear();
         for (String requiredFeature:requiredFeatures) {
-            for (HashMap ctr : communityCenterList) {
-                if (ctr.containsKey(requiredFeature) &&
-                        resemblesTruth(ctr, requiredFeature) &&
+            for (HashMap ctr : allLocs) {
+                if (resemblesTruth(ctr, requiredFeature) &&
                         !currentFilteredLocations.contains(ctr)) {
                     currentFilteredLocations.add(ctr);
-                }
-            }
-            for (HashMap prk : parkList) {
-                if (prk.containsKey(requiredFeature) &&
-                        resemblesTruth(prk, requiredFeature)
-                        && !currentFilteredLocations.contains(prk)) {
-                    currentFilteredLocations.add(prk);
                 }
             }
         }
@@ -173,15 +161,20 @@ public class Filter {
 
     public static void addRequirement(String key) {
         currentFields.add(key);
-
-        Iterator<HashMap<String, Object>> iterator = currentFilteredLocations.iterator();
-        while(iterator.hasNext())
+        switch(MODE)
         {
-            HashMap m = iterator.next();
-            if(m.containsKey(key) && !resemblesTruth(m, key))
-            {
-                iterator.remove();
-            }
+            case UNION:
+                for(HashMap c : allLocs)
+                    if(!currentFilteredLocations.contains(c) &&
+                            resemblesTruth(c,key))
+                        currentFilteredLocations.add(c);
+                break;
+            case INTERSECT:
+                Iterator<HashMap<String, Object>> iterator = currentFilteredLocations.iterator();
+                while(iterator.hasNext())
+                    if(!resemblesTruth(iterator.next(), key))
+                        iterator.remove();
+                break;
         }
         sort();
     }
@@ -193,6 +186,14 @@ public class Filter {
 
     public static void removeRequirement(String key) {
         currentFields.remove(key);
-        intersectGetLocationsWith(currentFields);
+        switch (MODE)
+        {
+            case UNION:
+                unionGetLocationsWith(currentFields);
+                break;
+            case INTERSECT:
+                intersectGetLocationsWith(currentFields);
+                break;
+        }
     }
 }
