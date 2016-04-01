@@ -75,7 +75,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             System.out.println(key+" "+locData.get(key)+" "+Filter.resemblesTruth(locData, key));
             if (Filter.resemblesTruth(locData, key)){
                 if (!fieldsToIgnore.contains(key)) {
-                    features.add(aliases.get(key));
+                    features.add('\u2022'+" "+aliases.get(key));
 
                 }
             }
