@@ -2,6 +2,7 @@ package appcontest.playabq;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -178,6 +179,7 @@ public class MapsActivity extends FragmentActivity implements
             Intent intent = new Intent(this, LocationActivity.class);
             HashMap locData = (HashMap) getMarkerData(marker);
             intent.putExtra("data", locData);
+
             startActivity(intent);
         }
     }
@@ -222,7 +224,9 @@ public class MapsActivity extends FragmentActivity implements
                 mContents = getLayoutInflater().inflate(R.layout.info_window_layout, null);
                 TextView titleUi = ((TextView) mContents.findViewById(R.id.title_window));
                 titleUi.setText(title);
-                int info = R.drawable.ic_info;
+                int info = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
+                        R.drawable.ic_info : R.drawable.ic_info_bmp;
+
                 ((ImageView) mContents.findViewById(R.id.info)).setImageResource(info);
                 ((ImageView) mContents.findViewById(R.id.info)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }
