@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -62,10 +65,33 @@ public class SplashScreenActivity extends AppCompatActivity implements
                     .addApi(LocationServices.API)
                     .build();
         }
+
+        ((Button)findViewById(R.id.button1)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        Button view = (Button) v;
+                        view.setBackgroundResource(R.drawable.button_start_pressed);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP:
+                        getStarted();
+                    case MotionEvent.ACTION_CANCEL: {
+                        Button view = (Button) v;
+                        view.setBackgroundResource(R.drawable.button_start);
+                        view.invalidate();
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
     }
 
     /** Called when the user clicks the Send button */
-    public void getStarted(View view) {
+    public void getStarted() {
         // Do something in response to button
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
