@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -63,13 +65,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
 
-        /*
-        features = new String[]{"HALFBASKETBALLCOURTS", "SOCCERFIELDS","LITSOFTBALLFIELDS",
-                                    "something else", "something else",
-                                    "something else", "something else",
-                                    "something else", "something lse",
-                                    "something else", "something else",
-                                    "something else", "something else"};*/
         features = new ArrayList<String>();
         for (String key : locData.keySet()) {
             System.out.println(key+" "+locData.get(key)+" "+Filter.resemblesTruth(locData, key));
@@ -80,13 +75,25 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 }
             }
         }
+
+        String website;
         if (isCtr) {
             features.add(0, (String) locData.get("REGULARHOURS"));
+            website = (String) locData.get("WEBSITE");
+        }
+        else {
+            website = getString(R.string.abq_park_website);
         }
 
         locName = Util.getName(locData);
         TextView textView = (TextView) findViewById(R.id.location_name);
         textView.setText(locName);
+
+        String moreInfo = "<a href='"+website+"'>Click for More Information</a>";
+        TextView infoView =(TextView)findViewById(R.id.more_info);
+        infoView.setClickable(true);
+        infoView.setMovementMethod(LinkMovementMethod.getInstance());
+        infoView.setText(Html.fromHtml(moreInfo));
 
         mapView = (MapView) findViewById(R.id.location_map);
         mapView.onCreate(savedInstanceState);
