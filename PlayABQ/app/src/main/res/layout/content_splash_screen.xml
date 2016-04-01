@@ -18,16 +18,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Let's Play!"
-        android:id="@+id/button"
+        android:id="@+id/button1"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="120dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/button_start"
         android:clickable="true"
-        android:onClick="getStarted"
         android:textSize="30dp"
         android:minHeight="0dip"
-        />
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:nestedScrollingEnabled="false" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -35,6 +36,10 @@
         android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="120dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="225dp"
+        android:maxHeight="225dp"
+        android:scaleType="fitCenter" />
 
 </RelativeLayout>
