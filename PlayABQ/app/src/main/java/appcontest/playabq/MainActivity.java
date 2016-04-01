@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,25 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener, CompoundButton.OnCheckedChangeListener {
 
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
+    private MapListAdapter adapter;
+    private ListView listView;
 
-    HashMap<String,String> ctrAliases;
-    HashMap<String,String> parkAliases;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -58,37 +55,14 @@ public class MainActivity extends AppCompatActivity
             initNavView(navigationView);
         }
 
-        /* Create an instance of GoogleAPIClient.
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }*/
 
-        MapsInitializer.initialize(getApplicationContext());
 
-        Map parkData = JsonParser.getParkData(this);
-        Map commData = JsonParser.getCommData(this);
-        parkAliases = (HashMap) JsonParser.getAliases(parkData);
-        ctrAliases = (HashMap) JsonParser.getAliases(commData);
 
-        ArrayList<Map<String, Object>> commList = JsonParser.getCommList(commData);
-        for (Map ctr : commList) {
-            MarkerOptions mkrOpt = Util.getMarker(ctr, this);
-            ctr.put("MarkerOptions", mkrOpt);
-        }
-        ArrayList<Map<String, Object>> parkList = JsonParser.getParkList(parkData);
-        for (Map park : parkList) {
-            MarkerOptions mkrOpt = Util.getMarker(park, this);
-            park.put("MarkerOptions", mkrOpt);
-        }
-        Filter.init(commList, parkList);
+        listView = (ListView) findViewById(R.id.list_view);
 
-        ListView lv = (ListView) findViewById(R.id.list_view);
-        lv.setAdapter(new MapListAdapter(this,Filter.filtered()));
-
+        adapter = new MapListAdapter(this);
+        listView.setAdapter(adapter);
+        listView.refreshDrawableState();
         drawer.openDrawer(GravityCompat.START);
     }
 
@@ -98,8 +72,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         Menu menu = nav.getMenu();
-
-        
 
         if(item.getTitle() == getString(R.string.park_filter_title)) {
             ((AppCompatImageView)item.getActionView())
@@ -126,6 +98,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void initNavView(NavigationView nv) {
         Menu menu = nv.getMenu();
         AppCompatImageView iv1 = new AppCompatImageView(this);
@@ -143,15 +116,21 @@ public class MainActivity extends AppCompatActivity
 
         for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
         {
+            AppCompatCheckBox box = new AppCompatCheckBox(this);
+            box.setOnCheckedChangeListener(this);
+            box.setTag(p);
             menu.add(R.id.park_filters, Menu.NONE, getResources().getInteger(R.integer.parkFilterOrder),p)
-                    .setActionView(new AppCompatCheckBox(this))
+                    .setActionView(box)
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
         }
         for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
         {
+            AppCompatCheckBox box = new AppCompatCheckBox(this);
+            box.setOnCheckedChangeListener(this);
+            box.setTag(cc);
             menu.add(R.id.comm_filters, Menu.NONE, getResources().getInteger(R.integer.commFilterOrder),cc)
-                    .setActionView(new AppCompatCheckBox(this))
+                    .setActionView(box)
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
         }
@@ -188,6 +167,13 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        else {
+            String key= Util.keyByAlias((String) item.getTitle());
+            if(null != key)
+            {
+                Log.i("OptItem", key);
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -201,21 +187,14 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.go_to_maps) {
             Log.i("Main", "go_to_maps");
             Intent intent = new Intent(this, MapsActivity.class);
-            intent.putExtra("ctrAliases",ctrAliases);
-            intent.putExtra("parkAliases",parkAliases);
             startActivity(intent);
         }
-//        else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+        String key = Util.keyByAlias((String) item.getTitle());
+        if (key != null) {
+            Log.i("OptItem", key);
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -224,16 +203,14 @@ public class MainActivity extends AppCompatActivity
 
 
     protected void onStart() {
-                super.onStart();
+        super.onStart();
     }
 
     protected void onStop() {
-        //mGoogleApiClient.disconnect();
         super.onStop();
     }
 
     protected void onDestroy() {
-        //stopLocationUpdates();
         super.onDestroy();
     }
 
@@ -250,6 +227,33 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         item.getActionView().performClick();
-        return false;
+        return true;
+    }
+
+    /**
+     * Called when the checked state of a compound button has changed.
+     *
+     * @param buttonView The compound button view whose state has changed.
+     * @param isChecked  The new checked state of buttonView.
+     */
+    @Override
+    @UiThread
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        String key = Util.keyByAlias((String) buttonView.getTag());
+        if (key != null) {
+            Log.i("MenuItem", key);
+            if(isChecked)
+            {
+                Filter.addRequirement(key);
+                adapter.onChanged();
+            }
+            else
+            {
+                Filter.removeRequirement(key);
+                adapter.onInvalidated();
+            }
+
+        }
+
     }
 }

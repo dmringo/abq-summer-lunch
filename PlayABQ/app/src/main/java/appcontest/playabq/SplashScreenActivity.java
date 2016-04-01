@@ -30,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.MapsInitializer;
 
 import java.util.HashMap;
 
@@ -48,15 +49,16 @@ public class SplashScreenActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_splash_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MapsInitializer.initialize(getApplicationContext());
 
         ImageView image = (ImageView) findViewById(R.id.imageView2);
+        if (image != null) {
+            image.setImageResource(R.drawable.ic_logo);
+        }
 
-        image.setImageResource(R.drawable.ic_logo);
-
-
-        Util.setUserLocation(Util.getDefaultLocation());
-        Util.isTrackingUser = false;
-
+        /* Initialize static data sources */
+        Util.init(this);
+        Filter.init(Util.commList, Util.parkList);
 
         // Create an instance of GoogleAPIClient.
         if (mGoogleApiClient == null) {
@@ -67,28 +69,32 @@ public class SplashScreenActivity extends AppCompatActivity implements
                     .build();
         }
 
-        ((Button)findViewById(R.id.button1)).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        Button view = (Button) v;
-                        view.setBackgroundResource(R.drawable.button_start_pressed);
-                        v.invalidate();
-                        break;
+        View playButton = findViewById(R.id.button1);
+        if (playButton != null) {
+
+            playButton.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN: {
+                            Button view = (Button) v;
+                            view.setBackgroundResource(R.drawable.button_start_pressed);
+                            v.invalidate();
+                            break;
+                        }
+                        case MotionEvent.ACTION_UP:
+                            getStarted();
+                        case MotionEvent.ACTION_CANCEL: {
+                            Button view = (Button) v;
+                            view.setBackgroundResource(R.drawable.button_start);
+                            view.invalidate();
+                            break;
+                        }
                     }
-                    case MotionEvent.ACTION_UP:
-                        getStarted();
-                    case MotionEvent.ACTION_CANCEL: {
-                        Button view = (Button) v;
-                        view.setBackgroundResource(R.drawable.button_start);
-                        view.invalidate();
-                        break;
-                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
+        }
     }
 
     /** Called when the user clicks the Send button */
@@ -135,10 +141,6 @@ public class SplashScreenActivity extends AppCompatActivity implements
 
     protected void onStart() {
         mGoogleApiClient.connect();
-        /*TODO: REMOVE THESE TESTES */
-        // ArrayList<String> features = new ArrayList<>();
-        // features.add("PLAYAREAS");
-        // Filter.intersectGetLocationsWith(features);
         super.onStart();
     }
 
@@ -194,7 +196,7 @@ public class SplashScreenActivity extends AppCompatActivity implements
                     mGoogleApiClient, LocationRequest.create(), locationListener=new LocationListener() {
                         @Override
                         public void onLocationChanged(Location location) {
-                            Log.i("LOC-CHANGE", "IT HAPPENED!");
+
                             if (location!=null) {
                                 Util.setUserLocation(location);
                                 Util.isTrackingUser = true;

@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,12 +36,17 @@ public class Util {
     private static String usrBaseColor = "#ffff80";
 
     public static boolean isTrackingUser = false;
+    public static HashMap <String, String> reverseAliasMap = new HashMap<>();
+    public static HashMap <String, String> aliases;
+    public static ArrayList<HashMap<String, Object>> parkList;
+    public static ArrayList<HashMap<String, Object>> commList;
+
+    private static Location userLocation = getDefaultLocation();
 
     public static Location getUserLocation() {
         return userLocation;
     }
 
-    private static Location userLocation = getDefaultLocation();
     public static boolean isCommCenter(Map m)
     {
         return m.containsKey("CENTERNAME");
@@ -86,7 +92,9 @@ public class Util {
         float[] hsv = new float[3];
         Color.colorToHSV(Color.parseColor(usrBaseColor), hsv);
         BitmapDescriptor color = BitmapDescriptorFactory.defaultMarker(hsv[0]);
-        return new MarkerOptions().position(new LatLng(getUserLocation().getLatitude(), getUserLocation().getLongitude())).title("My Location").icon(color);
+        return new MarkerOptions().position(
+                new LatLng(getUserLocation().getLatitude(), getUserLocation().getLongitude()))
+                .title("My Location").icon(color);
     }
 
     /**
@@ -225,5 +233,33 @@ public class Util {
         defaultLocation.setLatitude(35.113281);
         defaultLocation.setLongitude(-106.621216);
         return defaultLocation;
+    }
+
+    public static String keyByAlias(String title) {
+        return reverseAliasMap.get(title);
+    }
+
+    public static void init(Context ctx) {
+        setUserLocation(getDefaultLocation());
+        isTrackingUser = false;
+
+        Map parkData = JsonParser.getParkData(ctx);
+        Map commData = JsonParser.getCommData(ctx);
+        aliases = JsonParser.getAliases(parkData);
+        aliases.putAll(JsonParser.getAliases(commData));
+        parkList = JsonParser.getParkList(parkData);
+        commList = JsonParser.getCommList(commData);
+
+        for(String key : aliases.keySet()) reverseAliasMap.put(aliases.get(key), key);
+
+        for (Map ctr : commList) {
+            MarkerOptions mkrOpt = getMarker(ctr, ctx);
+            ctr.put("MarkerOptions", mkrOpt);
+        }
+        for (Map park : parkList) {
+            MarkerOptions mkrOpt = getMarker(park, ctx);
+            park.put("MarkerOptions", mkrOpt);
+        }
+
     }
 }

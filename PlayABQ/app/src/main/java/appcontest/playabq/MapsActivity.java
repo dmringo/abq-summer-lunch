@@ -2,30 +2,22 @@ package appcontest.playabq;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
@@ -45,8 +37,8 @@ public class MapsActivity extends FragmentActivity implements
     // aliases maps Json field names to their aliases
     private ArrayList<Map<String, Object>> parkList;
     private ArrayList<Map<String, Object>> commList;
-    private HashMap<String,String> ctrAliases;
-    private HashMap<String,String> parkAliases;
+//    private HashMap<String,String> ctrAliases;
+//    private HashMap<String,String> parkAliases;
 
 
     // polygonMap has park polygons as keys, their names as values
@@ -61,9 +53,6 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        Intent intent = getIntent();
-        parkAliases = (HashMap) intent.getExtras().get("parkAliases");
-        ctrAliases = (HashMap) intent.getExtras().get("ctrAliases");
         parkList = Filter.selectParks(Filter.filtered());
         commList = Filter.selectCommCenters(Filter.filtered());
 
@@ -228,8 +217,8 @@ public class MapsActivity extends FragmentActivity implements
             Intent intent = new Intent(this, LocationActivity.class);
             HashMap locData = (HashMap) getMarkerData(marker);
             intent.putExtra("data", locData);
-            intent.putExtra("ctrAliases",ctrAliases);
-            intent.putExtra("parkAliases",parkAliases);
+//            intent.putExtra("ctrAliases",ctrAliases);
+//            intent.putExtra("parkAliases",parkAliases);
             startActivity(intent);
         }
     }
@@ -271,7 +260,7 @@ public class MapsActivity extends FragmentActivity implements
                 mContents = getLayoutInflater().inflate(R.layout.info_window_layout, null);
                 TextView titleUi = ((TextView) mContents.findViewById(R.id.title_window));
                 titleUi.setText(title);
-                int info = R.drawable.ic_comm;
+                int info = R.drawable.ic_info;
                 ((ImageView) mContents.findViewById(R.id.info)).setImageResource(info);
                 ((ImageView) mContents.findViewById(R.id.info)).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             }

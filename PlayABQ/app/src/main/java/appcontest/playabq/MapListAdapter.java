@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -19,16 +20,25 @@ import java.util.Map;
 /**
  * Created by david on 3/25/16.
  */
-public class MapListAdapter implements ListAdapter {
+public class MapListAdapter extends BaseAdapter implements ListAdapter {
 
-    final private ArrayList<Map<String, Object>> recs;
     final private MainActivity context;
-    private List observers = new ArrayList();
+    private List<DataSetObserver> observers = new ArrayList();
 
-    public MapListAdapter(MainActivity context, ArrayList<Map<String, Object>> recs)
+    public MapListAdapter(MainActivity context)
     {
-        this.recs = recs;
         this.context = context;
+    }
+
+    public void onChanged()
+    {
+        for(DataSetObserver obs : observers)
+            obs.onChanged();
+    }
+
+    public void onInvalidated()
+    {
+        for(DataSetObserver obs : observers) obs.onInvalidated();
     }
 
 
@@ -62,6 +72,8 @@ public class MapListAdapter implements ListAdapter {
         return false;
     }
 
+
+
     /**
      * Register an observer that is called when changes happen to the data used by this adapter.
      *
@@ -90,7 +102,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public int getCount() {
-        return recs.size();
+        return Filter.filtered().size();
     }
 
     /**
@@ -102,7 +114,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public Object getItem(int position) {
-        return recs.get(position);
+        return Filter.filtered().get(position);
     }
 
     /**
@@ -113,7 +125,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public long getItemId(int position) {
-        return Util.getName(recs.get(position)).hashCode(); /* why not? */
+        return Util.getName(Filter.filtered().get(position)).hashCode(); /* why not? */
     }
 
     /**
@@ -154,15 +166,15 @@ public class MapListAdapter implements ListAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.list_name_text);
         TextView dist = (TextView) convertView.findViewById(R.id.list_distance_text);
         ImageView ico = (ImageView) convertView.findViewById(R.id.list_icon);
-        final HashMap<String,Object> place = (HashMap<String, Object>) recs.get(position);
+        final HashMap<String,Object> place = (HashMap<String, Object>) Filter.filtered().get(position);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LocationActivity.class);
                 intent.putExtra("data", place);
-                if(Util.isPark(place)) intent.putExtra("parkAliases", context.parkAliases);
-                else intent.putExtra("ctrAliases", context.ctrAliases);
+                if(Util.isPark(place)) intent.putExtra("parkAliases", Util.aliases);
+                else intent.putExtra("ctrAliases", Util.aliases);
                 context.startActivity(intent);
             }
         });
@@ -228,7 +240,7 @@ public class MapListAdapter implements ListAdapter {
      */
     @Override
     public boolean isEmpty() {
-        return recs.isEmpty();
+        return Filter.filtered().isEmpty();
     }
 
 

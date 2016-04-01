@@ -53,11 +53,11 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         String[] possFeatures;
         if (Util.isCommCenter(locData)) {
             isCtr = true;
-            aliases = (Map) (intent.getSerializableExtra("ctrAliases"));
+            aliases = Util.aliases;//(Map) (intent.getSerializableExtra("ctrAliases"));
         }
         else {
             isPark = true;
-            aliases = (Map) intent.getSerializableExtra("parkAliases");
+            aliases = Util.aliases; //(Map) intent.getSerializableExtra("parkAliases");
             fieldsToIgnore = Arrays.asList(getResources().getStringArray(R.array.park_ignore));
         }
 
