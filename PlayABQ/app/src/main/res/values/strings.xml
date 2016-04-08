@@ -33,6 +33,7 @@
         <item>Shade Structures</item>
         <item>Parking Spaces</item>
         <item>Jogging Paths</item>
+        <item>Golf Course</item>
     </string-array>
     <string-array name="CC_Filter_Options">
         <item>Gymnasium</item>
