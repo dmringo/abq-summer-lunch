@@ -12,6 +12,7 @@ import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -30,6 +31,8 @@ import java.util.Map;
  */
 public class Util {
 
+
+    private static final String TAG = Util.class.getSimpleName();
 
     private static String ccBaseColor = "#859bff";
     private static String parkBaseColor = "#9ad48f";
@@ -197,7 +200,17 @@ public class Util {
         }
         else throw new IllegalArgumentException("Bad drawable for Markers");
 
-        BitmapDescriptor ico = BitmapDescriptorFactory.fromBitmap(bm);
+        BitmapDescriptor ico = null;
+        int i = 0;
+        while(ico == null) /* try a few times */
+        try {
+            ico = BitmapDescriptorFactory.fromBitmap(bm);
+        }catch (RuntimeException e)
+        {
+            if(i++ > 5) throw e; /* try a few times */
+            Log.e(TAG, "BitmapDescr failure, try again. Attempt " + i);
+        }
+
         return ico;
     }
 
