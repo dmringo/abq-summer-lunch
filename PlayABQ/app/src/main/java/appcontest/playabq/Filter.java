@@ -28,7 +28,7 @@ public class Filter {
     private static ArrayList<HashMap<String, Object>> communityCenterList;
     private static ArrayList<HashMap<String, Object>> parkList;
     private static ArrayList<HashMap<String, Object>> allLocs = new ArrayList<>();
-    private static ArrayList<HashMap<String, Object>> currentFilteredLocations;
+    private static ArrayList<HashMap<String, Object>> currentFilteredLocations = new ArrayList<>();
     private static ArrayList<String> currentFields = new ArrayList<>();
     private static Location userLocation;
     private static Comparator<? super HashMap<String, Object>> comparator =
@@ -40,10 +40,10 @@ public class Filter {
     }
     public static void init (ArrayList<HashMap<String, Object>> commList,
                              ArrayList<HashMap<String, Object>> prkList) {
+
         communityCenterList= commList;
         parkList=prkList;
 
-        currentFilteredLocations= new ArrayList<>();
         currentFilteredLocations.addAll(prkList);
         currentFilteredLocations.addAll(commList);
         allLocs.addAll(currentFilteredLocations);
