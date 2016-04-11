@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -202,7 +203,7 @@ public class Util {
 
         BitmapDescriptor ico = null;
         int i = 0;
-        while(ico == null) /* try a few times */
+        while(ico == null)
         try {
             ico = BitmapDescriptorFactory.fromBitmap(bm);
         }catch (RuntimeException e)
@@ -248,7 +249,7 @@ public class Util {
         return defaultLocation;
     }
 
-    public static String keyByAlias(String title) {
+    public static String keyByAlias(@Nullable String title) {
         return reverseAliasMap.get(title);
     }
 

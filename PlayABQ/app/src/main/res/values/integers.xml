@@ -2,4 +2,6 @@
 <resources>
     <integer name="parkFilterOrder">1</integer>
     <integer name="commFilterOrder">2</integer>
+    <integer name="groupTagID">0</integer>
+    <integer name="reqTagID">1</integer>
 </resources>

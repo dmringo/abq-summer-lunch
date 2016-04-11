@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatCheckBox
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/comm_checkbox"
+    android:checked="true"
+    android:onClick="groupToggle"
+    android:buttonTint="@color/colorPrimaryDark">
+</android.support.v7.widget.AppCompatCheckBox>

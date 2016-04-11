@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.UiThread;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,26 +15,28 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ListAdapter;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ToggleButton;
 
 
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        MenuItem.OnMenuItemClickListener
+{
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener, CompoundButton.OnCheckedChangeListener {
-
+    private final String CLASSTAG = getClass().getSimpleName();
     private boolean parkFiltersOpen = false;
     private boolean commFiltersOpen = false;
     private MapListAdapter adapter;
     private ListView listView;
+    private Filter.FilterOpts filterOpts = Filter.FilterOpts.newDefault();
 
 
-    @Override
-        protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
-
         listView = (ListView) findViewById(R.id.list_view);
 
         adapter = new MapListAdapter(this);
@@ -67,70 +65,32 @@ public class MainActivity extends AppCompatActivity
         drawer.openDrawer(GravityCompat.START);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void expandFilters(MenuItem item)
-    {
-
-        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
-        Menu menu = nav.getMenu();
-
-        if(item.getTitle() == getString(R.string.park_filter_title)) {
-            ((AppCompatImageView)item.getActionView())
-            .setImageResource(parkFiltersOpen ?
-                    R.drawable.ic_add_24dp :
-                    R.drawable.ic_remove_24dp);
-
-            menu.setGroupEnabled(R.id.park_filters, !parkFiltersOpen);
-            menu.setGroupVisible(R.id.park_filters, !parkFiltersOpen);
-            parkFiltersOpen = !parkFiltersOpen;
-        }
-        if(item.getTitle() == getString(R.string.comm_filter_title)) {
-            ((AppCompatImageView)item.getActionView())
-                    .setImageResource(commFiltersOpen ?
-                            R.drawable.ic_add_24dp :
-                            R.drawable.ic_remove_24dp);
-
-            menu.setGroupEnabled(R.id.comm_filters, !commFiltersOpen);
-            menu.setGroupVisible(R.id.comm_filters, !commFiltersOpen);
-            commFiltersOpen = !commFiltersOpen;
-        }
-
-            
-    }
-
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void initNavView(NavigationView nv) {
         Menu menu = nv.getMenu();
-        AppCompatImageView iv1 = new AppCompatImageView(this);
-        AppCompatImageView iv2 = new AppCompatImageView(this);
-        iv1.setImageResource(R.drawable.ic_add_24dp);
-        iv2.setImageResource(R.drawable.ic_add_24dp);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            menu.findItem(R.id.park_header).setActionView(iv1);
-            menu.findItem(R.id.comm_header).setActionView(iv2);
-        }
-
-
 
         for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
         {
-            AppCompatCheckBox box = new AppCompatCheckBox(this);
-            box.setOnCheckedChangeListener(this);
-            box.setTag(p);
-            menu.add(R.id.park_filters, Menu.NONE, getResources().getInteger(R.integer.parkFilterOrder),p)
+            AppCompatCheckBox box = (AppCompatCheckBox) getLayoutInflater()
+                    .inflate(R.layout.filter_checkbox, null);
+            box.setTag(R.id.filter_drawer, R.id.park_filters_grp);
+            box.setTag(R.id.feature_checkbox, p);
+
+            menu.add(R.id.park_filters_grp, Menu.NONE, getResources().getInteger(R.integer.parkFilterOrder),p)
                     .setActionView(box)
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
         }
+
         for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
         {
-            AppCompatCheckBox box = new AppCompatCheckBox(this);
-            box.setOnCheckedChangeListener(this);
-            box.setTag(cc);
-            menu.add(R.id.comm_filters, Menu.NONE, getResources().getInteger(R.integer.commFilterOrder),cc)
+            AppCompatCheckBox box =(AppCompatCheckBox) getLayoutInflater()
+                    .inflate(R.layout.filter_checkbox, null);
+            box.setTag(R.id.filter_drawer, R.id.comm_filters_grp);
+            box.setTag(R.id.feature_checkbox, cc);
+
+            menu.add(R.id.comm_filters_grp, Menu.NONE, getResources().getInteger(R.integer.commFilterOrder),cc)
                     .setActionView(box)
                     .setOnMenuItemClickListener(this)
                     .setVisible(false);
@@ -161,32 +121,18 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else {
-            String key= Util.keyByAlias((String) item.getTitle());
-            if(null != key)
-            {
-                Log.i("OptItem", key);
-            }
-        }
+        // as you specify a parent activity in AndroidManifest.xml
 
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.go_to_maps) {
-            Log.i("Main", "go_to_maps");
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -201,23 +147,50 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    protected void onStart() {
-        Filter.sort();
-        super.onStart();
+    /**
+     * Called when one of the filter group headers is clicked.  Expands all the filtering
+     * options for Parks or Comm Centers
+     *
+     * @param v
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void metaItemClick(MenuItem v)
+    {
+        boolean menuState = false;
+        int id = 0;
+        switch (v.getItemId())
+        {
+            case R.id.park_filter_header:
+                id = R.id.park_filters_grp;
+                menuState = parkFiltersOpen = !parkFiltersOpen;
+                break;
+            case R.id.comm_filter_header:
+                id = R.id.comm_filters_grp;
+                menuState = commFiltersOpen = !commFiltersOpen;
+                break;
+
+            /* select show parks or community centers -
+               perform click on the checkbox and let it handle the logic */
+            case R.id.show_parks_item:
+            case R.id.show_comms_item:
+                Log.i(CLASSTAG,"show group metaItemClick");
+                v.getActionView().performClick();
+                return;
+            default:
+                /*something bad is happening? */
+                Log.e(CLASSTAG, "bad menu item id in metaItemClick: " + v.getItemId());
+        }
+
+        hideShowMenuGroup(id, menuState);
+        AppCompatImageView iv = (AppCompatImageView) v.getActionView();
+        iv.setImageResource(menuState ?
+                R.drawable.ic_remove_24dp : R.drawable.ic_add_24dp);
     }
 
-    protected void onStop() {
-        super.onStop();
-    }
-
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     /**
-     * Called when a menu item has been invoked.  This is the first code
-     * that is executed; if it returns true, no other callbacks will be
-     * executed.
+     * This is only called on feature-specific filter items, and simply delegates to the
+     * corresponding checkbox's onClick handler (filterBoxClick)
      *
      * @param item The menu item that was invoked.
      * @return Return true to consume this click and prevent others from
@@ -226,33 +199,92 @@ public class MainActivity extends AppCompatActivity
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+
+        /* calls filterBoxClick below*/
         item.getActionView().performClick();
         return true;
     }
 
     /**
-     * Called when the checked state of a compound button has changed.
+     * Called when Parks or Community Centers are selected by checkbox in the top level
+     * filter options of the Nav Drawer
      *
-     * @param buttonView The compound button view whose state has changed.
-     * @param isChecked  The new checked state of buttonView.
+     * @param v View (really an AppCompatCheckbox) that was clicked
      */
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        String key = Util.keyByAlias((String) buttonView.getTag());
-        if (key != null) {
-            Log.i("MenuItem", key);
-            if(isChecked)
-            {
-                Filter.addRequirement(key);
-                adapter.onChanged();
-            }
-            else
-            {
-                Filter.removeRequirement(key);
-                adapter.onInvalidated();
-            }
+    public void groupToggle(View v)
+    {
+        Log.i(CLASSTAG, "groupToggle");
+        AppCompatCheckBox cb = (AppCompatCheckBox) v;
+        switch(cb.getId())
+        {
+            case R.id.comm_checkbox:
+                hideShowMenuGroup(R.id.comm_filter_header_grp, cb.isChecked());
+                filterOpts.getGroupByTag(R.id.comm_filters_grp).toggle();
+                if(commFiltersOpen) hideShowMenuGroup(R.id.comm_filters_grp,cb.isChecked());
+                break;
 
+            case R.id.park_checkbox:
+                hideShowMenuGroup(R.id.park_filter_header_grp, cb.isChecked());
+                filterOpts.getGroupByTag(R.id.park_filters_grp).toggle();
+                if(parkFiltersOpen) hideShowMenuGroup(R.id.park_filters_grp,cb.isChecked());
+                break;
+
+            default:
+                Log.e(CLASSTAG, "bad group toggle id? - " + cb.getId());
+                return;
         }
+        Filter.filter(filterOpts);
+        adapter.onChanged();
+
+    }
+
+    public void filterModeToggle(View v)
+    {
+        ToggleButton button = (ToggleButton) v;
+        filterOpts.toggleMode();
+        Filter.filter(filterOpts);
+        adapter.onChanged();
+    }
+
+
+    public void filterBoxClick(View v){
+
+        AppCompatCheckBox box = (AppCompatCheckBox) v;
+
+        /* identify which group the checkbox is part of*/
+        int groupTag = (int) box.getTag(R.id.filter_drawer);
+
+        String reqTag = (String) box.getTag(R.id.feature_checkbox);
+
+        Log.i(CLASSTAG, String.format("groupTag = %s, reqTag = %s", groupTag, reqTag));
+
+        Filter.FilterGroup group = filterOpts.getGroupByTag(groupTag);
+        {
+            Log.i(CLASSTAG, reqTag);
+            filterOpts.toggleReq(group.tag, Util.keyByAlias(reqTag));
+        }
+
+        Filter.filter(filterOpts);
+        adapter.onChanged();
+
+    }
+
+
+    /**
+     * Helper to expand/contract menus dynamically
+     *
+     * @param groupTag menu group ID
+     * @param open whether the menu should be open or closed
+     */
+    private void hideShowMenuGroup(int groupTag, boolean open) {
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        Menu menu = nav.getMenu();
+        Log.i(CLASSTAG,
+                String.format("hideShowMenuGroup(groupTag = %d, menuState = %s, menusize = %d",
+                        groupTag, open, menu.size()));
+
+        menu.setGroupEnabled(groupTag, open);
+        menu.setGroupVisible(groupTag, open);
 
     }
 

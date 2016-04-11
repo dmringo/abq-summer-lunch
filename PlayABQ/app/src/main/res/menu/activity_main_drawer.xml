@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/filter_drawer">
 
     <group android:id="@+id/map_group">
@@ -9,39 +11,69 @@
             android:icon="@drawable/ic_map_24dp"
             />
     </group>
+    <group android:id="@+id/header_group">
+        <item
+            android:title="Show Parks"
+            android:id="@+id/show_parks_item"
+            android:onClick="metaItemClick"
+            app:actionLayout="@layout/park_select_checkbox"
+            app:showAsAction="always"/>
+        <item
+            android:title="Show Community Centers"
+            android:id="@+id/show_comms_item"
+            android:onClick="metaItemClick"
+            app:actionLayout="@layout/comm_select_checkbox"
+            app:showAsAction="always"/>
+        <item
+            android:title="Filter Mode"
+            android:id="@+id/filter_mode_item"
+            app:actionLayout="@layout/filter_toggle_layout"
+            app:showAsAction="always"
+            />
+    </group>
 
     <!-- Header group, helps delineate header from filter items -->
-    <group>
+    <group android:id="@+id/park_filter_header_grp">
     <item
-        android:id="@+id/park_header"
+        android:id="@+id/park_filter_header"
         android:title="@string/park_filter_title"
         android:icon="@drawable/ic_park"
-        android:onClick="expandFilters"
         android:orderInCategory="@integer/parkFilterOrder"
+        android:visible="true"
+        android:enabled="true"
+        android:onClick="metaItemClick"
+        app:actionLayout="@layout/filter_expandview"
+        app:showAsAction="always"
         />
+
+
     </group>
 
-    <group android:id="@+id/park_filters"
+    <group android:id="@+id/park_filters_grp"
         android:checkableBehavior="all"
-        android:enabled="false"
-        android:visible="false">
+        android:enabled="true"
+        android:visible="true">
     </group>
 
     <!-- Header group, helps delineate header from filter items -->
-    <group>
+    <group android:id="@+id/comm_filter_header_grp">
     <item
-        android:id="@+id/comm_header"
+        android:id="@+id/comm_filter_header"
         android:title="@string/comm_filter_title"
         android:icon="@drawable/ic_comm"
-        android:onClick="expandFilters"
         android:orderInCategory="@integer/commFilterOrder"
+        android:visible="true"
+        android:enabled="true"
+        android:onClick="metaItemClick"
+        app:actionLayout="@layout/filter_expandview"
+        app:showAsAction="always"
         />
     </group>
 
-    <group android:id="@+id/comm_filters"
+    <group android:id="@+id/comm_filters_grp"
         android:checkableBehavior="all"
-        android:enabled="false"
-        android:visible="false">
+        android:enabled="true"
+        android:visible="true">
     </group>
 
 

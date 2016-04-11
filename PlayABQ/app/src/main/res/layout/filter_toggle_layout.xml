@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_alignParentLeft="true">
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/andor_toggle"
+        android:checked="true"
+        android:textOff="OR"
+        android:textOn="AND"
+        android:enabled="true"
+        android:onClick="filterModeToggle"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_centerVertical="true"
+        />
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="Filter Mode"-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:gravity="center"-->
+        <!--android:foregroundGravity="center" />-->
+
+
+</RelativeLayout>
