@@ -173,6 +173,11 @@
    "alias": "Skate Park"
   },
   {
+   "name": "DOGPARK",
+   "type": "esriFieldTypeInteger",
+   "alias": "Dog Park"
+  },
+  {
    "name": "created_user",
    "type": "esriFieldTypeString",
    "alias": "created_user",
