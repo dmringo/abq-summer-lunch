@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 
+import java.util.Arrays;
+
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
@@ -70,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements
     private void initNavView(NavigationView nv) {
         Menu menu = nv.getMenu();
 
-        for(String p : getResources().getStringArray(R.array.Park_Filter_Options))
+        String[] parkOpts = getResources().getStringArray(R.array.Park_Filter_Options);
+        Arrays.sort(parkOpts);
+        for(String p : parkOpts)
         {
             AppCompatCheckBox box = (AppCompatCheckBox) getLayoutInflater()
                     .inflate(R.layout.filter_checkbox, null);
@@ -83,7 +87,9 @@ public class MainActivity extends AppCompatActivity implements
                     .setVisible(false);
         }
 
-        for(String cc : getResources().getStringArray(R.array.CC_Filter_Options))
+        String[] commOpts = getResources().getStringArray(R.array.CC_Filter_Options);
+        Arrays.sort(commOpts);
+        for(String cc : commOpts)
         {
             AppCompatCheckBox box =(AppCompatCheckBox) getLayoutInflater()
                     .inflate(R.layout.filter_checkbox, null);
@@ -100,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer != null && drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -142,7 +148,9 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 

@@ -196,18 +196,18 @@ public class Filter {
         Log.i(TAG,opts.toString());
         switch(opts.mode)
         {
-            case AND:
-                filterAND(opts.groups);
+            case ALL:
+                filterALL(opts.groups);
                 break;
-            case OR:
-                filterOR(opts.groups);
+            case ANY:
+                filterANY(opts.groups);
                 break;
         }
 
         sort();
     }
 
-    private static void filterOR(Map<Integer, FilterGroup> opts) {
+    private static void filterANY(Map<Integer, FilterGroup> opts) {
         currentFilteredLocations.clear();
         for(FilterGroup p : opts.values())
         {
@@ -224,7 +224,7 @@ public class Filter {
         return false;
     }
 
-    private static void filterAND(Map<Integer, FilterGroup> opts) {
+    private static void filterALL(Map<Integer, FilterGroup> opts) {
         currentFilteredLocations.clear();
         for(FilterGroup p : opts.values())
         {
@@ -250,14 +250,14 @@ public class Filter {
         }
 
         enum Mode{
-            AND, OR;
+            ALL, ANY;
 
             public Mode complement(){
-                if (this == AND) return OR;
-                else return AND;
+                if (this == ALL) return ANY;
+                else return ALL;
             }
 
-            public boolean toBool(){return this == AND;}
+            public boolean toBool(){return this == ALL;}
 
         };
         Mode mode;
@@ -274,7 +274,7 @@ public class Filter {
 
             FilterGroup parks = new FilterGroup(parkList, new ArrayList<String>(), R.id.park_filters_grp);
             FilterGroup comms = new FilterGroup(commList, new ArrayList<String>(), R.id.comm_filters_grp);
-            return new FilterOpts(Mode.AND, parks, comms);
+            return new FilterOpts(Mode.ALL, parks, comms);
         }
 
         public FilterGroup getGroupByTag(int tag) {
