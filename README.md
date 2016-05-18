@@ -2,7 +2,7 @@
 
 PlayABQ is an Android application built as a submission to the [2015-16 UNM/CNM App Contest][App Contest].
 
-The app provides a filtering interface for finding parks and community centers around the City of Albuquerque.
+The app provides a filtering interface for finding parks and community centers around the City of Albuquerque. You can view [screen shots] of the app in this repo's wiki.
 
 PlayABQ uses data provided by the City of Albuquerque's [open data sources][CABQ opendata] as well as hand-collected data from the city's website.
 
@@ -13,3 +13,4 @@ The most recent build of the app will always be named `app-release.apk` in kept 
 
 [App Contest]: http://appcontest.unm.edu/
 [CABQ opendata]: https://www.cabq.gov/abq-data/
+[screen shots]: https://github.com/dmringo/play-abq/wiki/User-Interface
